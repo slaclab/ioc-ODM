@@ -1,0 +1,64 @@
+# RELEASE - Location of external support modules
+#
+# IF YOU CHANGE ANY PATHS in this file or make API changes to
+# any modules it refers to, you should do a "make rebuild" in
+# this application's top level directory.
+#
+# The EPICS build process does not check dependencies against
+# any files from outside the application, so it is safest to
+# rebuild it completely if any modules it depends on change.
+#
+# Host- or target-specific settings can be given in files named
+#  RELEASE.$(EPICS_HOST_ARCH).Common
+#  RELEASE.Common.$(T_A)
+#  RELEASE.$(EPICS_HOST_ARCH).$(T_A)
+#
+
+# Read definitions of:
+#       EPICS_SITE_TOP
+#       BASE_MODULE_VERSION
+#       EPICS_MODULES
+# from one of the following options
+include $(TOP)/RELEASE_SITE
+# This file is parsed by both GNUmake and an EPICS Perl script,
+# so it may ONLY contain definititions of paths to other support
+# modules, variable definitions that are used in module paths,
+# and include statements that pull in other RELEASE files.
+# Variables may be used before their values have been set.
+# Build variables that are NOT used in paths should be set in
+# the CONFIG_SITE file.
+
+AUTOSAVE_MODULE_VERSION      = R5.8-2.1.0
+IOCADMIN_MODULE_VERSION      = R3.1.16-1.1.0
+CAPUTLOG_MODULE_VERSION      = R3.5-1.0.0
+CEXPSH_MODULE_VERSION        = R1.1.2
+PLCADMIN_MODULE_VERSION      = R3.2.2
+ASYN_MODULE_VERSION          = R4.32-1.0.0
+MODBUSTCPCLNT_MODULE_VERSION = R2.3.0-1.2.0
+MODBUS_MODULE_VERSION        = R2.11-1.0.0
+
+# Variables and paths to dependent modules:
+#MODULES = /path/to/modules
+#MYMODULE = $(MODULES)/my-module
+
+AUTOSAVE     = $(EPICS_MODULES)/autosave/$(AUTOSAVE_MODULE_VERSION)
+IOCADMIN     = $(EPICS_MODULES)/iocAdmin/$(IOCADMIN_MODULE_VERSION)
+CAPUTLOG     = $(EPICS_MODULES)/caPutLog/$(CAPUTLOG_MODULE_VERSION)
+CEXPSH       = $(EPICS_MODULES)/cexpsh/$(CEXPSH_MODULE_VERSION)
+
+
+PLCADMIN     = $(EPICS_MODULES)/plcAdmin/$(PLCADMIN_MODULE_VERSION)
+ASYN         = $(EPICS_MODULES)/asyn/$(ASYN_MODULE_VERSION)
+MODBUSTCPCLNT= $(EPICS_MODULES)/ModBusTCPClnt/$(MODBUSTCPCLNT_MODULE_VERSION)
+MODBUS       = $(EPICS_MODULES)/modbus/$(MODBUS_MODULE_VERSION)
+# If using the sequencer, point SNCSEQ at its top directory:
+#SNCSEQ = $(MODULES)/seq-ver
+
+# EPICS_BASE should appear last so earlier modules can override stuff:
+EPICS_BASE=$(EPICS_SITE_TOP)/base/$(BASE_MODULE_VERSION)
+
+# Set RULES here if you want to use build rules from somewhere
+# other than EPICS_BASE:
+#RULES = $(MODULES)/build-rules
+
+# End of file

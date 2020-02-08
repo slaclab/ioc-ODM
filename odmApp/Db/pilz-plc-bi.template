@@ -1,0 +1,20 @@
+record(bi, "$(dtype):$(area):$(position):$(attribute)") {
+  field(DESC, "$(description)")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port), $(bit), 1, 1)")
+  field(ZNAM, "$(zname)")
+  field(ONAM, "$(oname)")
+  field(ZSV,  "$(zsv)")
+  field(OSV,  "$(osv)")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(mbbiDirect, "BSOC:GUNB:1:CHKSM") {
+  field(DESC, "Checksum")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask(BI_Wd, 0, 0xFFFF, 1)")
+  field(MASK, "0xFFFF")
+  info(autosaveFields_pass0, "VAL")
+}

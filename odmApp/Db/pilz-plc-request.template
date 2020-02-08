@@ -1,0 +1,175 @@
+record(longout, "$(dtype):$(area):$(position):REQ_TABLE") {
+field(DESC, "$(description)")
+field(VAL, "$(tabval=9)")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_OUT PP")
+field(HOPR, "128")
+field(LOPR, "0")
+field(PINI, "YES")
+	info(autosaveFields, "VAL")
+}
+
+# The target PVs don't use the data, but this has 8 forward links,
+# the number we need, while the fanout record only has 6.
+record(dfanout, "$(dtype):$(area):$(position):REQ_TABLE_OUT") {
+field(OUTA, "$(dtype):$(area):$(position):REQ_TABLE_BIT0_CALC PP")
+field(OUTB, "$(dtype):$(area):$(position):REQ_TABLE_BIT1_CALC PP")
+field(OUTC, "$(dtype):$(area):$(position):REQ_TABLE_BIT2_CALC PP")
+field(OUTD, "$(dtype):$(area):$(position):REQ_TABLE_BIT3_CALC PP")
+field(OUTE, "$(dtype):$(area):$(position):REQ_TABLE_BIT4_CALC PP")
+field(OUTF, "$(dtype):$(area):$(position):REQ_TABLE_BIT5_CALC PP")
+field(OUTG, "$(dtype):$(area):$(position):REQ_TABLE_BIT6_CALC PP")
+field(OUTH, "$(dtype):$(area):$(position):REQ_TABLE_BIT7_CALC PP")
+field(SDIS, "$(dtype):$(area):$(position):REQ_TABLE_IN.PACT")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT0_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "A&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT0 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT1_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>1)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT1 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT2_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>2)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT2 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT3_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>3)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT3 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT4_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>4)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT4 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT5_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>5)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT5 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT6_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>6)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT6 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_BIT7_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_TABLE_OUT")
+field(CALC, "(A>>7)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE_BIT7 PP")
+}
+
+
+record(calcout, "$(dtype):$(area):$(position):REQ_TABLE_IN") {
+field(DESC, "$(description)")
+field(INPA, "$(dtype):$(area):$(position):TABLE_BIT0 CP MS")
+field(INPB, "$(dtype):$(area):$(position):TABLE_BIT1 CP MS")
+field(INPC, "$(dtype):$(area):$(position):TABLE_BIT2 CP MS")
+field(INPD, "$(dtype):$(area):$(position):TABLE_BIT3 CP MS")
+field(INPE, "$(dtype):$(area):$(position):TABLE_BIT4 CP MS")
+field(INPF, "$(dtype):$(area):$(position):TABLE_BIT5 CP MS")
+field(INPG, "$(dtype):$(area):$(position):TABLE_BIT6 CP MS")
+field(INPH, "$(dtype):$(area):$(position):TABLE_BIT7 CP MS")
+field(CALC, "A+B*2+C*4+D*8+E*16+F*32+G*64+H*128")
+field(OUT, "$(dtype):$(area):$(position):REQ_TABLE PP MS")
+field(SDIS, "$(dtype):$(area):$(position):REQ_TABLE_OUT.PACT")
+}
+
+
+record(longout, "$(dtype):$(area):$(position):REQ_SEG") {
+field(DESC, "$(description)")
+field(VAL, "$(segval=1)")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_OUT PP")
+field(HOPR, "128")
+field(LOPR, "0")
+field(PINI, "YES")
+	info(autosaveFields, "VAL")
+}
+
+# The target PVs don't use the data, but this has 8 forward links,
+# the number we need, while the fanout record only has 6.
+record(dfanout, "$(dtype):$(area):$(position):REQ_SEG_OUT") {
+field(OUTA, "$(dtype):$(area):$(position):REQ_SEG_BIT0_CALC PP")
+field(OUTB, "$(dtype):$(area):$(position):REQ_SEG_BIT1_CALC PP")
+field(OUTC, "$(dtype):$(area):$(position):REQ_SEG_BIT2_CALC PP")
+field(OUTD, "$(dtype):$(area):$(position):REQ_SEG_BIT3_CALC PP")
+field(OUTE, "$(dtype):$(area):$(position):REQ_SEG_BIT4_CALC PP")
+field(OUTF, "$(dtype):$(area):$(position):REQ_SEG_BIT5_CALC PP")
+field(OUTG, "$(dtype):$(area):$(position):REQ_SEG_BIT6_CALC PP")
+field(OUTH, "$(dtype):$(area):$(position):REQ_SEG_BIT7_CALC PP")
+field(SDIS, "$(dtype):$(area):$(position):REQ_SEG_IN.PACT")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT0_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "A&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT0 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT1_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>1)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT1 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT2_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>2)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT2 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT3_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>3)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT3 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT4_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>4)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT4 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT5_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>5)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT5 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT6_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>6)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT6 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_BIT7_CALC") {
+field(INPA, "$(dtype):$(area):$(position):REQ_SEG_OUT")
+field(CALC, "(A>>7)&1")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG_BIT7 PP")
+}
+
+record(calcout, "$(dtype):$(area):$(position):REQ_SEG_IN") {
+field(DESC, "$(description)")
+field(INPA, "$(dtype):$(area):$(position):SEG_BIT0 CP MS")
+field(INPB, "$(dtype):$(area):$(position):SEG_BIT1 CP MS")
+field(INPC, "$(dtype):$(area):$(position):SEG_BIT2 CP MS")
+field(INPD, "$(dtype):$(area):$(position):SEG_BIT3 CP MS")
+field(INPE, "$(dtype):$(area):$(position):SEG_BIT4 CP MS")
+field(INPF, "$(dtype):$(area):$(position):SEG_BIT5 CP MS")
+field(INPG, "$(dtype):$(area):$(position):SEG_BIT6 CP MS")
+field(INPH, "$(dtype):$(area):$(position):SEG_BIT7 CP MS")
+field(CALC, "A+B*2+C*4+D*8+E*16+F*32+G*64+H*128")
+field(OUT, "$(dtype):$(area):$(position):REQ_SEG PP MS")
+field(SDIS, "$(dtype):$(area):$(position):REQ_SEG_OUT.PACT")
+}
