@@ -27,7 +27,7 @@ epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 
 # Siemens supervisory PLC Node
 # Note cannot use nodename must use ip
-epicsEnvSet("ODM_NODE"      ,"172.27.14.xxx")
+epicsEnvSet("ODM_NODE"      ,"plc-cryo-od01")
 
 # Load generic environment variables and database
 < ../common/st.cmd.soft
