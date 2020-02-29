@@ -31,7 +31,7 @@ epicsEnvSet("ODM_NODE"      ,"plc-cryo-od01")
 
 # Load generic environment variables and database
 < ../common/st.cmd.soft
-epicsEnvSet("IOC","sioc-cp00-op01")
+epicsEnvSet("IOC","sioc-cp00-od01")
 
 # Initialize Modbus communications
 cd ${IOC_BOOT}
