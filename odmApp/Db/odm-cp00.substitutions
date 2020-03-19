@@ -183,6 +183,17 @@ file "pilz-plc-checksum.template"
         {PLC,CP00,OD01,CHECKSUM,          ODM_WD }
 }
 
+file MO2i.template
+{
+pattern	{ PRIM, LOCA, UNIT, PORT,                SCAN      }
+		{ ODM,  CR1,  1,    OXI_$(LOCA)$(UNIT), "1 second" }
+		{ ODM,  CR1,  2,    OXI_$(LOCA)$(UNIT), "1 second" }
+		{ ODM,  CR0,  1,    OXI_$(LOCA)$(UNIT), "1 second" }
+		{ ODM,  CR0,  2,    OXI_$(LOCA)$(UNIT), "1 second" }
+		{ ODM,  CR2,  1,    OXI_$(LOCA)$(UNIT), "1 second" }
+		{ ODM,  CR2,  2,    OXI_$(LOCA)$(UNIT), "1 second" }
+}
+
 file asynRecord.db
 {
 pattern{ P               , R          , PORT              , ADDR, IMAX, OMAX }

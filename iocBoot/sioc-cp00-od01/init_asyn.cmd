@@ -77,5 +77,14 @@ drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  1000, "PILZ")
 drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3, 4, 1,  4,  1000, "PILZ")
 drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  1000, "PILZ")
 
+# Oxigraf devices
+drvAsynIPPortConfigure( "OXI_CR11", "ts-b905-od01:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_CR12", "ts-b905-od02:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_CR01", "ts-b905-od03:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_CR02", "ts-b905-od04:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_CR21", "ts-b905-od05:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_CR22", "ts-b905-od06:2101", 0, 0, 0 )
+epicsEnvSet( "STREAM_PROTOCOL_PATH", "$(TOP)/db")
+
 # End of script
 
