@@ -1,9 +1,8 @@
-record(mbbiDirect, "$(dtype):$(area):$(position):$(attribute)") {
+record(longin, "$(dtype):$(area):$(position):$(attribute)") {
   field(DESC, "$(description=Checksum)")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 0, 0xFFFF, 1)")
-  field(MASK, "0xFFFF")
   info(autosaveFields_pass0, "VAL")
 }
 
