@@ -8,17 +8,47 @@ field(PINI, "YES")
 	info(autosaveFields, "VAL")
 }
 
+# All the data we're interested in is: Tables 1 and 9, segment 1
+# We only need table 1 once for check sums that don't change, so
+# read it for a short time during startup, then switch to table 9.
+record(calcout, "$(dtype):$(area):$(position):TABLE_CYCLER")
+{
+	field( OUT, "$(dtype):$(area):$(position):REQ_TABLE PP")
+	field( CALC, "A:=(A+1)%360;A=10?1:9")
+	field( INPA, "0")
+	field( SCAN, "5 second")
+}
+
+# Records for disabling PVs when their reqest table isn't active
+record(calc, "$(dtype):$(area):$(position):TABLE_9_SEG_1")
+{
+  field( INPA, "$(dtype):$(area):$(position):REQ_TABLE CP")
+  field( INPB, "$(dtype):$(area):$(position):REQ_SEG CP")
+  field( INPC, "$(dtype):$(area):$(position):REQ_TABLE_IN CP")
+  field( INPD, "$(dtype):$(area):$(position):REQ_SEG_IN CP")
+  field(CALC, "A=9 & B=1 & C=9 & D=1")
+}
+
+record(calc, "$(dtype):$(area):$(position):TABLE_1_SEG_1")
+{
+  field( INPA, "$(dtype):$(area):$(position):REQ_TABLE CP")
+  field( INPB, "$(dtype):$(area):$(position):REQ_SEG CP")
+  field( INPC, "$(dtype):$(area):$(position):REQ_TABLE_IN CP")
+  field( INPD, "$(dtype):$(area):$(position):REQ_SEG_IN CP")
+  field(CALC, "A=1 & B=1 & C=1 & D=1")
+}
+
 # The target PVs don't use the data, but this has 8 forward links,
 # the number we need, while the fanout record only has 6.
 record(dfanout, "$(dtype):$(area):$(position):REQ_TABLE_OUT") {
-field(OUTA, "$(dtype):$(area):$(position):REQ_TABLE_BIT0_CALC PP")
-field(OUTB, "$(dtype):$(area):$(position):REQ_TABLE_BIT1_CALC PP")
-field(OUTC, "$(dtype):$(area):$(position):REQ_TABLE_BIT2_CALC PP")
-field(OUTD, "$(dtype):$(area):$(position):REQ_TABLE_BIT3_CALC PP")
-field(OUTE, "$(dtype):$(area):$(position):REQ_TABLE_BIT4_CALC PP")
-field(OUTF, "$(dtype):$(area):$(position):REQ_TABLE_BIT5_CALC PP")
-field(OUTG, "$(dtype):$(area):$(position):REQ_TABLE_BIT6_CALC PP")
-field(OUTH, "$(dtype):$(area):$(position):REQ_TABLE_BIT7_CALC PP")
+field(OUTA, "$(dtype):$(area):$(position):REQ_TABLE_BIT0_CALC.A PP")
+field(OUTB, "$(dtype):$(area):$(position):REQ_TABLE_BIT1_CALC.A PP")
+field(OUTC, "$(dtype):$(area):$(position):REQ_TABLE_BIT2_CALC.A PP")
+field(OUTD, "$(dtype):$(area):$(position):REQ_TABLE_BIT3_CALC.A PP")
+field(OUTE, "$(dtype):$(area):$(position):REQ_TABLE_BIT4_CALC.A PP")
+field(OUTF, "$(dtype):$(area):$(position):REQ_TABLE_BIT5_CALC.A PP")
+field(OUTG, "$(dtype):$(area):$(position):REQ_TABLE_BIT6_CALC.A PP")
+field(OUTH, "$(dtype):$(area):$(position):REQ_TABLE_BIT7_CALC.A PP")
 field(SDIS, "$(dtype):$(area):$(position):REQ_TABLE_IN.PACT")
 }
 
@@ -83,7 +113,7 @@ field(INPG, "$(dtype):$(area):$(position):TABLE_BIT6 CP MS")
 field(INPH, "$(dtype):$(area):$(position):TABLE_BIT7 CP MS")
 field(CALC, "A+B*2+C*4+D*8+E*16+F*32+G*64+H*128")
 field(OUT, "$(dtype):$(area):$(position):REQ_TABLE PP MS")
-field(SDIS, "$(dtype):$(area):$(position):REQ_TABLE_OUT.PACT")
+#field(SDIS, "$(dtype):$(area):$(position):REQ_TABLE_OUT.PACT")
 }
 
 
@@ -100,14 +130,14 @@ field(PINI, "YES")
 # The target PVs don't use the data, but this has 8 forward links,
 # the number we need, while the fanout record only has 6.
 record(dfanout, "$(dtype):$(area):$(position):REQ_SEG_OUT") {
-field(OUTA, "$(dtype):$(area):$(position):REQ_SEG_BIT0_CALC PP")
-field(OUTB, "$(dtype):$(area):$(position):REQ_SEG_BIT1_CALC PP")
-field(OUTC, "$(dtype):$(area):$(position):REQ_SEG_BIT2_CALC PP")
-field(OUTD, "$(dtype):$(area):$(position):REQ_SEG_BIT3_CALC PP")
-field(OUTE, "$(dtype):$(area):$(position):REQ_SEG_BIT4_CALC PP")
-field(OUTF, "$(dtype):$(area):$(position):REQ_SEG_BIT5_CALC PP")
-field(OUTG, "$(dtype):$(area):$(position):REQ_SEG_BIT6_CALC PP")
-field(OUTH, "$(dtype):$(area):$(position):REQ_SEG_BIT7_CALC PP")
+field(OUTA, "$(dtype):$(area):$(position):REQ_SEG_BIT0_CALC.A PP")
+field(OUTB, "$(dtype):$(area):$(position):REQ_SEG_BIT1_CALC.A PP")
+field(OUTC, "$(dtype):$(area):$(position):REQ_SEG_BIT2_CALC.A PP")
+field(OUTD, "$(dtype):$(area):$(position):REQ_SEG_BIT3_CALC.A PP")
+field(OUTE, "$(dtype):$(area):$(position):REQ_SEG_BIT4_CALC.A PP")
+field(OUTF, "$(dtype):$(area):$(position):REQ_SEG_BIT5_CALC.A PP")
+field(OUTG, "$(dtype):$(area):$(position):REQ_SEG_BIT6_CALC.A PP")
+field(OUTH, "$(dtype):$(area):$(position):REQ_SEG_BIT7_CALC.A PP")
 field(SDIS, "$(dtype):$(area):$(position):REQ_SEG_IN.PACT")
 }
 

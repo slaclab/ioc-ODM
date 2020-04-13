@@ -74,7 +74,7 @@ modbusInterposeConfig ("ODM", 0, 2000, 500)
 
 ## ODM
 drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  1000, "PILZ")
-drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3, 4, 1,  4,  1000, "PILZ")
+drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3,  0, 10,  0,  1000, "PILZ")
 drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  1000, "PILZ")
 
 # Oxigraf devices

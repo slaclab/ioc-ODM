@@ -1,171 +1,201 @@
-file pilz-plc-bi-general.template
-{
+file pilz-plc-bi-table9seg1.template {
 	pattern
-	{dtype,area,position,attribute, description,                port,  bit,    zname,     oname,      zsv,            osv}
-	{ODM,CP00,x,in07,              "WCR West Oxigraf Ch0 Real",  ODM_RD,7,      Disabled,  Enabled,    NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in06,              "WCR West Oxigraf Ch0 Latch", ODM_RD,6,      Off,       Reset,      NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in05,              "WCR West Oxigraf Ch1 Real",  ODM_RD,5,      Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in04,              "WCR West Oxigraf Ch1 Latch", ODM_RD,4,      Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in03,              "WCR West Oxigraf Ch2 Real",  ODM_RD,3,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in02,              "WCR West Oxigraf Ch2 Latch", ODM_RD,2,      Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in01,              "WCR West Oxigraf Ch3 Real",  ODM_RD,1,      Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in00,              "WCR West Oxigraf Ch3 Latch", ODM_RD,0,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in015,             "WCR East Oxigraf Ch0 Real",  ODM_RD,15,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in014,             "WCR East Oxigraf Ch0 Latch", ODM_RD,14,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in013,             "WCR East Oxigraf Ch1 Real",  ODM_RD,13,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in012,             "WCR East Oxigraf Ch1 Latch", ODM_RD,12,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in011,             "WCR East Oxigraf Ch2 Real",  ODM_RD,11,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in010,             "WCR East Oxigraf Ch2 Latch", ODM_RD,10,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in09,              "WCR East Oxigraf Ch3 Real",  ODM_RD,9,      Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in08,              "WCR East Oxigraf Ch3 Latch", ODM_RD,8,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in023,             "WCR West Sys OK Real",       ODM_RD,23,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in022,             "WCR West Sys OK Latch",      ODM_RD,22,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in021,             "WCR East Sys OK Real",       ODM_RD,21,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in020,             "WCR East Sys OK Latch",      ODM_RD,20,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in019,             "CBR West Oxigraf Ch0 Real",  ODM_RD,19,     Off,       Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in018,             "CBR West Oxigraf Ch0 Latch", ODM_RD,18,     Off,       Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in017,             "CBR West Oxigraf Ch1 Real",  ODM_RD,17,     Off,       Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in016,             "CBR West Oxigraf Ch1 Latch", ODM_RD,16,     Off,       Reset,      NO_ALARM,       NO_ALARM}
+	{dtype,area,position,attribute, description,                port,  bit,      zname,     oname,      zsv,            osv,      plc}
 
-	{PLC,CP00,OD01,PWLED,           ODM-Power_LED_A,            ODM_RD,26,     Off,       On,         MAJOR,          NO_ALARM}
-	{PLC,CP00,OD01,RUNLED,          ODM-Run_LED_A,              ODM_RD,27,     Off,       On,         MAJOR,          NO_ALARM}
-	{PLC,CP00,OD01,DIAGLED,         ODM-Diag_LED_A,             ODM_RD,28,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,FAULTLED,        ODM-Fault_LED_A,            ODM_RD,29,     Off,       On,         NO_ALARM,       MAJOR}
-	{PLC,CP00,OD01,IFAULTLED,       ODM-IFault_LED_A,           ODM_RD,30,     Off,       On,         NO_ALARM,       MAJOR}
-	{PLC,CP00,OD01,OFAULTLED,       ODM-OFault_LED_A,           ODM_RD,31,     Off,       On,         NO_ALARM,       MAJOR}
-	{PLC,CP00,OD01,TABLE_BIT7,      "Table Read bit 7",         ODM_RD,32,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT6,      "Table Read bit 6",         ODM_RD,33,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT5,      "Table Read bit 5",         ODM_RD,34,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT4,      "Table Read bit 4",         ODM_RD,35,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT3,      "Table Read bit 3",         ODM_RD,36,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT2,      "Table Read bit 2",         ODM_RD,37,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT1,      "Table Read bit 1",         ODM_RD,38,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,TABLE_BIT0,      "Table Read bit 0",         ODM_RD,39,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT7,        "Segment Read bit 7",       ODM_RD,40,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT6,        "Segment Read bit 6",       ODM_RD,41,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT5,        "Segment Read bit 5",       ODM_RD,42,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT4,        "Segment Read bit 4",       ODM_RD,43,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT3,        "Segment Read bit 3",       ODM_RD,44,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT2,        "Segment Read bit 2",       ODM_RD,45,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT1,        "Segment Read bit 1",       ODM_RD,46,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,SEG_BIT0,        "Segment Read bit 0",       ODM_RD,47,     Off,       On,         NO_ALARM,       NO_ALARM}
+#################################################################### ODM PILZ PLC ##########################################################################
 
-	{ODM,CP00,x,in095,              "CBR West Oxigraf Ch2 Real", ODM_RD,95,     Off,       On,         NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in094,              "CBR West Oxigraf Ch2 Latch",ODM_RD,94,     Off,       On,         NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in093,              "CBR West Oxigraf Ch3 Real", ODM_RD,93,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in092,              "CBR West Oxigraf Ch3 Latch",ODM_RD,92,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in091,              "CBR East Oxigraf Ch0 Real", ODM_RD,91,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in090,              "CBR East Oxigraf Ch0 Latch",ODM_RD,90,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in089,              "CBR East Oxigraf Ch1 Real", ODM_RD,89,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in088,              "CBR East Oxigraf Ch1 Latch",ODM_RD,88,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0103,             "CBR East Oxigraf Ch2 Real", ODM_RD,103,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0102,             "CBR East Oxigraf Ch2 Latch",ODM_RD,102,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0101,             "CBR East Oxigraf Ch3 Real", ODM_RD,101,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0100,             "CBR East Oxigraf Ch3 Latch",ODM_RD,100,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in099,              "CBR West Sys OK Real",      ODM_RD,99,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in098,              "CBR West Sys OK Latch",     ODM_RD,98,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in097,              "CBR East Sys OK Real",      ODM_RD,97,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in096,              "CBR East Sys OK Latch",     ODM_RD,96,     Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0111,             "ECR West Oxigraf Ch0 Real", ODM_RD,111,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0110,             "ECR West Oxigraf Ch0 Latch",ODM_RD,110,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0109,             "ECR West Oxigraf Ch1 Real", ODM_RD,109,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0108,             "ECR West Oxigraf Ch1 Latch",ODM_RD,108,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0107,             "ECR West Oxigraf Ch2 Real", ODM_RD,107,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0106,             "ECR West Oxigraf Ch2 Latch",ODM_RD,106,    Ok,        Fault,      NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in0105,             "ECR West Oxigraf Ch3 Real", ODM_RD,105,    Ok,        Fault,      NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in0104,             "ECR West Oxigraf Ch3 Latch",ODM_RD,104,    Ok,        Fault,      NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in0119,             "ECR East Oxigraf Ch0 Real", ODM_RD,119,    Ok,        Fault,      NO_ALARM,       MAJOR}
-	{ODM,CP00,x,in0118,             "ECR East Oxigraf Ch0 Latch",ODM_RD,118,    Off,       On,         NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,in0117,             "ECR East Oxigraf Ch1 Real", ODM_RD,117,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0116,             "ECR East Oxigraf Ch1 Latch",ODM_RD,116,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0115,             "ECR East Oxigraf Ch2 Real", ODM_RD,115,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0114,             "ECR East Oxigraf Ch2 Latch",ODM_RD,114,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0113,             "ECR East Oxigraf Ch3 Real", ODM_RD,113,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0112,             "ECR East Oxigraf Ch3 Latch",ODM_RD,112,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0127,             "ECR West Sys OK Real",      ODM_RD,127,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,in07,              "WCR West Oxigraf Ch0 Real",  ODM_RD, 7,      Disabled,  Enabled,    NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in06,              "WCR West Oxigraf Ch0 Latch", ODM_RD, 6,      Off,       Reset,      NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in05,              "WCR West Oxigraf Ch1 Real",  ODM_RD, 5,      Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in04,              "WCR West Oxigraf Ch1 Latch", ODM_RD, 4,      Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in03,              "WCR West Oxigraf Ch2 Real",  ODM_RD, 3,      Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in02,              "WCR West Oxigraf Ch2 Latch", ODM_RD, 2,      Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in01,              "WCR West Oxigraf Ch3 Real",  ODM_RD, 1,      Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in00,              "WCR West Oxigraf Ch3 Latch", ODM_RD, 0,      Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
 
-	{ODM,CP00,x,in0126,              "ECR West Sys OK Latch",    ODM_RD,126,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0125,              "ECR East Sys OK Real",     ODM_RD,125,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0124,              "ECR East Sys OK Latch",    ODM_RD,124,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0123,              "WCR Alarm Bypass",         ODM_RD,123,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0122,              "WCR Alarm Mute",           ODM_RD,122,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0121,              "WCR Strobe Out",           ODM_RD,121,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0120,              "WCR Horn Out",             ODM_RD,120,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0135,              "WCR Fan Out",              ODM_RD,135,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0133,              "WCR West Oxigraf Disable", ODM_RD,133,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0132,              "WCR East Oxigraf Disable", ODM_RD,132,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0131,              "CBR Alarm Bypass",         ODM_RD,131,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0130,              "CBR Alarm Mute",           ODM_RD,130,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0129,              "CBR Strobe Out",           ODM_RD,129,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0128,              "CBR Horn Out",             ODM_RD,128,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0143,              "CBR Fan Out",              ODM_RD,143,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0141,              "CBR West Oxigraf Disable", ODM_RD,141,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0140,              "CBR East Oxigraf Disable", ODM_RD,140,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0139,              "ECR Alarm Bypass",         ODM_RD,139,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0138,              "ECR Alarm Mute",           ODM_RD,138,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0137,              "ECR Strobe Out",           ODM_RD,137,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0136,              "ECR Horn Out",             ODM_RD,136,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0151,              "ECR Fan Out",              ODM_RD,151,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0149,              "ECR West Oxigraf Disable", ODM_RD,149,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0148,              "ECR East Oxigraf Disable", ODM_RD,148,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0147,              "Yellow Alarm",             ODM_RD,147,    Fault,     Ok,         MAJOR,          NO_ALARM}
-	{ODM,CP00,x,in0146,              "Red Alarm",                ODM_RD,146,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,in015,             "WCR East Oxigraf Ch0 Real",  ODM_RD, 15,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in014,             "WCR East Oxigraf Ch0 Latch", ODM_RD, 14,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in013,             "WCR East Oxigraf Ch1 Real",  ODM_RD, 13,     Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in012,             "WCR East Oxigraf Ch1 Latch", ODM_RD, 12,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in011,             "WCR East Oxigraf Ch2 Real",  ODM_RD, 11,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in010,             "WCR East Oxigraf Ch2 Latch", ODM_RD, 10,     Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in09,              "WCR East Oxigraf Ch3 Real",  ODM_RD, 9,      Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in08,              "WCR East Oxigraf Ch3 Latch", ODM_RD, 8,      Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+
+	{ODM,CP00,x,in023,             "WCR West Sys OK Real",       ODM_RD, 23,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in022,             "WCR West Sys OK Latch",      ODM_RD, 22,     Off,       Bypassed,   NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in021,             "WCR East Sys OK Real",       ODM_RD, 21,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in020,             "WCR East Sys OK Latch",      ODM_RD, 20,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in019,             "CBR West Oxigraf Ch0 Real",  ODM_RD, 19,     Off,       Reset,      NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in018,             "CBR West Oxigraf Ch0 Latch", ODM_RD, 18,     Off,       Reset,      NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in017,             "CBR West Oxigraf Ch1 Real",  ODM_RD, 17,     Off,       Reset,      NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in016,             "CBR West Oxigraf Ch1 Latch", ODM_RD, 16,     Off,       Reset,      NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+
+	{ODM,CP00,x,in095,              "CBR West Oxigraf Ch2 Real", ODM_RD, 95,     Off,       On,         NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in094,              "CBR West Oxigraf Ch2 Latch",ODM_RD, 94,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in093,              "CBR West Oxigraf Ch3 Real", ODM_RD, 93,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in092,              "CBR West Oxigraf Ch3 Latch",ODM_RD, 92,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in091,              "CBR East Oxigraf Ch0 Real", ODM_RD, 91,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in090,              "CBR East Oxigraf Ch0 Latch",ODM_RD, 90,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in089,              "CBR East Oxigraf Ch1 Real", ODM_RD, 89,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in088,              "CBR East Oxigraf Ch1 Latch",ODM_RD, 88,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0103,             "CBR East Oxigraf Ch2 Real", ODM_RD, 103,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0102,             "CBR East Oxigraf Ch2 Latch",ODM_RD, 102,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0101,             "CBR East Oxigraf Ch3 Real", ODM_RD, 101,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0100,             "CBR East Oxigraf Ch3 Latch",ODM_RD, 100,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in099,              "CBR West Sys OK Real",      ODM_RD, 99,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in098,              "CBR West Sys OK Latch",     ODM_RD, 98,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in097,              "CBR East Sys OK Real",      ODM_RD, 97,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in096,              "CBR East Sys OK Latch",     ODM_RD, 96,     Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0111,             "ECR West Oxigraf Ch0 Real", ODM_RD, 111,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0110,             "ECR West Oxigraf Ch0 Latch",ODM_RD, 110,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0109,             "ECR West Oxigraf Ch1 Real", ODM_RD, 109,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0108,             "ECR West Oxigraf Ch1 Latch",ODM_RD, 108,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0107,             "ECR West Oxigraf Ch2 Real", ODM_RD, 107,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0106,             "ECR West Oxigraf Ch2 Latch",ODM_RD, 106,    Ok,        Fault,      NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in0105,             "ECR West Oxigraf Ch3 Real", ODM_RD, 105,    Ok,        Fault,      NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in0104,             "ECR West Oxigraf Ch3 Latch",ODM_RD, 104,    Ok,        Fault,      NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in0119,             "ECR East Oxigraf Ch0 Real", ODM_RD, 119,    Ok,        Fault,      NO_ALARM,       MAJOR,    PLC:CP00:OD01 }
+	{ODM,CP00,x,in0118,             "ECR East Oxigraf Ch0 Latch",ODM_RD, 118,    Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0117,             "ECR East Oxigraf Ch1 Real", ODM_RD, 117,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0116,             "ECR East Oxigraf Ch1 Latch",ODM_RD, 116,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0115,             "ECR East Oxigraf Ch2 Real", ODM_RD, 115,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0114,             "ECR East Oxigraf Ch2 Latch",ODM_RD, 114,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0113,             "ECR East Oxigraf Ch3 Real", ODM_RD, 113,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0112,             "ECR East Oxigraf Ch3 Latch",ODM_RD, 112,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+
+	{ODM,CP00,x,in0127,             "ECR West Sys OK Real",      ODM_RD, 127,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0126,              "ECR West Sys OK Latch",    ODM_RD, 126,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0125,              "ECR East Sys OK Real",     ODM_RD, 125,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0124,              "ECR East Sys OK Latch",    ODM_RD, 124,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0123,              "WCR Alarm Bypass",         ODM_RD, 123,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0122,              "WCR Alarm Mute",           ODM_RD, 122,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0121,              "WCR Strobe Out",           ODM_RD, 121,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0120,              "WCR Horn Out",             ODM_RD, 120,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0135,              "WCR Fan Out",              ODM_RD, 135,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0133,              "WCR West Oxigraf Disable", ODM_RD, 133,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0132,              "WCR East Oxigraf Disable", ODM_RD, 132,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0131,              "CBR Alarm Bypass",         ODM_RD, 131,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0130,              "CBR Alarm Mute",           ODM_RD, 130,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0129,              "CBR Strobe Out",           ODM_RD, 129,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0128,              "CBR Horn Out",             ODM_RD, 128,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0143,              "CBR Fan Out",              ODM_RD, 143,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0141,              "CBR West Oxigraf Disable", ODM_RD, 141,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0140,              "CBR East Oxigraf Disable", ODM_RD, 140,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0139,              "ECR Alarm Bypass",         ODM_RD, 139,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0138,              "ECR Alarm Mute",           ODM_RD, 138,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0137,              "ECR Strobe Out",           ODM_RD, 137,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0136,              "ECR Horn Out",             ODM_RD, 136,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0151,              "ECR Fan Out",              ODM_RD, 151,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0149,              "ECR West Oxigraf Disable", ODM_RD, 149,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0148,              "ECR East Oxigraf Disable", ODM_RD, 148,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0147,              "Yellow Alarm",             ODM_RD, 147,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{ODM,CP00,x,in0146,              "Red Alarm",                ODM_RD, 146,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
 }
 
+file pilz-plc-bi.template {
+	pattern
+	{dtype,area,position,attribute, description,                port,  bit,      zname,     oname,      zsv,            osv,      plc}
+
+#################################################################### ODM PILZ PLC ##########################################################################
+
+    {PLC,CP00,OD01,LED_X1,          PPS-X1_LED,                  ODM_RD, 24,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+    {PLC,CP00,OD01,LED_X2,          PPS-X2_LED,                  ODM_RD, 25,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+
+	{PLC,CP00,OD01,PWLED,           ODM-Power_LED_A,             ODM_RD, 26,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,RUNLED,          ODM-Run_LED_A,               ODM_RD, 27,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,DIAGLED,         ODM-Diag_LED_A,              ODM_RD, 28,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,FAULTLED,        ODM-Fault_LED_A,             ODM_RD, 29,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,IFAULTLED,       ODM-IFault_LED_A,            ODM_RD, 30,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,OFAULTLED,       ODM-OFault_LED_A,            ODM_RD, 31,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT7,      "Table Read bit 7",          ODM_RD, 32,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT6,      "Table Read bit 6",          ODM_RD, 33,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT5,      "Table Read bit 5",          ODM_RD, 34,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT4,      "Table Read bit 4",          ODM_RD, 35,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT3,      "Table Read bit 3",          ODM_RD, 36,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT2,      "Table Read bit 2",          ODM_RD, 37,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT1,      "Table Read bit 1",          ODM_RD, 38,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,TABLE_BIT0,      "Table Read bit 0",          ODM_RD, 39,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT7,        "Segment Read bit 7",        ODM_RD, 40,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT6,        "Segment Read bit 6",        ODM_RD, 41,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT5,        "Segment Read bit 5",        ODM_RD, 42,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT4,        "Segment Read bit 4",        ODM_RD, 43,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT3,        "Segment Read bit 3",        ODM_RD, 44,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT2,        "Segment Read bit 2",        ODM_RD, 45,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT1,        "Segment Read bit 1",        ODM_RD, 46,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,SEG_BIT0,        "Segment Read bit 0",        ODM_RD, 47,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+
+	{PLC,CP00,OD01,CHECKSUM_BIT7,        "Checksum bit 7",       ODM_RD, 48,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT6,        "Checksum bit 6",       ODM_RD, 49,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT5,        "Checksum bit 5",       ODM_RD, 50,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT4,        "Checksum bit 4",       ODM_RD, 51,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT3,        "Checksum bit 3",       ODM_RD, 52,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT2,        "Checksum bit 2",       ODM_RD, 53,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT1,        "Checksum bit 1",       ODM_RD, 54,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT0,        "Checksum bit 0",       ODM_RD, 55,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT15,       "Checksum bit 8",       ODM_RD, 56,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT14,       "Checksum bit 9",       ODM_RD, 57,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT13,      "Checksum bit 10",       ODM_RD, 58,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT12,      "Checksum bit 11",       ODM_RD, 59,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT11,      "Checksum bit 12",       ODM_RD, 60,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT10,      "Checksum bit 13",       ODM_RD, 61,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT9,       "Checksum bit 14",       ODM_RD, 62,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+	{PLC,CP00,OD01,CHECKSUM_BIT8,       "Checksum bit 15",       ODM_RD, 63,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
+}
 
 file pilz-plc-bo.template
 {
 	pattern
 	{dtype,area,position,attribute, description,                port,   bit,   zname,    oname,      zsv,            osv}
-	{ODM,CP00,x,out7,              "WCR West Oxigraf Disable",   ODM_WRT,7,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out6,              "WCR West Oxigraf Enable",    ODM_WRT,6,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out5,              "WCR East Oxigraf Disable",   ODM_WRT,5,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out4,              "WCR East Oxigraf Enable",    ODM_WRT,4,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out3,              "CBR West Oxigraf Disable",   ODM_WRT,3,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out2,              "CBR West Oxigraf Enable",    ODM_WRT,2,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out1,              "CBR East OxigrafDisable",    ODM_WRT,1,     Off,      Reset,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out0,              "CBR East Oxigraf Enable",    ODM_WRT,0,     Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out7,              "WCR West Oxigraf Disable",   ODM_WRT, 7,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out6,              "WCR West Oxigraf Enable",    ODM_WRT, 6,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out5,              "WCR East Oxigraf Disable",   ODM_WRT, 5,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out4,              "WCR East Oxigraf Enable",    ODM_WRT, 4,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out3,              "CBR West Oxigraf Disable",   ODM_WRT, 3,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out2,              "CBR West Oxigraf Enable",    ODM_WRT, 2,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out1,              "CBR East OxigrafDisable",    ODM_WRT, 1,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out0,              "CBR East Oxigraf Enable",    ODM_WRT, 0,     Off,      Pause,      NO_ALARM,       NO_ALARM}
 
-	{ODM,CP00,x,out15,             "ECR West Oxigraf Disable",   ODM_WRT,15,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out14,             "ECR West Oxigraf Enable",    ODM_WRT,14,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out13,             "ECR East OxigrafDisable",    ODM_WRT,13,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out12,             "ECR East Oxigraf Enable",    ODM_WRT,12,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out11,             "WCR Alarm Bypass",           ODM_WRT,11,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out10,             "WCR Alarm Unbypass",         ODM_WRT,10,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out9,              "WCR Alarm Mute",             ODM_WRT,9,     Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out8,              "WCR Alarm Unmute",           ODM_WRT,8,     Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out23,             "CBR Alarm Bypass",           ODM_WRT,23,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out22,             "CBR Alarm Unbypass",         ODM_WRT,22,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out21,             "CBR Alarm Mute",             ODM_WRT,21,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out20,             "CBR Alarm Unmute",           ODM_WRT,20,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out19,             "ECR Alarm Bypass",           ODM_WRT,19,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out18,             "ECR Alarm Unbypass",         ODM_WRT,18,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out17,             "ECR Alarm Mute",             ODM_WRT,17,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out16,             "ECR Alarm Unmute",           ODM_WRT,16,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out31,             "Alarm Reset",                ODM_WRT,31,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out30,             "WCR Fan Force",              ODM_WRT,30,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out29,             "WCR Fan Unforce",            ODM_WRT,29,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out28,             "CBR Fan Force",              ODM_WRT,28,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out27,             "CBR Fan Unforce",            ODM_WRT,27,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out26,             "ECR Fan Force",              ODM_WRT,26,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out25,             "ECR Fan Unforce",            ODM_WRT,25,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{ODM,CP00,x,out24,NC,                                       ODM_WRT,24,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT7,  "Table Request bit 7",      ODM_WRT,32,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT6,  "Table Request bit 6",      ODM_WRT,33,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT5,  "Table Request bit 5",      ODM_WRT,34,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT4,  "Table Request bit 4",      ODM_WRT,35,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT3,  "Table Request bit 3",      ODM_WRT,36,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT2,  "Table Request bit 2",      ODM_WRT,37,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT1,  "Table Request bit 1",      ODM_WRT,38,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT0,  "Table Request bit 0",      ODM_WRT,39,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT7,    "Segment Request bit 7",    ODM_WRT,40,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT6,    "Segment Request bit 6",    ODM_WRT,41,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT5,    "Segment Request bit 5",    ODM_WRT,42,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT4,    "Segment Request bit 4",    ODM_WRT,43,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT3,    "Segment Request bit 3",    ODM_WRT,44,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT2,    "Segment Request bit 2",    ODM_WRT,45,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT1,    "Segment Request bit 1",    ODM_WRT,46,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT0,    "Segment Request bit 0",    ODM_WRT,47,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out15,             "ECR West Oxigraf Disable",   ODM_WRT, 15,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out14,             "ECR West Oxigraf Enable",    ODM_WRT, 14,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out13,             "ECR East OxigrafDisable",    ODM_WRT, 13,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out12,             "ECR East Oxigraf Enable",    ODM_WRT, 12,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out11,             "WCR Alarm Bypass",           ODM_WRT, 11,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out10,             "WCR Alarm Unbypass",         ODM_WRT, 10,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out9,              "WCR Alarm Mute",             ODM_WRT, 9,     Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out8,              "WCR Alarm Unmute",           ODM_WRT, 8,     Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out23,             "CBR Alarm Bypass",           ODM_WRT, 23,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out22,             "CBR Alarm Unbypass",         ODM_WRT, 22,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out21,             "CBR Alarm Mute",             ODM_WRT, 21,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out20,             "CBR Alarm Unmute",           ODM_WRT, 20,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out19,             "ECR Alarm Bypass",           ODM_WRT, 19,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out18,             "ECR Alarm Unbypass",         ODM_WRT, 18,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out17,             "ECR Alarm Mute",             ODM_WRT, 17,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out16,             "ECR Alarm Unmute",           ODM_WRT, 16,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out31,             "Alarm Reset",                ODM_WRT, 31,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out30,             "WCR Fan Force",              ODM_WRT, 30,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out29,             "WCR Fan Unforce",            ODM_WRT, 29,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out28,             "CBR Fan Force",              ODM_WRT, 28,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out27,             "CBR Fan Unforce",            ODM_WRT, 27,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out26,             "ECR Fan Force",              ODM_WRT, 26,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out25,             "ECR Fan Unforce",            ODM_WRT, 25,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,out24,NC,                                       ODM_WRT, 24,    Off,      Pause,      NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT7,  "Table Request bit 7",      ODM_WRT, 32,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT6,  "Table Request bit 6",      ODM_WRT, 33,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT5,  "Table Request bit 5",      ODM_WRT, 34,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT4,  "Table Request bit 4",      ODM_WRT, 35,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT3,  "Table Request bit 3",      ODM_WRT, 36,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT2,  "Table Request bit 2",      ODM_WRT, 37,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT1,  "Table Request bit 1",      ODM_WRT, 38,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT0,  "Table Request bit 0",      ODM_WRT, 39,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT7,    "Segment Request bit 7",    ODM_WRT, 40,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT6,    "Segment Request bit 6",    ODM_WRT, 41,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT5,    "Segment Request bit 5",    ODM_WRT, 42,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT4,    "Segment Request bit 4",    ODM_WRT, 43,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT3,    "Segment Request bit 3",    ODM_WRT, 44,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT2,    "Segment Request bit 2",    ODM_WRT, 45,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT1,    "Segment Request bit 1",    ODM_WRT, 46,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT0,    "Segment Request bit 0",    ODM_WRT, 47,    Off,      On,         NO_ALARM,       NO_ALARM}
 }
 
 file "pilz-plc-request.template"
@@ -179,8 +209,8 @@ file "pilz-plc-request.template"
 file "pilz-plc-checksum.template"
 {
         pattern
-        {dtype,area,position,attribute,   port  }
-        {PLC,CP00,OD01,CHECKSUM,          ODM_WD }
+        {dtype,area,position   port   }
+        {PLC,  CP00,OD01,      ODM_WD }
 }
 
 file MO2i.template
@@ -197,5 +227,5 @@ pattern	{ PRIM, LOCA, UNIT, PORT,                SCAN      }
 file asynRecord.db
 {
 pattern{ P               , R          , PORT              , ADDR, IMAX, OMAX }
-		{ SIOC:CP00:OD01: , ASYNDRIVER , PILZ_BI ,0,0, 0    }
+		{ SIOC:CP00:OD01: , ASYNDRIVER , ODM_WD ,0,0, 0    }
 }

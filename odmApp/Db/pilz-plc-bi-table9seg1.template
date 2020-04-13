@@ -1,0 +1,26 @@
+record(bi, "$(dtype):$(area):$(position):$(port)b$(bit)") {
+  field(DESC, "Port $(port) bit $(bit)")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port), $(bit), 1, 1)")
+  field(FLNK, "$(dtype):$(area):$(position):$(attribute)_calc")
+}
+
+record(calcout, "$(dtype):$(area):$(position):$(attribute)_calc") {
+  field(INPA,  "$(dtype):$(area):$(position):$(port)b$(bit)")
+  field(INPB, "$(plc):TABLE_9_SEG_1 CP")
+  field(CALC, "B")
+  field(OCAL, "A")
+  field(DOPT, "Use OCAL")
+  field(OOPT, "When Non-zero")
+  field(OUT,  "$(dtype):$(area):$(position):$(attribute) PP")
+}
+
+record(bi, "$(dtype):$(area):$(position):$(attribute)") {
+  field(DESC, "$(description)")
+  field(ZNAM, "$(zname)")
+  field(ONAM, "$(oname)")
+  field(ZSV,  "$(zsv)")
+  field(OSV,  "$(osv)")
+  info(autosaveFields_pass0, "SEVR")
+}

@@ -14,6 +14,8 @@ DB_INSTALLS += $(ASYN)/db/asynRecord.db
 DB_INSTALLS += $(IOCADMIN)/db/iocAdminSoft.db
 DB_INSTALLS += $(IOCADMIN)/db/iocAdminRTEMS.db
 DB_INSTALLS += $(AUTOSAVE)/db/save_restoreStatus.db
+DB_INSTALLS += $(OXIGRAFMO2I)/db/MO2i.template
+DB_INSTALLS += $(OXIGRAFMO2I)/db/MO2i.proto
 IOCRELEASE_DB += iocRelease.db
 
 # Install CA security file
