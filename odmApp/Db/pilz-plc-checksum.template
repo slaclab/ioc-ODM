@@ -23,7 +23,7 @@ record(longin, "$(dtype):$(area):$(position):$(port)w2") {
 record(calc, "$(dtype):$(area):$(position):CHECKSUM_SDIS") {
   field(INPA, "$(dtype):$(area):$(position):TABLE_1_SEG_1 CP")
   field(INPB, "$(dtype):$(area):$(position):$(port)w2")
-  field(CALC, "A & (B = 0X0101)")
+  field(CALC, "B = 0X0101")
 }
 
 record(longin, "$(dtype):$(area):$(position):$(port)w3") {
