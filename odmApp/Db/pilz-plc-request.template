@@ -19,6 +19,14 @@ record(calcout, "$(dtype):$(area):$(position):TABLE_CYCLER")
 	field( SCAN, "5 second")
 }
 
+record(calcout, "$(dtype):$(area):$(position):SEG_CYCLER")
+{
+	field( OUT, "$(dtype):$(area):$(position):REQ_SEG PP")
+	field( CALC, "1")
+	field( INPA, "0")
+	field( SCAN, "10 second")
+}
+
 # Records for disabling PVs when their reqest table isn't active
 record(calc, "$(dtype):$(area):$(position):TABLE_9_SEG_1")
 {
@@ -202,4 +210,421 @@ field(INPH, "$(dtype):$(area):$(position):SEG_BIT7 CP MS")
 field(CALC, "A+B*2+C*4+D*8+E*16+F*32+G*64+H*128")
 field(OUT, "$(dtype):$(area):$(position):REQ_SEG PP MS")
 field(SDIS, "$(dtype):$(area):$(position):REQ_SEG_OUT.PACT")
+}
+
+record(bi, "$(dtype):$(area):$(position):LED_X1") {
+  field(DESC, "PPS-X1_LED")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 24, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "MAJOR")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):LED_X2") {
+  field(DESC, "PPS-X2_LED")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 25, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "MAJOR")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):PWLED") {
+  field(DESC, "ODM-Power_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 26, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "MAJOR")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):RUNLED") {
+  field(DESC, "ODM-Run_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 27, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "MAJOR")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):DIAGLED") {
+  field(DESC, "ODM-Diag_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 28, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):FAULTLED") {
+  field(DESC, "ODM-Fault_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 29, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):IFAULTLED") {
+  field(DESC, "ODM-IFault_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 30, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):OFAULTLED") {
+  field(DESC, "ODM-OFault_LED_A")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 31, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT7") {
+  field(DESC, "Table Read bit 7")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 32, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT6") {
+  field(DESC, "Table Read bit 6")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 33, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT5") {
+  field(DESC, "Table Read bit 5")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 34, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT4") {
+  field(DESC, "Table Read bit 4")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 35, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT3") {
+  field(DESC, "Table Read bit 3")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 36, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT2") {
+  field(DESC, "Table Read bit 2")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 37, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT1") {
+  field(DESC, "Table Read bit 1")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 38, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):TABLE_BIT0") {
+  field(DESC, "Table Read bit 0")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 39, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT7") {
+  field(DESC, "Segment Read bit 7")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 40, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT6") {
+  field(DESC, "Segment Read bit 6")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 41, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT5") {
+  field(DESC, "Segment Read bit 5")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 42, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT4") {
+  field(DESC, "Segment Read bit 4")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 43, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT3") {
+  field(DESC, "Segment Read bit 3")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 44, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT2") {
+  field(DESC, "Segment Read bit 2")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 45, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT1") {
+  field(DESC, "Segment Read bit 1")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 46, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(area):$(position):SEG_BIT0") {
+  field(DESC, "Segment Read bit 0")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+  field(INP,  "@asynMask($(port_rd), 47, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+  field(ZSV,  "NO_ALARM")
+  field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT7") {
+  field(DESC, "Table Request bit 7")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 32, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT6") {
+  field(DESC, "Table Request bit 6")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 33, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT5") {
+  field(DESC, "Table Request bit 5")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 34, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT4") {
+  field(DESC, "Table Request bit 4")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 35, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT3") {
+  field(DESC, "Table Request bit 3")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 36, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT2") {
+  field(DESC, "Table Request bit 2")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 37, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT1") {
+  field(DESC, "Table Request bit 1")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 38, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_TABLE_BIT0") {
+  field(DESC, "Table Request bit 0")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 39, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT7") {
+  field(DESC, "Segment Request bit 7")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 40, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT6") {
+  field(DESC, "Segment Request bit 6")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 41, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT5") {
+  field(DESC, "Segment Request bit 5")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 42, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT4") {
+  field(DESC, "Segment Request bit 4")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 43, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT3") {
+  field(DESC, "Segment Request bit 3")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 44, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT2") {
+  field(DESC, "Segment Request bit 2")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 45, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT1") {
+  field(DESC, "Segment Request bit 1")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 46, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bo, "$(dtype):$(area):$(position):REQ_SEG_BIT0") {
+  field(DESC, "Segment Request bit 0")
+  field(DTYP, "asynUInt32Digital")
+  field(OUT,  "@asynMask($(port_wrt), 47, 1, 1)")
+  field(ZNAM, "Off")
+  field(ONAM, "On")
 }

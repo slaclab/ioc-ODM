@@ -93,56 +93,6 @@ file pilz-plc-bi-table9seg1.template {
 	{ODM,CP00,x,in0146,              "Red Alarm",                ODM_RD, 146,    Fault,     Ok,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
 }
 
-file pilz-plc-bi.template {
-	pattern
-	{dtype,area,position,attribute, description,                port,  bit,      zname,     oname,      zsv,            osv,      plc}
-
-#################################################################### ODM PILZ PLC ##########################################################################
-
-    {PLC,CP00,OD01,LED_X1,          PPS-X1_LED,                  ODM_RD, 24,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
-    {PLC,CP00,OD01,LED_X2,          PPS-X2_LED,                  ODM_RD, 25,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
-
-	{PLC,CP00,OD01,PWLED,           ODM-Power_LED_A,             ODM_RD, 26,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,RUNLED,          ODM-Run_LED_A,               ODM_RD, 27,     Off,       On,         MAJOR,          NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,DIAGLED,         ODM-Diag_LED_A,              ODM_RD, 28,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,FAULTLED,        ODM-Fault_LED_A,             ODM_RD, 29,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,IFAULTLED,       ODM-IFault_LED_A,            ODM_RD, 30,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,OFAULTLED,       ODM-OFault_LED_A,            ODM_RD, 31,     Off,       On,         NO_ALARM,       MAJOR, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT7,      "Table Read bit 7",          ODM_RD, 32,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT6,      "Table Read bit 6",          ODM_RD, 33,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT5,      "Table Read bit 5",          ODM_RD, 34,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT4,      "Table Read bit 4",          ODM_RD, 35,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT3,      "Table Read bit 3",          ODM_RD, 36,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT2,      "Table Read bit 2",          ODM_RD, 37,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT1,      "Table Read bit 1",          ODM_RD, 38,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,TABLE_BIT0,      "Table Read bit 0",          ODM_RD, 39,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT7,        "Segment Read bit 7",        ODM_RD, 40,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT6,        "Segment Read bit 6",        ODM_RD, 41,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT5,        "Segment Read bit 5",        ODM_RD, 42,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT4,        "Segment Read bit 4",        ODM_RD, 43,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT3,        "Segment Read bit 3",        ODM_RD, 44,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT2,        "Segment Read bit 2",        ODM_RD, 45,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT1,        "Segment Read bit 1",        ODM_RD, 46,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,SEG_BIT0,        "Segment Read bit 0",        ODM_RD, 47,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-
-	{PLC,CP00,OD01,CHECKSUM_BIT7,        "Checksum bit 7",       ODM_RD, 48,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT6,        "Checksum bit 6",       ODM_RD, 49,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT5,        "Checksum bit 5",       ODM_RD, 50,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT4,        "Checksum bit 4",       ODM_RD, 51,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT3,        "Checksum bit 3",       ODM_RD, 52,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT2,        "Checksum bit 2",       ODM_RD, 53,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT1,        "Checksum bit 1",       ODM_RD, 54,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT0,        "Checksum bit 0",       ODM_RD, 55,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT15,       "Checksum bit 8",       ODM_RD, 56,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT14,       "Checksum bit 9",       ODM_RD, 57,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT13,      "Checksum bit 10",       ODM_RD, 58,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT12,      "Checksum bit 11",       ODM_RD, 59,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT11,      "Checksum bit 12",       ODM_RD, 60,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT10,      "Checksum bit 13",       ODM_RD, 61,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT9,       "Checksum bit 14",       ODM_RD, 62,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-	{PLC,CP00,OD01,CHECKSUM_BIT8,       "Checksum bit 15",       ODM_RD, 63,     Off,       On,         NO_ALARM,       NO_ALARM, PLC:CP00:OD01 }
-}
-
 file pilz-plc-bo.template
 {
 	pattern
@@ -180,36 +130,20 @@ file pilz-plc-bo.template
 	{ODM,CP00,x,out26,             "ECR Fan Force",              ODM_WRT, 26,    Off,      Pause,      NO_ALARM,       NO_ALARM}
 	{ODM,CP00,x,out25,             "ECR Fan Unforce",            ODM_WRT, 25,    Off,      Pause,      NO_ALARM,       NO_ALARM}
 	{ODM,CP00,x,out24,NC,                                       ODM_WRT, 24,    Off,      Pause,      NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT7,  "Table Request bit 7",      ODM_WRT, 32,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT6,  "Table Request bit 6",      ODM_WRT, 33,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT5,  "Table Request bit 5",      ODM_WRT, 34,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT4,  "Table Request bit 4",      ODM_WRT, 35,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT3,  "Table Request bit 3",      ODM_WRT, 36,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT2,  "Table Request bit 2",      ODM_WRT, 37,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT1,  "Table Request bit 1",      ODM_WRT, 38,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_TABLE_BIT0,  "Table Request bit 0",      ODM_WRT, 39,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT7,    "Segment Request bit 7",    ODM_WRT, 40,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT6,    "Segment Request bit 6",    ODM_WRT, 41,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT5,    "Segment Request bit 5",    ODM_WRT, 42,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT4,    "Segment Request bit 4",    ODM_WRT, 43,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT3,    "Segment Request bit 3",    ODM_WRT, 44,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT2,    "Segment Request bit 2",    ODM_WRT, 45,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT1,    "Segment Request bit 1",    ODM_WRT, 46,    Off,      On,         NO_ALARM,       NO_ALARM}
-	{PLC,CP00,OD01,REQ_SEG_BIT0,    "Segment Request bit 0",    ODM_WRT, 47,    Off,      On,         NO_ALARM,       NO_ALARM}
 }
 
 file "pilz-plc-request.template"
 {
 	pattern
-	{dtype,area,position,   description }
-	{PLC,CP00,OD01,        "ODM data request"}
+	{dtype,area,position,   port_rd, port_wrt  }
+	{PLC,CP00,OD01,         ODM_RD,  ODM_WRT   }
 }
 
 # New checksum template since there are going to be a lot of these for OD0.
 file "pilz-plc-checksum.template"
 {
         pattern
-        {dtype,area,position   port   }
+        {dtype,area,position,   port   }
         {PLC,  CP00,OD01,      ODM_WD }
 }
 
