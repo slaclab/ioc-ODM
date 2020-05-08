@@ -1,191 +1,191 @@
-record(longin, "$(dtype):$(area):$(position):$(port)w0") {
-  field(DESC, "$(description=Checksum word 0)")
+record(longin, "$(dtype):$(areapos):$(port)w0") {
+  field(DESC, "Checksum word 0")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 0, 0xFFFF, 1)")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w1") {
-  field(DESC, "$(description=Checksum word 1)")
+record(longin, "$(dtype):$(areapos):$(port)w1") {
+  field(DESC, "Checksum word 1")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 1, 0xFFFF, 1)")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w2") {
+record(longin, "$(dtype):$(areapos):$(port)w2") {
   field(DESC, "Active Table and Segment")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 2, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+  field(FLNK, "$(dtype):$(areapos):CHECKSUM_SDIS")
 }
 
-record(calc, "$(dtype):$(area):$(position):CHECKSUM_SDIS") {
-  field(INPA, "$(dtype):$(area):$(position):TABLE_1_SEG_1 CP")
-  field(INPB, "$(dtype):$(area):$(position):$(port)w2")
+record(calc, "$(dtype):$(areapos):CHECKSUM_SDIS") {
+  field(INPA, "$(dtype):$(areapos):TABLE_1_SEG_1 CP")
+  field(INPB, "$(dtype):$(areapos):$(port)w2")
   field(CALC, "B = 0X0101")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w3") {
-  field(DESC, "$(description=Checksum word 3)")
+record(longin, "$(dtype):$(areapos):$(port)w3") {
+  field(DESC, "Checksum word 3")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 3, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):CHECKSUM_SAFE_calc")
+  field(FLNK, "$(dtype):$(areapos):CHECKSUM_SAFE_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):CHECKSUM_SAFE_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w3")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):CHECKSUM_SAFE_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w3")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):CHECKSUM_SAFE PP")
+  field(OUT,  "$(dtype):$(areapos):CHECKSUM_SAFE PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):CHECKSUM_SAFE") {
+record(longin, "$(dtype):$(areapos):CHECKSUM_SAFE") {
   field(DESC, "Check Sum Safe")
   info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w4") {
-  field(DESC, "$(description=Checksum word 4)")
+record(longin, "$(dtype):$(areapos):$(port)w4") {
+  field(DESC, "Checksum word 4")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 4, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):PROJ_CHECKSUM_calc")
+  field(FLNK, "$(dtype):$(areapos):PROJ_CHECKSUM_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):PROJ_CHECKSUM_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w4")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):PROJ_CHECKSUM_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w4")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):PROJ_CHECKSUM PP")
+  field(OUT,  "$(dtype):$(areapos):PROJ_CHECKSUM PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):PROJ_CHECKSUM") {
+record(longin, "$(dtype):$(areapos):PROJ_CHECKSUM") {
     field(DESC, "Total Project Check Sum")
     info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w5") {
-  field(DESC, "$(description=Checksum word 5)")
+record(longin, "$(dtype):$(areapos):$(port)w5") {
+  field(DESC, "Checksum word 5")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 5, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):DAY_MONTH_calc")
+  field(FLNK, "$(dtype):$(areapos):DAY_MONTH_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):DAY_MONTH_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w5")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):DAY_MONTH_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w5")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):DAY_MONTH PP")
+  field(OUT,  "$(dtype):$(areapos):DAY_MONTH PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):DAY_MONTH") {
+record(longin, "$(dtype):$(areapos):DAY_MONTH") {
   field(DESC, "Raw day and month")
 }
 
-record(calc, "$(dtype):$(area):$(position):PROJ_MONTH") {
+record(calc, "$(dtype):$(areapos):PROJ_MONTH") {
   field(DESC, "Project creation day")
-  field(INPA, "$(dtype):$(area):$(position):DAY_MONTH CP")
+  field(INPA, "$(dtype):$(areapos):DAY_MONTH CP")
   field(CALC, "A & 0xFF")
   info(autosaveFields_pass0, "VAL")
 }
 
-record(calc, "$(dtype):$(area):$(position):PROJ_DAY") {
+record(calc, "$(dtype):$(areapos):PROJ_DAY") {
   field(DESC, "Project creation month")
-  field(INPA, "$(dtype):$(area):$(position):DAY_MONTH CP")
+  field(INPA, "$(dtype):$(areapos):DAY_MONTH CP")
   field(CALC, "A >> 8")
   info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w6") {
+record(longin, "$(dtype):$(areapos):$(port)w6") {
   field(DESC, "Checksum word 6")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 6, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):PROJ_YEAR_calc")
+  field(FLNK, "$(dtype):$(areapos):PROJ_YEAR_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):PROJ_YEAR_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w6")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):PROJ_YEAR_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w6")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):PROJ_YEAR PP")
+  field(OUT,  "$(dtype):$(areapos):PROJ_YEAR PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):PROJ_YEAR") {
+record(longin, "$(dtype):$(areapos):PROJ_YEAR") {
   field(DESC, "Project creation year.")
   info(autosaveFields_pass0, "VAL")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w7") {
+record(longin, "$(dtype):$(areapos):$(port)w7") {
   field(DESC, "Checksum word 7")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 7, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):OP_HRS_MSB_calc")
+  field(FLNK, "$(dtype):$(areapos):OP_HRS_MSB_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):OP_HRS_MSB_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w7")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):OP_HRS_MSB_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w7")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):OP_HRS_MSB PP")
+  field(OUT,  "$(dtype):$(areapos):OP_HRS_MSB PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):OP_HRS_MSB") {
+record(longin, "$(dtype):$(areapos):OP_HRS_MSB") {
   field(DESC, "Operation hours upper byte")
 }
 
-record(longin, "$(dtype):$(area):$(position):$(port)w8") {
+record(longin, "$(dtype):$(areapos):$(port)w8") {
   field(DESC, "Checksum word 8")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
   field(INP,  "@asynMask($(port), 8, 0xFFFF, 1)")
-  field(FLNK, "$(dtype):$(area):$(position):OP_HRS_LSB_calc")
+  field(FLNK, "$(dtype):$(areapos):OP_HRS_LSB_calc")
 }
 
-record(calcout, "$(dtype):$(area):$(position):OP_HRS_LSB_calc") {
-  field(INPA,  "$(dtype):$(area):$(position):$(port)w8")
-  field(INPB, "$(dtype):$(area):$(position):CHECKSUM_SDIS")
+record(calcout, "$(dtype):$(areapos):OP_HRS_LSB_calc") {
+  field(INPA,  "$(dtype):$(areapos):$(port)w8")
+  field(INPB, "$(dtype):$(areapos):CHECKSUM_SDIS")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
   field(OOPT, "When Non-zero")
-  field(OUT,  "$(dtype):$(area):$(position):OP_HRS_LSB PP")
+  field(OUT,  "$(dtype):$(areapos):OP_HRS_LSB PP")
 }
 
-record(longin, "$(dtype):$(area):$(position):OP_HRS_LSB") {
+record(longin, "$(dtype):$(areapos):OP_HRS_LSB") {
   field(DESC, "Operation hours lower byte")
 }
 
-record(calc, "$(dtype):$(area):$(position):OP_HOURS") {
-  field(INPA, "$(dtype):$(area):$(position):OP_HRS_MSB CP")
-  field(INPB, "$(dtype):$(area):$(position):OP_HRS_LSB CP")
+record(calc, "$(dtype):$(areapos):OP_HOURS") {
+  field(INPA, "$(dtype):$(areapos):OP_HRS_MSB CP")
+  field(INPB, "$(dtype):$(areapos):OP_HRS_LSB CP")
   field(CALC, "(A << 8)+(B>>8)")
   info(autosaveFields_pass0, "VAL")
 }
 
-record(mbbi, "$(dtype):$(area):$(position):BASE_MODEL") {
+record(mbbi, "$(dtype):$(areapos):BASE_MODEL") {
   field(DTYP, "Raw Soft Channel")
   field(NOBT, "8")
-  field(INP, "$(dtype):$(area):$(position):OP_HRS_LSB CP")
+  field(INP, "$(dtype):$(areapos):OP_HRS_LSB CP")
   field(ZRVL, "0x00")
   field(ONVL, "0x02")
   field(TWVL, "0x04")

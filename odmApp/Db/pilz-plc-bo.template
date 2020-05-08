@@ -1,4 +1,4 @@
-record(bo, "$(dtype):$(area):$(position):$(attribute)") {
+record(bo, "$(dtype):$(areapos):$(attribute)") {
   field(DESC, "$(description)")
   field(DTYP, "asynUInt32Digital")
   field(OUT,  "@asynMask($(port), $(bit), 1, 1)")

@@ -1,4 +1,4 @@
-record(bi, "$(dtype):$(area):$(position):$(attribute)") {
+record(bi, "$(dtype):$(areapos):$(attribute)") {
   field(DESC, "$(description)")
   field(SCAN, "I/O Intr")
   field(DTYP, "asynUInt32Digital")
