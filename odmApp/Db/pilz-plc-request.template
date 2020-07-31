@@ -1,3 +1,34 @@
+#==============================================================================
+#
+# Abs:  PILZ PNOZ PLC interface for accessing the right table/segment
+#
+# Name: pilz-plc-request.template
+#
+# Facility: LCLS Personnel Protection Controls
+#
+# Auth: 11-Dec-2018, Garth Brown   (GWBROWN)
+# Rev : dd-mmm-yyyy, Reviewer's Name  (USERNAME)
+#
+# To specify which registers to read/write, you need to set the table and
+# segment (see PNOZ docs). This set of PVs keeps them set to the correct values
+# for reading either virtual I/O points or program stats such as project checksum.
+# The PNOZ PLC also has occasional communications dropouts, where the PLC stops
+# responding and the TCP connection must be reset. This happens more frequently
+# the more communication there is with the PLC.
+# While the vendor offers a PNOZ model with integrated Ethernet port which
+# allows readback at different modbus addresses instead of needing to set
+# table/segment, that interface also allows remote access to secure registers
+# and PLC programming. For safety, that type of remote access is not allowed in
+# our system. All of their products that don't allow remote access beyond our
+# safety specs also require table/segment setting to choose which registers to
+# read/write.
+#
+#-----------------------------------------------------------------------------
+#  Mod:
+#
+#==============================================================================
+#
+
 record(longout, "$(dtype):$(areapos):REQ_TABLE") {
 	field(DESC, "Table to read/write")
 	field(VAL, "$(tabval=9)")
@@ -14,9 +45,9 @@ record(longout, "$(dtype):$(areapos):REQ_TABLE") {
 record(calcout, "$(dtype):$(areapos):TABLE_CYCLER")
 {
 	field( OUT, "$(dtype):$(areapos):REQ_TABLE PP")
-	field( CALC, "A:=(A+1)%360;A=10?1:9")
+	field( CALC, "A:=(A+1)%3600;A=20?1:9")
 	field( INPA, "0")
-	field( SCAN, "5 second")
+	field( SCAN, ".5 second")
 }
 
 record(calcout, "$(dtype):$(areapos):SEG_CYCLER")
@@ -24,7 +55,7 @@ record(calcout, "$(dtype):$(areapos):SEG_CYCLER")
 	field( OUT, "$(dtype):$(areapos):REQ_SEG PP")
 	field( CALC, "1")
 	field( INPA, "0")
-	field( SCAN, "10 second")
+	field( SCAN, ".5 second")
 }
 
 # Records for disabling PVs when their reqest table isn't active
@@ -60,10 +91,16 @@ record(dfanout, "$(dtype):$(areapos):REQ_TABLE_OUT") {
 	field(SDIS, "$(dtype):$(areapos):REQ_TABLE_IN.PACT")
 }
 
+# The simpler approach of writing to the table/segment every few seconds caused
+# TCP dropouts to happen several times an hour, compared to every day or two
+# when we only ever read/wrote table 9 segment 1. These calcout records reduce
+# the dropouts to around 5 a day by only writing the bits that need to change.
+
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT0_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT0 MS")
-	field(CALC, "B#(A&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT0 MS")
+	field(CALC, "(B#C)||(B#(A&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "A&1")
@@ -73,7 +110,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT0_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT1_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT1 MS")
-	field(CALC, "B#((A>>1)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT1 MS")
+	field(CALC, "(B#C)||(B#((A>>1)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>1)&1")
@@ -83,7 +121,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT1_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT2_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT2 MS")
-	field(CALC, "B#((A>>2)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT2 MS")
+	field(CALC, "(B#C)||(B#((A>>2)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>2)&1")
@@ -93,7 +132,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT2_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT3_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT3 MS")
-	field(CALC, "B#((A>>3)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT3 MS")
+	field(CALC, "(B#C)||(B#((A>>3)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>3)&1")
@@ -103,7 +143,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT3_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT4_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT4 MS")
-	field(CALC, "B#((A>>4)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT4 MS")
+	field(CALC, "(B#C)||(B#((A>>4)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>4)&1")
@@ -113,7 +154,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT4_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT5_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT5 MS")
-	field(CALC, "B#((A>>5)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT5 MS")
+	field(CALC, "(B#C)||(B#((A>>5)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>5)&1")
@@ -123,7 +165,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT5_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT6_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT6 MS")
-	field(CALC, "B#((A>>6)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT6 MS")
+	field(CALC, "(B#C)||(B#((A>>6)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>6)&1")
@@ -133,7 +176,8 @@ record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT6_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_TABLE_BIT7_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_TABLE_OUT")
 	field(INPB, "$(dtype):$(areapos):TABLE_BIT7 MS")
-	field(CALC, "B#((A>>7)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_TABLE_BIT7 MS")
+	field(CALC, "(B#C)||(B#((A>>7)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>7)&1")
@@ -184,7 +228,7 @@ record(dfanout, "$(dtype):$(areapos):REQ_SEG_OUT") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT0_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT0 CP MS")
-	field(CALC, "B#(A&1)")
+	field(CALC, "(B#C)||(B#(A&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "A&1")
@@ -194,7 +238,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT0_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT1_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT1 MS")
-	field(CALC, "B#((A>>1)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT1 MS")
+	field(CALC, "(B#C)||(B#((A>>1)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>1)&1")
@@ -204,7 +249,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT1_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT2_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT2 MS")
-	field(CALC, "B#((A>>2)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT2 MS")
+	field(CALC, "(B#C)||(B#((A>>2)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>2)&1")
@@ -214,7 +260,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT2_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT3_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT3 MS")
-	field(CALC, "B#((A>>3)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT3 MS")
+	field(CALC, "(B#C)||(B#((A>>3)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>3)&1")
@@ -224,7 +271,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT3_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT4_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT4 MS")
-	field(CALC, "B#((A>>4)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT4 MS")
+	field(CALC, "(B#C)||(B#((A>>4)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>4)&1")
@@ -234,7 +282,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT4_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT5_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT5 MS")
-	field(CALC, "B#((A>>5)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT5 MS")
+	field(CALC, "(B#C)||(B#((A>>5)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>5)&1")
@@ -244,7 +293,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT5_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT6_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT6 MS")
-	field(CALC, "B#((A>>6)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT6 MS")
+	field(CALC, "(B#C)||(B#((A>>6)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>6)&1")
@@ -254,7 +304,8 @@ record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT6_CALC") {
 record(calcout, "$(dtype):$(areapos):REQ_SEG_BIT7_CALC") {
 	field(INPA, "$(dtype):$(areapos):REQ_SEG_OUT")
 	field(INPB, "$(dtype):$(areapos):SEG_BIT7 MS")
-	field(CALC, "B#((A>>7)&1)")
+	field(INPC, "$(dtype):$(areapos):REQ_SEG_BIT7 MS")
+	field(CALC, "(B#C)||(B#((A>>7)&1))")
 	field(DOPT, "Use OCAL")
 	field(OOPT, "When Non-zero")
 	field(OCAL, "(A>>7)&1")
