@@ -71,9 +71,9 @@ file pilz-plc-bi-table9seg1.template
 	{ ODM, CR1,      FAN,           "C1 Fan Out",                     ODM_RD,      135, FAN_OFF,       FAN_ON,              NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR1:1,    OXGF_DISABLED, "C1 West Oxigraf Disable",        ODM_RD,      133, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR1:2,    OXGF_DISABLED, "C1 East Oxigraf Disable",        ODM_RD,      132, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
-	{ ODM, CR0,      AL_MUTED,      "CBR Alarm Mute",                 ODM_RD,      131, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
-	{ ODM, CR0,      STROBE,        "CBR Strobe Out",                 ODM_RD,      130, STROBE_OFF,    STROBE_ON,           NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
-	{ ODM, CR0,      HORN,          "CBR Horn Out",                   ODM_RD,      129, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
+	{ ODM, CR0,      AL_MUTED,      "CBR Alarm Mute",                 ODM_RD,      130, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR0,      STROBE,        "CBR Strobe Out",                 ODM_RD,      129, STROBE_OFF,    STROBE_ON,           NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
+	{ ODM, CR0,      HORN,          "CBR Horn Out",                   ODM_RD,      128, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR0,      FAN,           "CBR Fan Out",                    ODM_RD,      143, FAN_OFF,       FAN_ON,              NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR0:1,    OXGF_DISABLE,  "CBR West Oxigraf Disable",       ODM_RD,      141, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR0:2,    OXGF_DISABLE,  "CBR East Oxigraf Disable",       ODM_RD,      140, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
@@ -110,14 +110,13 @@ file pilz-plc-bo.template
 	{ ODM, CR2:1,    SET_OXGF_ENABLE,      "C2 West Oxigraf Enable",         ODM_WRT,     14,  NOT_ENABLE,       ENABLE,           NO_ALARM,NO_ALARM }
 	{ ODM, CR2:2,    SET_OXGF_DISABLE,     "C2 East OxigrafDisable",         ODM_WRT,     13,  NOT_DISABLE,      DISABLE,          NO_ALARM,NO_ALARM }
 	{ ODM, CR2:2,    SET_OXGF_ENABLE,      "C2 East Oxigraf Enable",         ODM_WRT,     12,  NOT_ENABLE,       ENABLE,           NO_ALARM,NO_ALARM }
+	{ ODM, CP00,     SET_AL_RESET,         "Alarm Reset",                    ODM_WRT,     11,  NOT_RESET,        RESET,            NO_ALARM,NO_ALARM }
 	{ ODM, CR1,      SET_AL_MUTE,          "C1 Alarm Mute",                  ODM_WRT,     9,   NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
 	{ ODM, CR1,      SET_FAN_FORCE,        "C1 Fan Force",                   ODM_WRT,     8,   NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
 	{ ODM, CR0,      SET_AL_MUTE,          "CBR Alarm Mute",                 ODM_WRT,     21,  NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
 	{ ODM, CR0,      SET_FAN_FORCE,        "CBR Fan Force",                  ODM_WRT,     20,  NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
 	{ ODM, CR2,      SET_AL_MUTE,          "C2 Alarm Mute",                  ODM_WRT,     17,  NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
 	{ ODM, CR2,      SET_FAN_FORCE,        "C2 Fan Force",                   ODM_WRT,     16,  NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
-	{ ODM, CP00,     SET_AL_RESET,         "Alarm Reset",                    ODM_WRT,     31,  NOT_RESET,        RESET,            NO_ALARM,NO_ALARM }
-	{ ODM, CP00,     HW_ENABLE,            "Hardware enable",                ODM_WRT,     24,  Off,              On,               NO_ALARM,NO_ALARM}
 }
 
 file "pilz-plc-request.template"
