@@ -8,6 +8,7 @@ include $(TOP)/configure/CONFIG
 # databases, templates, substitutions like this
 #DB += xxx.db
 DB += odm-cp00.db
+DB += odm-test.db
 
 # Install databbases from EPICS modules
 DB_INSTALLS += $(ASYN)/db/asynRecord.db
