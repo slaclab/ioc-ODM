@@ -23,6 +23,7 @@
 #                       int noAutoConnect,
 #                       int noProcessEos);
 drvAsynIPPortConfigure ("ODM", "$(ODM_NODE):502"   ,0,0,0)
+asynSetOption("ODM",0,"disconnectOnReadTimeout", "Y")
 
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
