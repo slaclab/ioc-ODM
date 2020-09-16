@@ -1,0 +1,18 @@
+#==============================================================
+#
+#  Name: RELEASE_NOTES
+#
+#  Rem:  This files describes release notes for
+#        the Oxygen Deficiency Monitor System IOC Application.
+#
+#  Auth: 08-Feb-2020, Garth Brown         (GWBROWN)
+#  Rev:  dd-mmm-yyyy, Reviewer's Name    (USERNAME)
+#--------------------------------------------------------------
+#  Mod
+#==============================================================
+
+R1.0.1        Garth Brown (GWBROWN):
+15-Sep-2020   PILZ fixes merged in from PPS, updated registers after design review
+
+R1.0.0        Garth Brown (GWBROWN):
+19-Mar-2020   Oxigrafs and pilz now in production, preliminary testing release
