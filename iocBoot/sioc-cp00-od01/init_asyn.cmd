@@ -26,7 +26,7 @@ drvAsynIPPortConfigure ("ODM", "$(ODM_NODE):502"   ,0,0,0)
 
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
-modbusInterposeConfig ("ODM", 0, 2000, 500)
+modbusInterposeConfig ("ODM", 0, 250, 0)
 
 
 #drvModbusAsynConfigure(portName,
@@ -73,9 +73,9 @@ modbusInterposeConfig ("ODM", 0, 2000, 500)
 # PILZ PLC MODBUS ASYN Configuration for ODMs
 
 ## ODM
-drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  1000, "PILZ")
-drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3,  0, 10,  0,  1000, "PILZ")
-drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  1000, "PILZ")
+drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  250, "PILZ")
+drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3,  0, 10,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  250, "PILZ")
 
 # Oxigraf devices
 drvAsynIPPortConfigure( "OXI_CR11", "ts-b905-od01:2101", 0, 0, 0 )

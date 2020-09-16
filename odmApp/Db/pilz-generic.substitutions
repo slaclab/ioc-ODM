@@ -1,0 +1,145 @@
+file pilz-plc-bi-general.template
+{
+	pattern
+	{dtype,area,position,attribute,      description,          port,  bit,    zname,     oname,      zsv,            osv}
+	{ODM,CP00,x,nnn7,                    ODM_Desc_nnn7,        ODM_RD,  7,      Disabled,  Enabled,    NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn6,                    ODM_Desc_nnn6,        ODM_RD,  6,      Off,       Reset,      NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn5,                    ODM_Desc_nnn5,        ODM_RD,  5,      Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn4,                    ODM_Desc_nnn4,        ODM_RD,  4,      Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn3,                    ODM_Desc_nnn3,        ODM_RD,  3,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn2,                    ODM_Desc_nnn2,        ODM_RD,  2,      Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn1,                    ODM_Desc_nnn1,        ODM_RD,  1,      Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn0,                    ODM_Desc_nnn0,        ODM_RD,  0,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn15,                   ODM_Desc_nnn15,       ODM_RD,  15,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn14,                   ODM_Desc_nnn14,       ODM_RD,  14,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn13,                   ODM_Desc_nnn13,       ODM_RD,  13,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn12,                   ODM_Desc_nnn12,       ODM_RD,  12,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn11,                   ODM_Desc_nnn11,       ODM_RD,  11,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn10,                   ODM_Desc_nnn10,       ODM_RD,  10,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn9,                    ODM_Desc_nnn9,        ODM_RD,  9,      Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn8,                    ODM_Desc_nnn8,        ODM_RD,  8,      Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn23,                   ODM_Desc_nnn23,       ODM_RD,  23,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn22,                   ODM_Desc_nnn22,       ODM_RD,  22,     Off,       Bypassed,   NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn21,                   ODM_Desc_nnn21,       ODM_RD,  21,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn20,                   ODM_Desc_nnn20,       ODM_RD,  20,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn19,                   ODM_Desc_nnn19,       ODM_RD,  19,     Off,       Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn18,                   ODM_Desc_nnn18,       ODM_RD,  18,     Off,       Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn17,                   ODM_Desc_nnn17,       ODM_RD,  17,     Off,       Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn16,                   ODM_Desc_nnn16,       ODM_RD,  16,     Off,       Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn31,                   ODM_Desc_nnn31,       ODM_RD,  31,     Off,       On,         NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn30,                   ODM_Desc_nnn30,       ODM_RD,  30,     Off,       On,         NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn29,                   ODM_Desc_nnn29,       ODM_RD,  29,     Off,       On,         NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn28,                   ODM_Desc_nnn28,       ODM_RD,  28,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn27,                   ODM_Desc_nnn27,       ODM_RD,  27,     Off,       On,         NO_ALARM,       NO_ALARM}
+
+	{PLC,CP00,OD01,PWLED,                ODM-Power_LED_A,      ODM_RD,  26,     Off,       On,         MAJOR,          NO_ALARM}
+	{PLC,CP00,OD01,RUNLED,               ODM-Run_LED_A,        ODM_RD,  27,     Off,       On,         MAJOR,          NO_ALARM}
+	{PLC,CP00,OD01,DIAGLED,              ODM-Diag_LED_A,       ODM_RD,  28,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,FAULTLED,             ODM-Fault_LED_A,      ODM_RD,  29,     Off,       On,         NO_ALARM,       MAJOR}
+	{PLC,CP00,OD01,IFAULTLED,            ODM-IFault_LED_A,     ODM_RD,  30,     Off,       On,         NO_ALARM,       MAJOR}
+	{PLC,CP00,OD01,OFAULTLED,            ODM-OFault_LED_A,     ODM_RD,  31,     Off,       On,         NO_ALARM,       MAJOR}
+	{PLC,CP00,OD01,TABLE_BIT7,           "Table Read bit 7",   ODM_RD,  32,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT6,           "Table Read bit 6",   ODM_RD,  33,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT5,           "Table Read bit 5",   ODM_RD,  34,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT4,           "Table Read bit 4",   ODM_RD,  35,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT3,           "Table Read bit 3",   ODM_RD,  36,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT2,           "Table Read bit 2",   ODM_RD,  37,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT1,           "Table Read bit 1",   ODM_RD,  38,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,TABLE_BIT0,           "Table Read bit 0",   ODM_RD,  39,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT7,             "Segment Read bit 7", ODM_RD,  40,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT6,             "Segment Read bit 6", ODM_RD,  41,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT5,             "Segment Read bit 5", ODM_RD,  42,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT4,             "Segment Read bit 4", ODM_RD,  43,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT3,             "Segment Read bit 3", ODM_RD,  44,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT2,             "Segment Read bit 2", ODM_RD,  45,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT1,             "Segment Read bit 1", ODM_RD,  46,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,SEG_BIT0,             "Segment Read bit 0", ODM_RD,  47,     Off,       On,         NO_ALARM,       NO_ALARM}
+
+	{ODM,CP00,x,nnn95,                   ODM_Desc_nnn95,       ODM_RD,  95,     Off,       On,         NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn94,                   ODM_Desc_nnn94,       ODM_RD,  94,     Off,       On,         NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn93,                   ODM_Desc_nnn93,       ODM_RD,  93,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn92,                   ODM_Desc_nnn92,       ODM_RD,  92,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn91,                   ODM_Desc_nnn91,       ODM_RD,  91,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn90,                   ODM_Desc_nnn90,       ODM_RD,  90,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn89,                   ODM_Desc_nnn89,       ODM_RD,  89,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn88,                   ODM_Desc_nnn88,       ODM_RD,  88,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn103,                  ODM_Desc_nnn103,      ODM_RD,  103,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn102,                  ODM_Desc_nnn102,      ODM_RD,  102,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn101,                  ODM_Desc_nnn101,      ODM_RD,  101,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn100,                  ODM_Desc_nnn100,      ODM_RD,  100,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn99,                   ODM_Desc_nnn99,       ODM_RD,  99,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn98,                   ODM_Desc_nnn98,       ODM_RD,  98,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn97,                   ODM_Desc_nnn97,       ODM_RD,  97,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn96,                   ODM_Desc_nnn96,       ODM_RD,  96,     Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn111,                  ODM_Desc_nnn111,      ODM_RD,  111,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn110,                  ODM_Desc_nnn110,      ODM_RD,  110,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn109,                  ODM_Desc_nnn109,      ODM_RD,  109,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn108,                  ODM_Desc_nnn108,      ODM_RD,  108,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn107,                  ODM_Desc_nnn107,      ODM_RD,  107,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn106,                  ODM_Desc_nnn106,      ODM_RD,  106,    Ok,        Fault,      NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn105,                  ODM_Desc_nnn105,      ODM_RD,  105,    Ok,        Fault,      NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn104,                  ODM_Desc_nnn104,      ODM_RD,  104,    Ok,        Fault,      NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn119,                  ODM_Desc_nnn119,      ODM_RD,  119,    Ok,        Fault,      NO_ALARM,       MAJOR}
+	{ODM,CP00,x,nnn118,                  ODM_Desc_nnn118,      ODM_RD,  118,    Off,       On,         NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn117,                  ODM_Desc_nnn117,      ODM_RD,  117,    Off,       On,         NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn116,                  ODM_Desc_nnn116,      ODM_RD,  116,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn115,                  ODM_Desc_nnn115,      ODM_RD,  115,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn114,                  ODM_Desc_nnn114,      ODM_RD,  114,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn113,                  ODM_Desc_nnn113,      ODM_RD,  113,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn112,                  ODM_Desc_nnn112,      ODM_RD,  112,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	{ODM,CP00,x,nnn127,                  ODM_Desc_nnn127,      ODM_RD,  127,    Fault,     Ok,         MAJOR,          NO_ALARM}
+	
+}
+
+
+file pilz-plc-bo.template
+{
+	pattern
+	{dtype,area,position,attribute,      description,              port,      bit,   zname,    oname,      zsv,            osv}
+	{ODM,CP00,x,nnn7,                    ODM_Desc_nnn7,            ODM_WRT,   7,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn6,                    ODM_Desc_nnn6,            ODM_WRT,   6,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn5,                    ODM_Desc_nnn5,            ODM_WRT,   5,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn4,                    ODM_Desc_nnn4,            ODM_WRT,   4,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn3,                    ODM_Desc_nnn3,            ODM_WRT,   3,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn2,                    ODM_Desc_nnn2,            ODM_WRT,   2,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn1,                    ODM_Desc_nnn1,            ODM_WRT,   1,     Off,      Reset,      NO_ALARM,       NO_ALARM}
+	{ODM,CP00,x,nnn0,                    ODM_Desc_nnn0,            ODM_WRT,   0,     Off,      Pause,      NO_ALARM,       NO_ALARM}
+
+	{PLC,CP00,OD01,REQ_TABLE_BIT7,       "Table Request bit 7",    ODM_WRT,   32,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT6,       "Table Request bit 6",    ODM_WRT,   33,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT5,       "Table Request bit 5",    ODM_WRT,   34,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT4,       "Table Request bit 4",    ODM_WRT,   35,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT3,       "Table Request bit 3",    ODM_WRT,   36,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT2,       "Table Request bit 2",    ODM_WRT,   37,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT1,       "Table Request bit 1",    ODM_WRT,   38,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_TABLE_BIT0,       "Table Request bit 0",    ODM_WRT,   39,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT7,         "Segment Request bit 7",  ODM_WRT,   40,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT6,         "Segment Request bit 6",  ODM_WRT,   41,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT5,         "Segment Request bit 5",  ODM_WRT,   42,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT4,         "Segment Request bit 4",  ODM_WRT,   43,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT3,         "Segment Request bit 3",  ODM_WRT,   44,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT2,         "Segment Request bit 2",  ODM_WRT,   45,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT1,         "Segment Request bit 1",  ODM_WRT,   46,    Off,      On,         NO_ALARM,       NO_ALARM}
+	{PLC,CP00,OD01,REQ_SEG_BIT0,         "Segment Request bit 0",  ODM_WRT,   47,    Off,      On,         NO_ALARM,       NO_ALARM}
+}
+
+file "pilz-plc-request.template"
+{
+	pattern
+	{dtype,area,position,   description }
+	{PLC,CP00,OD01,        "ODM data request"}
+}
+
+# New checksum template since there are going to be a lot of these for OD0.
+file "pilz-plc-checksum.template"
+{
+        pattern
+        {dtype,area,position,attribute,   port  }
+        {PLC,CP00,OD01,CHECKSUM,          ODM_WD }
+}
+
+file asynRecord.db
+{
+pattern{ P               , R          , PORT              , ADDR, IMAX, OMAX }
+		{ SIOC:CP00:OD01: , ASYNDRIVER , PILZ_BI , 0   , 0   , 0    }
+}
