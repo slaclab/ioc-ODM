@@ -65,12 +65,15 @@ file pilz-plc-bi-table9seg1.template
 	{ ODM, CR2:1,    SYS_OK_LTH,    "C2 West Sys OK Latch",           ODM_RD,      126, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR2:2,    SYS_OK,        "C2 East Sys OK Real",            ODM_RD,      125, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR2:2,    SYS_OK_LTH,    "C2 East Sys OK Latch",           ODM_RD,      124, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1,      AC_OK     ,    "C1 AC OK Sum",                   ODM_RD,      123, "AC OK",       "AC Not OK",         NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1,      AL_MUTED,      "C1 Alarm Mute",                  ODM_RD,      122, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR1,      STROBE,        "C1 Strobe Out",                  ODM_RD,      121, STROBE_OFF,    STROBE_ON,           NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR1,      HORN,          "C1 Horn Out",                    ODM_RD,      120, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR1,      FAN,           "C1 Fan Out",                     ODM_RD,      135, FAN_OFF,       FAN_ON,              NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
+	{ ODM, CR0,      AC_OK     ,    "CB AC OK Sum",                   ODM_RD,      134, "AC OK",       "AC Not OK",         NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1:1,    OXGF_DISABLED, "C1 West Oxigraf Disable",        ODM_RD,      133, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR1:2,    OXGF_DISABLED, "C1 East Oxigraf Disable",        ODM_RD,      132, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR2,      AC_OK     ,    "C2 AC OK Sum",                   ODM_RD,      131, "AC OK",       "AC Not OK",         NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR0,      AL_MUTED,      "CBR Alarm Mute",                 ODM_RD,      130, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR0,      STROBE,        "CBR Strobe Out",                 ODM_RD,      129, STROBE_OFF,    STROBE_ON,           NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR0,      HORN,          "CBR Horn Out",                   ODM_RD,      128, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
