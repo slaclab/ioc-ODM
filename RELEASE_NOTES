@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.2        Garth Brown (GWBROWN):
+6-Jan-2021    Adding a few status bits, state name clarification
+
 R1.0.1        Garth Brown (GWBROWN):
 15-Sep-2020   PILZ fixes merged in from PPS, updated registers after design review
 
