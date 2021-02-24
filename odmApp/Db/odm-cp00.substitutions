@@ -5,62 +5,62 @@ file pilz-plc-bi-table9seg1.template
 
 #################################################################### ODM PILZ PLC ##########################################################################
 
-	{ ODM, CR1:1:0,  FAULT,         "C1 West Oxigraf Ch0",            ODM_RD,      7,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:0,  FAULT_LTH,     "C1 West Oxigraf Ch0 Latch",      ODM_RD,      6,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:1,  FAULT,         "C1 West Oxigraf Ch1",            ODM_RD,      5,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:1,  FAULT_LTH,     "C1 West Oxigraf Ch1 Latch",      ODM_RD,      4,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:2,  FAULT,         "C1 West Oxigraf Ch2",            ODM_RD,      3,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:2,  FAULT_LTH,     "C1 West Oxigraf Ch2 Latch",      ODM_RD,      2,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:3,  FAULT,         "C1 West Oxigraf Ch3",            ODM_RD,      1,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:1:3,  FAULT_LTH,     "C1 West Oxigraf Ch3 Latch",      ODM_RD,      0,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:0,  FAULT,         "C1 East Oxigraf Ch0",            ODM_RD,      15,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:0,  FAULT_LTH,     "C1 East Oxigraf Ch0 Latch",      ODM_RD,      14,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:1,  FAULT,         "C1 East Oxigraf Ch1",            ODM_RD,      13,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:1,  FAULT_LTH,     "C1 East Oxigraf Ch1 Latch",      ODM_RD,      12,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:2,  FAULT,         "C1 East Oxigraf Ch2",            ODM_RD,      11,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:2,  FAULT_LTH,     "C1 East Oxigraf Ch2 Latch",      ODM_RD,      10,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:3,  FAULT,         "C1 East Oxigraf Ch3",            ODM_RD,      9,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR1:2:3,  FAULT_LTH,     "C1 East Oxigraf Ch3 Latch",      ODM_RD,      8,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:0,  FAULT,         "C1 West Oxigraf Ceil L1",        ODM_RD,      7,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:0,  FAULT_LTH,     "C1 West Oxigraf Ceil L1 Latch",  ODM_RD,      6,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:1,  FAULT,         "C1 West Oxigraf Ceil L2",        ODM_RD,      5,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:1,  FAULT_LTH,     "C1 West Oxigraf Ceil L2 Latch",  ODM_RD,      4,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:2,  FAULT,         "C1 West Oxigraf Floor L1",       ODM_RD,      3,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:2,  FAULT_LTH,     "C1 West Oxigraf Floor L1 Latch", ODM_RD,      2,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:3,  FAULT,         "C1 West Oxigraf Floor L2",       ODM_RD,      1,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:1:3,  FAULT_LTH,     "C1 West Oxigraf Floor L2 Latch", ODM_RD,      0,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:0,  FAULT,         "C1 East Oxigraf Ceil L1",        ODM_RD,      15,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:0,  FAULT_LTH,     "C1 East Oxigraf Ceil L1 Latch",  ODM_RD,      14,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:1,  FAULT,         "C1 East Oxigraf Ceil L2",        ODM_RD,      13,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:1,  FAULT_LTH,     "C1 East Oxigraf Ceil L2 Latch",  ODM_RD,      12,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:2,  FAULT,         "C1 East Oxigraf Floor L1",       ODM_RD,      11,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:2,  FAULT_LTH,     "C1 East Oxigraf Floor L1 Latch", ODM_RD,      10,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:3,  FAULT,         "C1 East Oxigraf Floor L2",       ODM_RD,      9,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR1:2:3,  FAULT_LTH,     "C1 East Oxigraf Floor L2 Latch", ODM_RD,      8,   OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1:1,    SYS_OK,        "C1 West Sys OK",                 ODM_RD,      23,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1:1,    SYS_OK_LTH,    "C1 West Sys OK Latch",           ODM_RD,      22,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1:2,    SYS_OK,        "C1 East Sys OK",                 ODM_RD,      21,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR1:2,    SYS_OK_LTH,    "C1 East Sys OK Latch",           ODM_RD,      20,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:0,  FAULT,         "CB West Oxigraf Ch0",            ODM_RD,      19,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:0,  FAULT_LTH,     "CB West Oxigraf Ch0 Latch",      ODM_RD,      18,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:1,  FAULT,         "CB West Oxigraf Ch1",            ODM_RD,      17,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:1,  FAULT_LTH,     "CB West Oxigraf Ch1 Latch",      ODM_RD,      16,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:2,  FAULT,         "CB West Oxigraf Ch2",            ODM_RD,      95,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:2,  FAULT_LTH,     "CB West Oxigraf Ch2 Latch",      ODM_RD,      94,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:3,  FAULT,         "CB West Oxigraf Ch3",            ODM_RD,      93,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1:3,  FAULT_LTH,     "CB West Oxigraf Ch3 Latch",      ODM_RD,      92,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:0,  FAULT,         "CB East Oxigraf Ch0",            ODM_RD,      91,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:0,  FAULT_LTH,     "CB East Oxigraf Ch0 Latch",      ODM_RD,      90,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:1,  FAULT,         "CB East Oxigraf Ch1",            ODM_RD,      89,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:1,  FAULT_LTH,     "CB East Oxigraf Ch1 Latch",      ODM_RD,      88,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:2,  FAULT,         "CB East Oxigraf Ch2",            ODM_RD,      103, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:2,  FAULT_LTH,     "CB East Oxigraf Ch2 Latch",      ODM_RD,      102, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:3,  FAULT,         "CB East Oxigraf Ch3",            ODM_RD,      101, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2:3,  FAULT_LTH,     "CB East Oxigraf Ch3 Latch",      ODM_RD,      100, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:0,  FAULT,         "CB West Oxigraf Ceil L1",        ODM_RD,      19,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:0,  FAULT_LTH,     "CB West Oxigraf Ceil L1 Latch",  ODM_RD,      18,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:1,  FAULT,         "CB West Oxigraf Ceil L2",        ODM_RD,      17,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:1,  FAULT_LTH,     "CB West Oxigraf Ceil L2 Latch",  ODM_RD,      16,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:2,  FAULT,         "CB West Oxigraf Floor L1",       ODM_RD,      95,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:2,  FAULT_LTH,     "CB West Oxigraf Floor L1 Latch", ODM_RD,      94,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:3,  FAULT,         "CB West Oxigraf Floor L2",       ODM_RD,      93,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1:3,  FAULT_LTH,     "CB West Oxigraf Floor L2 Latch", ODM_RD,      92,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:0,  FAULT,         "CB East Oxigraf Ceil L1",        ODM_RD,      91,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:0,  FAULT_LTH,     "CB East Oxigraf Ceil L1 Latch",  ODM_RD,      90,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:1,  FAULT,         "CB East Oxigraf Ceil L2",        ODM_RD,      89,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:1,  FAULT_LTH,     "CB East Oxigraf Ceil L2 Latch",  ODM_RD,      88,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:2,  FAULT,         "CB East Oxigraf Floor L1",       ODM_RD,      103, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:2,  FAULT_LTH,     "CB East Oxigraf Floor L1 Latch", ODM_RD,      102, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:3,  FAULT,         "CB East Oxigraf Floor L2",       ODM_RD,      101, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2:3,  FAULT_LTH,     "CB East Oxigraf Floor L2 Latch", ODM_RD,      100, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR0:1,    SYS_OK,        "CB West Sys OK",                 ODM_RD,      99,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR0:1,    SYS_OK_LTH,    "CB West Sys OK Latch",           ODM_RD,      98,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR0:2,    SYS_OK,        "CB East Sys OK",                 ODM_RD,      97,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR0:2,    SYS_OK_LTH,    "CB East Sys OK Latch",           ODM_RD,      96,  OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:0,  FAULT,         "C2 West Oxigraf Ch0",            ODM_RD,      111, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:0,  FAULT_LTH,     "C2 West Oxigraf Ch0 Latch",      ODM_RD,      110, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:1,  FAULT,         "C2 West Oxigraf Ch1",            ODM_RD,      109, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:1,  FAULT_LTH,     "C2 West Oxigraf Ch1 Latch",      ODM_RD,      108, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:2,  FAULT,         "C2 West Oxigraf Ch2",    ,       ODM_RD,      107, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:2,  FAULT_LTH,     "C2 West Oxigraf Ch2 Latch",      ODM_RD,      106, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:3,  FAULT,         "C2 West Oxigraf Ch3",            ODM_RD,      105, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:1:3,  FAULT_LTH,     "C2 West Oxigraf Ch3 Latch",      ODM_RD,      104, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:0,  FAULT,         "C2 East Oxigraf Ch0",            ODM_RD,      119, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:0,  FAULT_LTH,     "C2 East Oxigraf Ch0 Latch",      ODM_RD,      118, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:1,  FAULT,         "C2 East Oxigraf Ch1",            ODM_RD,      117, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:1,  FAULT_LTH,     "C2 East Oxigraf Ch1 Latch",      ODM_RD,      116, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:2,  FAULT,         "C2 East Oxigraf Ch2",            ODM_RD,      115, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:2,  FAULT_LTH,     "C2 East Oxigraf Ch2 Latch",      ODM_RD,      114, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:3,  FAULT,         "C2 East Oxigraf Ch3",            ODM_RD,      113, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2:3,  FAULT_LTH,     "C2 East Oxigraf Ch3 Latch",      ODM_RD,      112, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:0,  FAULT,         "C2 West Oxigraf Ceil L1",        ODM_RD,      111, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:0,  FAULT_LTH,     "C2 West Oxigraf Ceil L1 Latch",  ODM_RD,      110, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:1,  FAULT,         "C2 West Oxigraf Ceil L2",        ODM_RD,      109, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:1,  FAULT_LTH,     "C2 West Oxigraf Ceil L2 Latch",  ODM_RD,      108, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:2,  FAULT,         "C2 West Oxigraf Floor L1",       ODM_RD,      107, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:2,  FAULT_LTH,     "C2 West Oxigraf Floor L1 Latch", ODM_RD,      106, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:3,  FAULT,         "C2 West Oxigraf Floor L2",       ODM_RD,      105, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1:3,  FAULT_LTH,     "C2 West Oxigraf Floor L2 Latch", ODM_RD,      104, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:0,  FAULT,         "C2 East Oxigraf Ceil L1",        ODM_RD,      119, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:0,  FAULT_LTH,     "C2 East Oxigraf Ceil L1 Latch",  ODM_RD,      118, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:1,  FAULT,         "C2 East Oxigraf Ceil L2",        ODM_RD,      117, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:1,  FAULT_LTH,     "C2 East Oxigraf Ceil L2 Latch",  ODM_RD,      116, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:2,  FAULT,         "C2 East Oxigraf Floor L1",       ODM_RD,      115, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:2,  FAULT_LTH,     "C2 East Oxigraf Floor L1 Latch", ODM_RD,      114, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:3,  FAULT,         "C2 East Oxigraf Floor L2",       ODM_RD,      113, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2:3,  FAULT_LTH,     "C2 East Oxigraf Floor L2 Latch", ODM_RD,      112, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR2:1,    SYS_OK,        "C2 West Sys OK",                 ODM_RD,      127, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR2:1,    SYS_OK_LTH,    "C2 West Sys OK Latch",           ODM_RD,      126, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CR2:2,    SYS_OK,        "C2 East Sys OK",                 ODM_RD,      125, OK,            FAULT,               NO_ALARM,   MAJOR, PLC:CP00:OD01 }
@@ -90,9 +90,9 @@ file pilz-plc-bi-table9seg1.template
 	{ ODM, CR2:1,    OXGF_DISABLE,  "C2 West Oxigraf Disable",        ODM_RD,      149, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR2:2,    OXGF_DISABLE,  "C2 East Oxigraf Disable",        ODM_RD,      148, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 #	level 1 alarm
-	{ ODM, CP00,     YELLOW_ALARM,  "Yellow Alarm",                   ODM_RD,      147, NO_YELLOW_ALARM,YELLOW_ALARM,       NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CP00,     L1_ALARM,      "L1 Alarm",                       ODM_RD,      147, NO_L1_ALARM,   L1_ALARM,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 #	level 2 alarm
-	{ ODM, CP00,     RED_ALARM,     "Red Alarm",                      ODM_RD,      146, NO_RED_ALARM,  RED_ALARM,           NO_ALARM,   MAJOR, PLC:CP00:OD01 }
+	{ ODM, CP00,     L2_ALARM,      "L2 Alarm",                       ODM_RD,      146, NO_L2_ALARM,   L2_ALARM,            NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 	{ ODM, CP00,     HEARTBEAT,     "PLC Heart Beat",                 ODM_RD,      145, LOW,           HIGH,                MAJOR,   NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CP00,     ACR_ALARM,     "ACR Alarm",                      ODM_RD,      144, NO_ACR_ALARM,  ACR_ALARM,           NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 
@@ -116,11 +116,11 @@ file pilz-plc-bo.template
 	{ ODM, CR2:2,    SET_OXGF_ENABLE,      "C2 East Oxigraf Enable",         ODM_WRT,     12,  NOT_ENABLE,       ENABLE,           NO_ALARM,NO_ALARM }
 	{ ODM, CP00,     SET_AL_RESET,         "Alarm Reset",                    ODM_WRT,     11,  NOT_RESET,        RESET,            NO_ALARM,NO_ALARM }
 	{ ODM, CR1,      SET_AL_MUTE,          "C1 Alarm Mute",                  ODM_WRT,     9,   NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
-	{ ODM, CR1,      SET_FAN_FORCE,        "C1 Fan Force",                   ODM_WRT,     8,   NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
+	{ ODM, CR1,      SET_FAN,              "C1 Ventilation Request",         ODM_WRT,     8,   "NOT REQUESTED",  REQUESTED,        NO_ALARM,NO_ALARM }
 	{ ODM, CR0,      SET_AL_MUTE,          "CB Alarm Mute",                  ODM_WRT,     21,  NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
-	{ ODM, CR0,      SET_FAN_FORCE,        "CB Fan Force",                   ODM_WRT,     20,  NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
+	{ ODM, CR0,      SET_FAN,              "CB Ventilation Request",         ODM_WRT,     20,  "NOT REQUESTED",  REQUESTED,        NO_ALARM,NO_ALARM }
 	{ ODM, CR2,      SET_AL_MUTE,          "C2 Alarm Mute",                  ODM_WRT,     17,  NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
-	{ ODM, CR2,      SET_FAN_FORCE,        "C2 Fan Force",                   ODM_WRT,     16,  NOT_FAN_FORCE,    FAN_FORCE,        NO_ALARM,NO_ALARM }
+	{ ODM, CR2,      SET_FAN,              "C2 Ventilation Request",         ODM_WRT,     16,  "NOT REQUESTED",  REQUESTED,        NO_ALARM,NO_ALARM }
 }
 
 file "pilz-plc-request.template"
