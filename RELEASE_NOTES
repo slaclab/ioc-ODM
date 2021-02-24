@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.3        Garth Brown (GWBROWN):
+23-Feb-2021   Change a few state names and DESC for clarity. Adding archive file generation.
+
 R1.0.2        Garth Brown (GWBROWN):
 6-Jan-2021    Adding a few status bits, state name clarification
 
