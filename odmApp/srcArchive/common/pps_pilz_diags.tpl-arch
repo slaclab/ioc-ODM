@@ -1,0 +1,13 @@
+
+# Archive List for PPS Pilz diagnostic signals
+#
+# Signal Name    Period (sec)    Type
+$(P):$(PLC):PWLED 1 monitor
+$(P):$(PLC):RUNLED 1 monitor
+$(P):$(PLC):DIAGLED 1 monitor
+$(P):$(PLC):FAULTLED 1 monitor
+$(P):$(PLC):IFAULTLED 1 monitor
+$(P):$(PLC):OFAULTLED 1 monitor
+$(P):$(PLC):CHECKSUM_SAFE 1 monitor
+$(P):$(PLC):OP_HOURS 1 monitor
+

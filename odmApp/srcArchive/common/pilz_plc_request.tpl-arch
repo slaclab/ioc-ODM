@@ -1,0 +1,5 @@
+# Table and segment requested
+
+$(dev):TABLE_REQUEST	1		monitor
+$(dev):SEG_REQUEST		1		monitor
+

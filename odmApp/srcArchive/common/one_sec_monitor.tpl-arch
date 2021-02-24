@@ -1,0 +1,20 @@
+# minimalist to work easily with existing substitutions, and default archive settings.
+# Remember to set ADEL if you don't want clumps of points every 10 seconds.
+# If you have an existing substitutions file that looks like
+#
+#file yourSinglePvTemplate.template
+#{
+#	pattern
+#	{dtype,    area,   position,       attribute,....
+#
+#
+# - replace yourSinglePvTemplate.template with one_sec_monitor.tpl-arch
+#
+# - replace everything after "attribute, " with ", name }",
+#
+# - after the macro values, for "name" put "$(dtype):$(area):$(position):$(attribute)".
+#   e.g. {BSOC, GUNB, 13, RTEQP, $(dtype):$(area):$(position):$(attribute) }
+
+
+$(name)		1		monitor
+

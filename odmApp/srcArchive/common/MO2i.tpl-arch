@@ -1,0 +1,52 @@
+# Required Macros:
+#   DEVICE or PRIM, LOCA, UNIT.
+#       EPICS prefix. Every PV for this device starts with this prefix.
+#       DEVICE can be used to define a free format prefix. If you want to stay
+#       with LCLS II naming conventions you can use PRIM as the Device Type,
+#       LOCA, as the Area, and UNIT as the numeric position inside area.
+#   SCAN
+#       Rate at which to query often changing values such as
+#       current measurement, status, statistics, etc.
+#   PORT
+#   	Name of the Asyn port used to connect to the equipment.
+# Read 2 bytes containing 15 system status
+
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):SystemStatus 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):NonZeroStandbyStatus 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LineLockAcquired 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LaserEnabled 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):UncalibratedWarning 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):TestFaultWarning 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CellWarmUp 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):PressureCalibrationMode 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):MemoryFailure 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):EepromFailure 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):WatchdogTimeout 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):InvalidO2Computation 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowReferenceSignal 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CellNullBalance 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LaserTempControl 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CellTemp 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):SampleFlow 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CO2MeasPct 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):ChannelIndex 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel0O2 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel1O2 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel2O2 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel3O2 10 scan
+# Read 2 bytes containing 15 alarm status
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):AlarmStatus 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowO2AlarmA 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighO2AlarmA 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowO2AlarmB 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighO2AlarmB 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowCO2AlarmA 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighCO2AlarmA 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowCO2AlarmB 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighCO2AlarmB 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowSupplyVoltAlarm 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowSampleFlowAlarm 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighSampleFlowAlarm 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowSamplePAlarm 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighSamplePAlarm 1 monitor
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CriticalSelfTestAlarm 1 monitor

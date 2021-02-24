@@ -1,0 +1,15 @@
+# Facet-ii PPS Siemans PLC Admin Archive List 
+#
+# Signal Name			Period (sec)    Type
+$(dev):PILZ$(chain)_OFAULT	       1	monitor
+$(dev):PILZ$(chain)_IFAULT	       1	monitor
+$(dev):PILZ$(chain)_FAULT	       1	monitor
+$(dev):PILZ$(chain)_DIAG	       1	monitor
+$(dev):PILZ$(chain)_RUN		       1	monitor
+$(dev):PILZ$(chain)_COMM	       1	monitor
+$(dev):PILZ$(chain)_HEARTBEAT	       1	monitor
+$(dev):PILZ$(chain)_COMM_STAT	       1	monitor
+$(dev):PILZ$(chain)_COM_FLT_CNT	       1	monitor
+$(dev):PILZ$(chain)_CHECKSUM	       1	monitor
+
+# End of file
