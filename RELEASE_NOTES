@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.4        Garth Brown (GWBROWN):
+24-Mar-2021   Make names consistent for the same attribute.
+
 R1.0.3        Garth Brown (GWBROWN):
 23-Feb-2021   Change a few state names and DESC for clarity. Adding archive file generation.
 

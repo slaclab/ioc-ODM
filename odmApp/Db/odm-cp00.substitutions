@@ -79,16 +79,16 @@ file pilz-plc-bi-table9seg1.template
 	{ ODM, CR0,      HORN,          "CB Horn Out",                    ODM_RD,      128, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR0,      FAN,           "CB Ventilation Request",         ODM_RD,      143, "NOT REQUESTED","REQUESTED",        NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CP00:1,   TEST_MODE,     "TRI Test Mode Key Switch",       ODM_RD,      142, Normal,        Test,                NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CR0:1,    OXGF_DISABLE,  "CB West Oxigraf Disable",        ODM_RD,      141, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
-	{ ODM, CR0:2,    OXGF_DISABLE,  "CB East Oxigraf Disable",        ODM_RD,      140, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR0:1,    OXGF_DISABLED, "CB West Oxigraf Disable",        ODM_RD,      141, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR0:2,    OXGF_DISABLED, "CB East Oxigraf Disable",        ODM_RD,      140, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CP00:1,   DC_OK,         "DC Power Supply Ok",             ODM_RD,      139, FAULT,         OK,                  MAJOR,   NO_ALARM, PLC:CP00:OD01 }
-	{ ODM, CR2,      AL_MUTE,       "C2 Alarm Mute",                  ODM_RD,      138, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR2,      AL_MUTED,      "C2 Alarm Mute",                  ODM_RD,      138, NOT_MUTED,     MUTED,               NO_ALARM,   MINOR, PLC:CP00:OD01 }
 	{ ODM, CR2,      STROBE,        "C2 Strobe Out",                  ODM_RD,      137, STROBE_OFF,    STROBE_ON,           NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR2,      HORN,          "C2 Horn Out",                    ODM_RD,      136, HORN_OFF,      HORN_ON,             NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CR2,      FAN,           "C2 Ventilation Request",         ODM_RD,      151, "NOT REQUESTED","REQUESTED",        NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CP00:1,   DC_UPS_OK,     "DC UPS Ok",                      ODM_RD,      150, FAULT,         OK,                  MAJOR,   NO_ALARM, PLC:CP00:OD01 }
-	{ ODM, CR2:1,    OXGF_DISABLE,  "C2 West Oxigraf Disable",        ODM_RD,      149, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
-	{ ODM, CR2:2,    OXGF_DISABLE,  "C2 East Oxigraf Disable",        ODM_RD,      148, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR2:1,    OXGF_DISABLED, "C2 West Oxigraf Disable",        ODM_RD,      149, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
+	{ ODM, CR2:2,    OXGF_DISABLED, "C2 East Oxigraf Disable",        ODM_RD,      148, ENABLED,       DISABLED,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 #	level 1 alarm
 	{ ODM, CP00,     L1_ALARM,      "L1 Alarm",                       ODM_RD,      147, NO_L1_ALARM,   L1_ALARM,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 #	level 2 alarm
