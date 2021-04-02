@@ -9,6 +9,16 @@ include $(TOP)/configure/CONFIG
 #DB += xxx.db
 DB += odm-cp00.db
 DB += odm-test.db
+DB += bkh_odm_common.db
+DB += bkh_odm_li00.db
+DB += bkh_odm_li01.db
+DB += bkh_odm_li02.db
+DB += bkh_odm_li03.db
+DB += bkh_odm_supervisor.db
+DB += bkh_odm_li04.db
+DB += bkh_odm_li05.db
+DB += bkh_odm_li06.db
+DB += bkh_odm_li07.db
 
 # Install databbases from EPICS modules
 DB_INSTALLS += $(ASYN)/db/asynRecord.db

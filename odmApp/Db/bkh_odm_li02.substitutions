@@ -1,0 +1,11 @@
+
+file bkhAi_simple.db {
+pattern
+    {ADDR,  ATTR,                     DESC,         PORT, EGU, EOFF,      ESLO, PREC,  LOLO,  LOW, HIGH, HIHI,     LLSV,      LSV,      HSV,     HHSV}
+    {   0, :1:O2, "SEN-CELL-H02-01 Oxygen", $(M)_3012_01, "%", -7.5, 0.0011444,    1,  18.0, 20.0, 25.0, 28.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {   1, :2:O2, "SEN-CELL-H02-02 Oxygen", $(M)_3012_01, "%", -7.5, 0.0011444,    1,  18.0, 20.0, 25.0, 28.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+}
+
+file bkh_odm_common.db {
+{None}
+}

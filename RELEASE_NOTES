@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.6        M. Dunning (mdunning)
+02-Apr-2021   Add support for sensor cell type O2 monitors, which are read out by Beckhoffs.
+
 R1.0.4        Garth Brown (GWBROWN):
 24-Mar-2021   Make names consistent for the same attribute.
 
