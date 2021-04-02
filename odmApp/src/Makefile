@@ -43,6 +43,10 @@ odm_DBD += ModBusTCPClnt.dbd
 odm_DBD += drvAsynIPPort.dbd
 odm_DBD += stream.dbd
 odm_DBD += system.dbd
+odm_DBD += drvMBus.dbd
+odm_DBD += drvBkhErr.dbd
+odm_DBD += drvBkhAsyn.dbd
+
 
 # Add all the support libraries needed by this IOC
 #odm_LIBS += xxx
@@ -61,6 +65,9 @@ odm_LIBS += autosave
 odm_LIBS += ModBusTCPClnt
 odm_LIBS += modbus
 odm_LIBS += stream
+odm_LIBS += bkhErr
+odm_LIBS += bkhMBus
+odm_LIBS += bkhAsyn
 odm_LIBS += asyn
 # Add support from base/src/vxWorks if needed
 #odm_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
