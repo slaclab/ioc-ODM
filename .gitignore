@@ -1,0 +1,15 @@
+O.*
+autosave
+bin
+db
+dbd
+include
+lib
+envPaths
+*.bak
+*~
+*.swp
+RELEASE_SITE
+archive/
+info*.req
+
