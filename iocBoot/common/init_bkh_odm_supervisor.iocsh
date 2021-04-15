@@ -15,7 +15,7 @@ modbusInterposeConfig("$(BKH_PORT)", 0, 1000)
 drvMBusConfig("$(BKH_PORT)", 0, 0, 125, 0, "$(BKH_PORT)", 10)
 #
 # drvBkhAsynConfig(mbus_name, id, port, func, addr, len, nch, msec)
-# mbus_name is a unique idendifier for bus couplers
+# mbus_name is the modbus name used in drvMBusConfig()
 # id is a unique module type identifier: 0 - coupler, 1 - analogSigned,
 #     2 - analogUnsigned, 3 - digitalIn, 4 - digitalOut, 5 - motor.
 # port is the asyn port name for the driver (pick a unique short name for each module as below)
@@ -27,8 +27,8 @@ drvMBusConfig("$(BKH_PORT)", 0, 0, 125, 0, "$(BKH_PORT)", 10)
 #
 # These are standard bus coupler commands
 drvBkhAsynConfig("$(BKH_PORT)", 0,   "$(BKH_PORT)_DEBUG", 3,      0, 125,  2,    0)
-drvBkhAsynConfig("$(BKH_PORT)", 0,   "$(BKH_PORT)_B900R", 3, 0x1000,  33, 33,    0)
-drvBkhAsynConfig("$(BKH_PORT)", 0,   "$(BKH_PORT)_B900W", 3, 0x110a,  26, 26,    0)
+drvBkhAsynConfig("$(BKH_PORT)", 0, "$(BKH_PORT)_BK9000R", 3, 0x1000,  33, 33,    0)
+drvBkhAsynConfig("$(BKH_PORT)", 0, "$(BKH_PORT)_BK9000W", 3, 0x110a,  26, 26,    0)
 #
 # These are for the bus terminals
 drvBkhAsynConfig("$(BKH_PORT)", 3, "$(BKH_PORT)_1104_01", 2,      0,  20, 20,  250)
