@@ -1,50 +1,27 @@
 
 file readwrite.db {
 pattern
-    {    MOD,         PORT}
-    {3012_01, $(M)_3012_01}
+    {     P,     MOD,         PORT}
+    {$(BKH), 3012_01, $(M)_3012_01}
 }
 
 file bkhADrv.db {
 pattern
-    {    MOD,         PORT}
-    {3012_01, $(M)_3012_01}
+    {     P,     MOD,         PORT}
+    {$(BKH), 3012_01, $(M)_3012_01}
 }
 
 file bkhAErr.db {
 pattern
-    {    MOD,         PORT}
-    {3012_01, $(M)_3012_01}
+    {     P,     MOD,         PORT}
+    {$(BKH), 3012_01, $(M)_3012_01}
 }
 
-# For bus coupler -------------------------
-file b9000.db {
-    {DPORT=$(M)_DEBUG, RPORT=$(M)_B900R, WPORT=$(M)_B900W, LOC=$(LOC)}
-}
-
-file b9000RRegs.db {
+# For bus coupler
+file bk9000.db {
 pattern
-    { N,                 DESC,       PORT}
-    {10,      "PLC Interface", $(M)_B900R}
-    {11,      "Bus Term Diag", $(M)_B900R}
-    {12, "Bus Coupler Status", $(M)_B900R}
-    {16, "Anlg Output Length", $(M)_B900R}
-    {17,  "Anlg Input Length", $(M)_B900R}
-    {18, "Outpt Image Length", $(M)_B900R}
-    {19, "Input Image Length", $(M)_B900R}
-    {32, "Watchdog Curr Time", $(M)_B900R}
+    {     P,      DPORT,        RPORT,        WPORT}
+    {$(BKH), $(M)_DEBUG, $(M)_BK9000R, $(M)_BK9000W}
 }
 
-file b9000WRegs.db {
-pattern
-    { N,                  DESC,       PORT}
-    { 0,       "PLC Interface", $(M)_B900W}
-    { 1,       "Bus Term Diag", $(M)_B900W}
-    {22,  "Watchdog Tout (ms)", $(M)_B900W}
-    {23,      "Watchdog Reset", $(M)_B900W}
-    {24,       "Watchdog Type", $(M)_B900W}
-    {25,     "Modbus TCP Mode", $(M)_B900W}
-}
-#---------------------------------------------
 
-#---------------------------------------------
