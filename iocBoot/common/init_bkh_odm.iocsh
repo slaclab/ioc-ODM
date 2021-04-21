@@ -1,6 +1,8 @@
 # Beckhoff config for ODM sensor cell type (oldham)
 # 20210401 mdunning
 #
+# This file supports the following setup: BK9000 + KL3012 + KL9010
+#
 # Required macros:
 #  BKH_PORT - Asyn port name
 #  BKH_IP - Bus coupler node name or IP address 
@@ -10,15 +12,17 @@
 #  For example:
 #  iocshLoad("$(TOP)/iocBoot/common/init_bkh_ms02.iocsh", "BKH_PORT=BKH02,BKH_IP=apc-sys0-ms02")
 
-drvAsynIPPortConfigure("$(BKH_PORT)", "$(BKH_IP):502", 0,0,1)
-modbusInterposeConfig("$(BKH_PORT)", 0, 1000)
-drvMBusConfig("$(BKH_PORT)", 0, 0, 125, 0, "$(BKH_PORT)", 10)
+drvAsynIPPortConfigure("$(BKH_PORT)_IP", "$(BKH_IP):502", 0,0,1)
+modbusInterposeConfig("$(BKH_PORT)_IP", 0, 1000)
 #
-# drvBkhAsynConfig(mbus_name, id, port, func, addr, len, nch, msec)
-# mbus_name is the modbus name used in drvMBusConfig()
+# drvMBusConfig(port, octetPort, slave, addr, len, dtype, msec)
+drvMBusConfig("$(BKH_PORT)", "$(BKH_PORT)_IP", 0, 0, 125, 0, 10)
+#
+# drvBkhAsynConfig(port, modbusPort, id, func, addr, len, nch, msec)
+# port is the asyn port name for the driver (pick a unique short name for each module)
+# modbusPort is the modbus port name used in drvMBusConfig()
 # id is a unique module type identifier: 0 - coupler, 1 - analogSigned,
 #     2 - analogUnsigned, 3 - digitalIn, 4 - digitalOut, 5 - motor.
-# port is the asyn port name for the driver (pick a unique short name for each module as below)
 # func is the modbus function (e.g. 5 - digitalOut, 2 - digitalIn, 3 - analog In/Out)
 # addr is the modbus starting address of the memory image (group all modules of the same modbus function together)
 # len is the length of the memory image, in bits (digital modules) or 16 bit words (analog modules)
@@ -26,15 +30,12 @@ drvMBusConfig("$(BKH_PORT)", 0, 0, 125, 0, "$(BKH_PORT)", 10)
 # msec is poll routine timeout in milliseconds
 #
 # These are standard bus coupler commands
-drvBkhAsynConfig("$(BKH_PORT)", 0,   "$(BKH_PORT)_DEBUG", 3,      0, 125,  2,    0)
-drvBkhAsynConfig("$(BKH_PORT)", 0, "$(BKH_PORT)_BK9000R", 3, 0x1000,  33, 33,    0)
-drvBkhAsynConfig("$(BKH_PORT)", 0, "$(BKH_PORT)_BK9000W", 3, 0x110a,  26, 26,    0)
+drvBkhAsynConfig("$(BKH_PORT)_DEBUG",   "$(BKH_PORT)", 0, 3,      0, 125,  2,    0)
+drvBkhAsynConfig("$(BKH_PORT)_BK9000R", "$(BKH_PORT)", 0, 3, 0x1000,  33, 33,    0)
+drvBkhAsynConfig("$(BKH_PORT)_BK9000W", "$(BKH_PORT)", 0, 3, 0x110a,  26, 26,    0)
 #
 # These are for the bus terminals
-drvBkhAsynConfig("$(BKH_PORT)", 2, "$(BKH_PORT)_3012_01", 3,      0,   4,  2,  250)
-
-#asynSetTraceIOMask("$(BKH_PORT)_3012_01", 0, 4)
-#asynSetTraceMask("$(BKH_PORT)_3012_01", 0, 0x9)
+drvBkhAsynConfig("$(BKH_PORT)_3012_01", "$(BKH_PORT)", 2, 3,      0,   4,  2,  250)
 
 # End of file
 
