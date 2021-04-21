@@ -24,4 +24,15 @@ pattern
     {$(BKH), $(M)_DEBUG, $(M)_BK9000R, $(M)_BK9000W}
 }
 
+file asynRecord.db {
+pattern
+    {      P,    R, PORT, ADDR, IMAX, OMAX}
+    {$(BKH):, Asyn, $(M),    0,    0,    0}
+}
+
+file statistics.template {
+pattern
+    {      P,    R, PORT,        SCAN}
+    {$(BKH):, Asyn, $(M), "10 second"}
+}
 
