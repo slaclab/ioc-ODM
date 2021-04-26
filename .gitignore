@@ -13,3 +13,7 @@ RELEASE_SITE
 archive/
 info*.req
 
+.cproject
+.project
+.settings/
+tmp/
