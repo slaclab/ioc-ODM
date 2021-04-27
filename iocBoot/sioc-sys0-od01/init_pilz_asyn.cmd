@@ -22,11 +22,11 @@
 #                       unsigned int priority,
 #                       int noAutoConnect,
 #                       int noProcessEos);
-drvAsynIPPortConfigure ("ODM", "$(ODM_NODE):502"   ,0,0,0)
+drvAsynIPPortConfigure ("ODM_$(LOCA)", "$(ODM_NODE):502"   ,0,0,0)
 
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
-modbusInterposeConfig ("ODM", 0, 250, 0)
+modbusInterposeConfig ("ODM_$(LOCA)", 0, 250, 0)
 
 
 #drvModbusAsynConfigure(portName,
@@ -73,18 +73,9 @@ modbusInterposeConfig ("ODM", 0, 250, 0)
 # PILZ PLC MODBUS ASYN Configuration for ODMs
 
 ## ODM
-drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  250, "PILZ")
-drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3,  0, 10,  0,   250, "PILZ")
-drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  250, "PILZ")
-
-# Oxigraf devices
-drvAsynIPPortConfigure( "OXI_CR11", "ts-b905-od01:2101", 0, 0, 0 )
-drvAsynIPPortConfigure( "OXI_CR12", "ts-b905-od02:2101", 0, 0, 0 )
-drvAsynIPPortConfigure( "OXI_CR01", "ts-b905-od03:2101", 0, 0, 0 )
-drvAsynIPPortConfigure( "OXI_CR02", "ts-b905-od04:2101", 0, 0, 0 )
-drvAsynIPPortConfigure( "OXI_CR21", "ts-b905-od05:2101", 0, 0, 0 )
-drvAsynIPPortConfigure( "OXI_CR22", "ts-b905-od06:2101", 0, 0, 0 )
-epicsEnvSet( "STREAM_PROTOCOL_PATH", "$(TOP)/db")
+drvModbusAsynConfigure ("ODM_$(LOCA)_RD",  "ODM_$(LOCA)", 1, 1,  0, 160,  0,  250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(LOCA)_WD",  "ODM_$(LOCA)", 1, 3,  0, 10,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(LOCA)_WRT", "ODM_$(LOCA)", 1, 5,  16384 , 48,  0,  250, "PILZ")
 
 # End of script
 

@@ -19,6 +19,7 @@ DB_INSTALLS += $(MODBUS)/db/statistics.template
 IOCRELEASE_DB += iocRelease.db
 
 #DB += xxx.db
+DB += odm-sys0-od01.db
 DB += odm-cp00.db
 DB += odm-test.db
 DB += bkh_odm_common.db
@@ -32,8 +33,6 @@ DB += bkh_odm_li05.db
 DB += bkh_odm_li06.db
 DB += bkh_odm_li07.db
 
-# Install CA security file
-SECURITY += pps.acf
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>

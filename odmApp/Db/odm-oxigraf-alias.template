@@ -1,0 +1,5 @@
+alias("$(PRIM):$(LOCA):1:Channel0O2", "$(PRIM):$(LOCA):1:Air:O2")
+alias("$(PRIM):$(LOCA):1:Channel1O2", "$(PRIM):$(LOCA):2:Air:O2")
+alias("$(PRIM):$(LOCA):1:Channel2O2", "$(PRIM):$(LOCA):3:Air:O2")
+alias("$(PRIM):$(LOCA):1:Channel3O2", "$(PRIM):$(LOCA):4:Air:O2")
+

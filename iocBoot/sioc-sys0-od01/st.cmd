@@ -22,20 +22,21 @@
 #
 
 # Set environment variables
-epicsEnvSet("IOC_NAME"  ,"SIOC:SYS2:OD01")
+epicsEnvSet("IOC_NAME"  ,"SIOC:SYS0:OD01")
 epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 
 # Load generic environment variables and database
 < ../common/st.cmd.soft
-epicsEnvSet("IOC","sioc-sys2-od01")
+epicsEnvSet("IOC","sioc-sys0-od01")
 
 # Initialize Modbus communications
 cd ${IOC_BOOT}
-< init_asyn.cmd
+iocshLoad( "init_MO2i_asyn.cmd")
+#iocshLoad( "init_pilz_asyn.cmd", "LOCA=LI00,ODM_NODE=plc-li00-od01")
 cd ${TOP}
 
 # Load Additional databases:
-dbLoadRecords("db/odm-sys2.db")
+dbLoadRecords("db/odm-sys0-od01.db")
 
 # Setup autosave/restore
 < iocBoot/common/init_restore.cmd.soft
