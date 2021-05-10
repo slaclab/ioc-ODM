@@ -9,9 +9,9 @@
 #--------------------------------------------------------------
 #  Mod:
 #        19-Oct-2018, K. Luchini      (LUCHINI):
-#          install pps_misc.tpl-sub
+#          install odm_misc.tpl-sub
 #        15-Oct-2018, K. Luchini      (LUCHINI):
-#          move from ppsApp/srcArchive to ppsApp/srcArchive/common
+#          move from odmApp/srcArchive to odmApp/srcArchive/common
 #        04-Jun-2018, K. Luchini      (LUCHINI):
 #          install sioc-in10-pp01.archive
 #          install archive template for iocAdmin
@@ -28,8 +28,8 @@ ARCHIVE += $(IOCADMIN)/iocAdmin/Db/archive_iocAdmin.tpl-arch
 # Install archive list into $TOP/archive
 ARCHIVE += one_sec_monitor.tpl-arch
 ARCHIVE += pilz_plc_request.tpl-arch
-ARCHIVE += pps_s7plc.tpl-arch
-ARCHIVE += pps_pilz_diags.tpl-arch
+ARCHIVE += odm_s7plc.tpl-arch
+ARCHIVE += odm_pilz_diags.tpl-arch
 ARCHIVE += MO2i.tpl-arch
 
 

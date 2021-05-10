@@ -121,7 +121,7 @@ pattern	{ PRIM, LOCA, UNIT }
 		{ ODM,  CR2,  2,   }
 }
 
-file pps_pilz_diags.tpl-arch
+file odm_pilz_diags.tpl-arch
 {
 pattern   { P       ,  PLC }
           { PLC:CP00, OD01 }

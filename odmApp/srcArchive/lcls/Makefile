@@ -9,7 +9,7 @@
 #--------------------------------------------------------------
 #  Mod:
 #        15-Oct-2018, K. Luchini      (LUCHINI):
-#          move from ppsApp/srcArchive to ppsApp/srcArchive/common
+#          move from odmApp/srcArchive to odmApp/srcArchive/common
 #          chg gunb file name to conform to standard such that
 #          the archive file is the ioc file name, lower case.
 #        04-Jun-2018, K. Luchini      (LUCHINI):
