@@ -28,8 +28,8 @@ ARCHIVE += $(IOCADMIN)/iocAdmin/Db/archive_iocAdmin.tpl-arch
 # Install archive list into $TOP/archive
 ARCHIVE += one_sec_monitor.tpl-arch
 ARCHIVE += pilz_plc_request.tpl-arch
-ARCHIVE += odm_s7plc.tpl-arch
 ARCHIVE += odm_pilz_diags.tpl-arch
+ARCHIVE += odm_sector_pilz.tpl-arch
 ARCHIVE += MO2i.tpl-arch
 
 
