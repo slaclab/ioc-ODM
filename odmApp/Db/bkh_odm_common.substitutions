@@ -5,12 +5,6 @@ pattern
     {$(BKH), 3012_01, $(M)_3012_01}
 }
 
-file bkhADrv.db {
-pattern
-    {     P,     MOD,         PORT}
-    {$(BKH), 3012_01, $(M)_3012_01}
-}
-
 file bkhAErr.db {
 pattern
     {     P,     MOD,         PORT}
