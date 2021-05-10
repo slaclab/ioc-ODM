@@ -1,0 +1,55 @@
+file odm_sector_pilz.tpl-arch
+{
+pattern	{ SECTOR }
+		{ LI00,  }
+		{ LI01,  }
+		{ LI02,  }
+		{ LI03,  }
+		{ LI04,  }
+		{ LI05,  }
+		{ LI06,  }
+		{ LI07,  }
+		{ LI08,  }
+}
+
+file MO2i.tpl-arch
+{
+pattern	{ PRIM, LOCA, UNIT }
+		{ ODM,  LI00, 1,   }
+		{ ODM,  LI01, 1,   }
+		{ ODM,  LI02, 1,   }
+		{ ODM,  LI03, 1,   }
+		{ ODM,  LI04, 1,   }
+		{ ODM,  LI05, 1,   }
+		{ ODM,  LI06, 1,   }
+		{ ODM,  LI07, 1,   }
+		{ ODM,  LI08, 1,   }
+}
+
+file odm_pilz_diags.tpl-arch
+{
+pattern   { P       ,  PLC }
+          { PLC:LI00, OD01 }
+          { PLC:LI01, OD01 }
+          { PLC:LI02, OD01 }
+          { PLC:LI03, OD01 }
+          { PLC:LI04, OD01 }
+          { PLC:LI05, OD01 }
+          { PLC:LI06, OD01 }
+          { PLC:LI07, OD01 }
+          { PLC:LI08, OD01 }
+}
+
+file archive_SR.tpl-arch
+{
+pattern   { IOC            }
+          { SIOC:SYS0:OD01 }
+}
+
+file archive_iocAdmin.tpl-arch
+{
+    pattern { IOC            }
+            { SIOC:CP00:OD01 }
+}
+
+# End of file

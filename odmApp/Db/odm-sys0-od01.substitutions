@@ -1,29 +1,29 @@
 file MO2i.template
 {
 pattern	{ PRIM, LOCA, UNIT, PORT,         SCAN      }
-		{ ODM,  LI00, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI01, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI02, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI03, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI04, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI05, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI06, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI07, 1,    OXI_$(LOCA), "1 second" }
-		{ ODM,  LI08, 1,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI00, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI01, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI02, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI03, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI04, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI05, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI06, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI07, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI08, 100,    OXI_$(LOCA), "1 second" }
 }
 
 file odm-oxigraf-alias.template
 {
-pattern	{ PRIM, LOCA }
-		{ ODM,  LI00 }
-		{ ODM,  LI01 }
-		{ ODM,  LI02 }
-		{ ODM,  LI03 }
-		{ ODM,  LI04 }
-		{ ODM,  LI05 }
-		{ ODM,  LI06 }
-		{ ODM,  LI07 }
-		{ ODM,  LI08 }
+pattern	{ LOCA }
+		{ LI00 }
+		{ LI01 }
+		{ LI02 }
+		{ LI03 }
+		{ LI04 }
+		{ LI05 }
+		{ LI06 }
+		{ LI07 }
+		{ LI08 }
 }
 
 file asynRecord.db

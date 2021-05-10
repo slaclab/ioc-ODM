@@ -22,11 +22,11 @@
 #                       unsigned int priority,
 #                       int noAutoConnect,
 #                       int noProcessEos);
-drvAsynIPPortConfigure ("ODM_$(LOCA)", "$(ODM_NODE):502"   ,0,0,0)
+drvAsynIPPortConfigure ("ODM_$(SECTOR)", "plc-$(SECTOR)-od01:502"   ,0,0,0)
 
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
-modbusInterposeConfig ("ODM_$(LOCA)", 0, 250, 0)
+modbusInterposeConfig ("ODM_$(SECTOR)", 0, 250, 0)
 
 
 #drvModbusAsynConfigure(portName,
@@ -73,9 +73,10 @@ modbusInterposeConfig ("ODM_$(LOCA)", 0, 250, 0)
 # PILZ PLC MODBUS ASYN Configuration for ODMs
 
 ## ODM
-drvModbusAsynConfigure ("ODM_$(LOCA)_RD",  "ODM_$(LOCA)", 1, 1,  0, 160,  0,  250, "PILZ")
-drvModbusAsynConfigure ("ODM_$(LOCA)_WD",  "ODM_$(LOCA)", 1, 3,  0, 10,  0,   250, "PILZ")
-drvModbusAsynConfigure ("ODM_$(LOCA)_WRT", "ODM_$(LOCA)", 1, 5,  16384 , 48,  0,  250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_RD",  "ODM_$(SECTOR)", 1, 1,  0, 160,  0,  250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WD",  "ODM_$(SECTOR)", 1, 3,  0, 10,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WRT", "ODM_$(SECTOR)", 1, 5,  16384 , 48,  0,  250, "PILZ")
 
+dbLoadRecords("${TOP}/db/odm-sys0-pilz.db", "SECTOR=$(SECTOR)")
 # End of script
 

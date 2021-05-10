@@ -32,7 +32,7 @@ epicsEnvSet("IOC","sioc-sys0-od01")
 # Initialize Modbus communications
 cd ${IOC_BOOT}
 iocshLoad( "init_MO2i_asyn.cmd")
-#iocshLoad( "init_pilz_asyn.cmd", "LOCA=LI00,ODM_NODE=plc-li00-od01")
+iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI00")
 cd ${TOP}
 
 # Load Additional databases:

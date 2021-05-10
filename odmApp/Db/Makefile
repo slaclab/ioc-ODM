@@ -19,6 +19,7 @@ DB_INSTALLS += $(MODBUS)/db/statistics.template
 IOCRELEASE_DB += iocRelease.db
 
 #DB += xxx.db
+DB += odm-sys0-pilz.db
 DB += odm-sys0-od01.db
 DB += odm-cp00.db
 DB += odm-test.db

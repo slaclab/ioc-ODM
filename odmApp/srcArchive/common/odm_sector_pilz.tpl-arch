@@ -1,0 +1,69 @@
+
+# Archive List for ODM per-sector Pilz signals
+#
+# Signal Name    Period (sec)    Type
+
+ODM:$(SECTOR):101:Air:FaultStatus 1 monitor
+ODM:$(SECTOR):101:Air:FaultLatched 1 monitor
+ODM:$(SECTOR):102:Air:FaultStatus 1 monitor
+ODM:$(SECTOR):102:Air:FaultLatched 1 monitor
+ODM:$(SECTOR):103:Air:FaultStatus 1 monitor
+ODM:$(SECTOR):103:Air:FaultLatched 1 monitor
+ODM:$(SECTOR):104:Air:FaultStatus 1 monitor
+ODM:$(SECTOR):104:Air:FaultLatched 1 monitor
+ODM:$(SECTOR):100:SysReady 1 monitor
+ODM:$(SECTOR):100:SysReadyLatched 1 monitor
+ODM:$(SECTOR):100:AlarmMuteStatus 1 monitor
+ODM:$(SECTOR):100:StrobeStatus 1 monitor
+ODM:$(SECTOR):100:HornStatus 1 monitor
+ODM:$(SECTOR):100:KeyStatus 1 monitor
+ODM:$(SECTOR):101:Cell:KeyStatus 1 monitor
+ODM:$(SECTOR):102:Cell:KeyStatus 1 monitor
+ODM:$(SECTOR):101:DC:FaultStatus 1 monitor
+ODM:$(SECTOR):102:DC:FaultStatus 1 monitor
+ODM:$(SECTOR):101:DC:UpsFaultStatus 1 monitor
+ODM:$(SECTOR):102:DC:UpsFaultStatus 1 monitor
+ODM:$(SECTOR):100:AC:FaultStatus 1 monitor
+ODM:$(SECTOR):100:AOR:FaultStatus 1 monitor
+ODM:$(SECTOR):100:AHU:FaultStatus 1 monitor
+ODM:$(SECTOR):100:ACRAlarmStatus 1 monitor
+ODM:$(SECTOR):100:L1AlarmSum 1 monitor
+ODM:$(SECTOR):100:L2AlarmSum 1 monitor
+ODM:$(SECTOR):100:L1AlarmStatus 1 monitor
+ODM:$(SECTOR):100:L2AlarmStatus 1 monitor
+ODM:$(SECTOR):100:AOR:AlarmStatus 1 monitor
+ODM:$(SECTOR):100:AlarmReset 1 monitor
+ODM:$(SECTOR):100:Air:AlmarmByp 1 monitor
+ODM:$(SECTOR):101:Cell:AlmarmByp 1 monitor
+ODM:$(SECTOR):102:Cell:AlmarmByp 1 monitor
+ODM:$(SECTOR):100:AlarmMute 1 monitor
+ODM:$(SECTOR):100:Ahu:AlmarmByp 1 monitor
+
+PLC:$(SECTOR):OD01:HeartBeat 1 monitor
+PLC:$(SECTOR):OD01:TestMode 1 monitor
+PLC:$(SECTOR):OD01:REQ_TABLE 1 monitor
+PLC:$(SECTOR):OD01:TABLE_9_SEG_1 1 monitor
+PLC:$(SECTOR):OD01:TABLE_1_SEG_1 1 monitor
+PLC:$(SECTOR):OD01:REQ_TABLE_OUT 1 monitor
+PLC:$(SECTOR):OD01:REQ_SEG 1 monitor
+PLC:$(SECTOR):OD01:REQ_SEG_OUT 1 monitor
+PLC:$(SECTOR):OD01:LED_X1 1 monitor
+PLC:$(SECTOR):OD01:LED_X2 1 monitor
+PLC:$(SECTOR):OD01:PWLED 1 monitor
+PLC:$(SECTOR):OD01:RUNLED 1 monitor
+PLC:$(SECTOR):OD01:DIAGLED 1 monitor
+PLC:$(SECTOR):OD01:FAULTLED 1 monitor
+PLC:$(SECTOR):OD01:IFAULTLED 1 monitor
+PLC:$(SECTOR):OD01:OFAULTLED 1 monitor
+PLC:$(SECTOR):OD01:CHECKSUM_SAFE 1 monitor
+PLC:$(SECTOR):OD01:PROJ_CHECKSUM 1 monitor
+PLC:$(SECTOR):OD01:DAY_MONTH 1 monitor
+PLC:$(SECTOR):OD01:PROJ_MONTH 1 monitor
+PLC:$(SECTOR):OD01:PROJ_DAY 1 monitor
+PLC:$(SECTOR):OD01:PROJ_YEAR 1 monitor
+PLC:$(SECTOR):OD01:OP_HOURS 1 monitor
+PLC:$(SECTOR):OD01:BASE_MODEL 1 monitor
+
+
+
+

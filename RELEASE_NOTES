@@ -14,7 +14,8 @@
 R1.0.7        M. Dunning (mdunning)
 29-Apr-2021   Update bkhAsyn
 
-R1.0.6        ?
+R1.0.6        Garth Brown (GWBROWN):
+27-Apr-2021   Add linac IOC for Oxigraf and Pilz devices.
 
 R1.0.5        M. Dunning (mdunning)
 21-Apr-2021   Add support for sensor cell type O2 monitors, which are read out by Beckhoffs.
