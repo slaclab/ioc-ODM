@@ -26,7 +26,7 @@ pattern
 
 file statistics.template {
 pattern
-    {      P,    R, PORT,        SCAN}
-    {$(BKH):, Asyn, $(M), "10 second"}
+    {      P,      R, PORT,        SCAN}
+    {$(BKH):, Modbus, $(M), "10 second"}
 }
 
