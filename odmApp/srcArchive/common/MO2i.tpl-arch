@@ -11,7 +11,6 @@
 #   	Name of the Asyn port used to connect to the equipment.
 # Read 2 bytes containing 15 system status
 
-$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):SystemStatus 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):NonZeroStandbyStatus 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LineLockAcquired 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LaserEnabled 1 monitor
@@ -28,14 +27,14 @@ $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CellNullBalance 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LaserTempControl 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CellTemp 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):SampleFlow 10 scan
-$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):CO2MeasPct 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):PumpDrive 10 scan
+$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):SupplyV 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):ChannelIndex 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel0O2 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel1O2 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel2O2 10 scan
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):Channel3O2 10 scan
 # Read 2 bytes containing 15 alarm status
-$(DEVICE=$(PRIM):$(LOCA):$(UNIT)):AlarmStatus 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowO2AlarmA 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):HighO2AlarmA 1 monitor
 $(DEVICE=$(PRIM):$(LOCA):$(UNIT)):LowO2AlarmB 1 monitor
