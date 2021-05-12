@@ -41,11 +41,11 @@ file pilz-plc-bo.template
 {
   pattern{ dtype, areapos,  attribute,           description,                               zname,  oname,   zsv,       osv,    port,              bit }
          { ODM,$(SECTOR):100,AlarmReset,         "Alarm Reset",                             Normal, Reset,   NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  7   }
-         { ODM,$(SECTOR):100,Air:AlmarmByp,      "Oxigraf 1 Disable Request",               Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  6   }
-         { ODM,$(SECTOR):101,Cell:AlmarmByp,     "Oldham Sensor Cell 1 Disable Request",    Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  5   }
-         { ODM,$(SECTOR):102,Cell:AlmarmByp,     "Oldham Sensor Cell 2 Disable Request",    Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  4   }
+         { ODM,$(SECTOR):100,Air:AlarmByp,      "Oxigraf 1 Disable Request",               Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  6   }
+         { ODM,$(SECTOR):101,Cell:AlarmByp,     "Oldham Sensor Cell 1 Disable Request",    Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  5   }
+         { ODM,$(SECTOR):102,Cell:AlarmByp,     "Oldham Sensor Cell 2 Disable Request",    Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  4   }
          { ODM,$(SECTOR):100,AlarmMute,          "Alarm Mute Request",                      Normal, Request, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  3   }
-         { ODM,$(SECTOR):100,Ahu:AlmarmByp,      "Air Handling unit DP sw Disable Request", Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  2   }
+         { ODM,$(SECTOR):100,Ahu:AlarmByp,      "Air Handling unit DP sw Disable Request", Normal, Disable, NO_ALARM,  MAJOR,  ODM_$(SECTOR)_WT,  2   }
 }
 
 file "pilz-plc-request.template"

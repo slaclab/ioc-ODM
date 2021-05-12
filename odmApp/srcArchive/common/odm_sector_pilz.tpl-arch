@@ -33,11 +33,11 @@ ODM:$(SECTOR):100:L1AlarmStatus 1 monitor
 ODM:$(SECTOR):100:L2AlarmStatus 1 monitor
 ODM:$(SECTOR):100:AOR:AlarmStatus 1 monitor
 ODM:$(SECTOR):100:AlarmReset 1 monitor
-ODM:$(SECTOR):100:Air:AlmarmByp 1 monitor
-ODM:$(SECTOR):101:Cell:AlmarmByp 1 monitor
-ODM:$(SECTOR):102:Cell:AlmarmByp 1 monitor
+ODM:$(SECTOR):100:Air:AlarmByp 1 monitor
+ODM:$(SECTOR):101:Cell:AlarmByp 1 monitor
+ODM:$(SECTOR):102:Cell:AlarmByp 1 monitor
 ODM:$(SECTOR):100:AlarmMute 1 monitor
-ODM:$(SECTOR):100:Ahu:AlmarmByp 1 monitor
+ODM:$(SECTOR):100:Ahu:AlarmByp 1 monitor
 
 PLC:$(SECTOR):OD01:HeartBeat 1 monitor
 PLC:$(SECTOR):OD01:TestMode 1 monitor
