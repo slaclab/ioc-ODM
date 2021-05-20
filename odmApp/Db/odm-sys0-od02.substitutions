@@ -1,0 +1,35 @@
+
+file bkh_odm_common.db {
+pattern
+    {            P,     M,       LOC}
+    {BKH:LI00:OD01, BKH01, L2KA01-08}
+    {BKH:LI01:OD01, BKH02, L2KA01-08}
+    {BKH:LI02:OD01, BKH03, L2KA02-09}
+    {BKH:LI03:OD01, BKH04, L2KA03-07}
+    {BKH:LI04:OD01, BKH05, L2KA04-06}
+    {BKH:LI05:OD01, BKH06, L2KA05-07}
+    {BKH:LI06:OD01, BKH07, L2KA06-08}
+    {BKH:LI07:OD01, BKH08, L2KA07-03}
+}
+
+file bkh_odm_supervisor.db {
+pattern
+    {            P,     M,       LOC}
+    {BKH:LI03:OD02, BKH09, L2KA03-07}
+}
+
+file ai_convert_autosave.template {
+pattern
+    {                          INPV,                OUTPV,                   DESC,    C0,    C1, EGU, PREC, LOLO,  LOW, HIGH, HIHI,     LLSV,      LSV,      HSV,     HHSV}
+    {"BKH:LI01:OD01:3012_01_CH01_I", "ODM:LI01:1:Cell:O2", "Sector 01, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI01:OD01:3012_01_CH02_I", "ODM:LI01:2:Cell:O2", "Sector 01, Sensor 02",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI02:OD01:3012_01_CH01_I", "ODM:LI02:1:Cell:O2", "Sector 02, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI02:OD01:3012_01_CH02_I", "ODM:LI02:2:Cell:O2", "Sector 02, Sensor 02",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD01:3012_01_CH01_I", "ODM:LI03:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI04:OD01:3012_01_CH01_I", "ODM:LI04:1:Cell:O2", "Sector 04, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI04:OD01:3012_01_CH02_I", "ODM:LI04:2:Cell:O2", "Sector 04, Sensor 02",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI05:OD01:3012_01_CH01_I", "ODM:LI05:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI06:OD01:3012_01_CH01_I", "ODM:LI06:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI07:OD01:3012_01_CH01_I", "ODM:LI07:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+}
+

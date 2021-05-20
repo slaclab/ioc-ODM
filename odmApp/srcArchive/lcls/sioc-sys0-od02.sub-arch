@@ -2,8 +2,6 @@
 file one_sec_monitor.tpl-arch {
 pattern
 	{name}
-	{ODM:LI00:1:Cell:Spare}
-	{ODM:LI00:2:Cell:Spare}
 	{BKH:LI00:OD01:3012_01_ERROR}
 	{BKH:LI00:OD01:Error}
 	{ODM:LI01:1:Cell:O2}
@@ -15,7 +13,6 @@ pattern
 	{BKH:LI02:OD01:3012_01_ERROR}
 	{BKH:LI02:OD01:Error}
 	{ODM:LI03:1:Cell:O2}
-	{ODM:LI03:2:Cell:Spare}
 	{BKH:LI03:OD01:3012_01_ERROR}
 	{BKH:LI03:OD01:Error}
 	{ODM:LI04:1:Cell:O2}
@@ -23,15 +20,12 @@ pattern
 	{BKH:LI04:OD01:3012_01_ERROR}
 	{BKH:LI04:OD01:Error}
 	{ODM:LI05:1:Cell:O2}
-	{ODM:LI05:2:Cell:Spare}
 	{BKH:LI05:OD01:3012_01_ERROR}
 	{BKH:LI05:OD01:Error}
 	{ODM:LI06:1:Cell:O2}
-	{ODM:LI06:2:Cell:Spare}
 	{BKH:LI06:OD01:3012_01_ERROR}
 	{BKH:LI06:OD01:Error}
 	{ODM:LI07:1:Cell:O2}
-	{ODM:LI07:2:Cell:Spare}
 	{BKH:LI07:OD01:3012_01_ERROR}
 	{BKH:LI07:OD01:Error}
     {ODM:LI03:OD02:CH01}

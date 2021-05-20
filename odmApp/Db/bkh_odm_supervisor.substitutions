@@ -27,32 +27,32 @@ pattern
 # Not needed for digitial I/O modules
 #file readwrite.db {
 #pattern
-#    {     P,     MOD,         PORT}
-#    {$(BKH), 3012_01, $(M)_3012_01}
+#    {    MOD,         PORT}
+#    {3012_01, $(M)_3012_01}
 #}
 
 file bkhAErr.db {
 pattern
-    {     P,     MOD,         PORT}
-    {$(BKH), 1104_01, $(M)_1104_01}
+    {    MOD,         PORT}
+    {1104_01, $(M)_1104_01}
 }
 
 # For bus coupler
 file bk9000.db {
 pattern
-    {     P,      DPORT,        RPORT,        WPORT}
-    {$(BKH), $(M)_DEBUG, $(M)_BK9000R, $(M)_BK9000W}
+    {     DPORT,        RPORT,        WPORT}
+    {$(M)_DEBUG, $(M)_BK9000R, $(M)_BK9000W}
 }
 
 file asynRecord.db {
 pattern
-    {      P,    R, PORT, ADDR, IMAX, OMAX}
-    {$(BKH):, Asyn, $(M),    0,    0,    0}
+    {      R, PORT, ADDR, IMAX, OMAX}
+    {":Asyn", $(M),    0,    0,    0}
 }
 
 file statistics.template {
 pattern
-    {      P,      R, PORT,        SCAN}
-    {$(BKH):, Modbus, $(M), "10 second"}
+    {        R, PORT,        SCAN}
+    {":Modbus", $(M), "10 second"}
 }
 

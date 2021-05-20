@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.8        M. Dunning (mdunning)
+20-May-2021   Merge databases for sioc-sys0-od02 into single db; add current (mA) PVs
+
 R1.0.7        M. Dunning (mdunning)
 29-Apr-2021   Update bkhAsyn
 

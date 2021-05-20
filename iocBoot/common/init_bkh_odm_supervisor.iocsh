@@ -18,7 +18,6 @@ modbusInterposeConfig("$(BKH_PORT)_IP", 0, 1000)
 # drvMBusConfig(port, octetPort, slave, addr, len, dtype, msec)
 drvMBusConfig("$(BKH_PORT)", "$(BKH_PORT)_IP", 0, 0, 125, 0, 10)
 #
-#
 # # drvBkhAsynConfig(port, modbusPort, id, func, addr, len, nch, msec)
 # port is the asyn port name for the driver (pick a unique short name for each module)
 # modbusPort is the modbus port name used in drvMBusConfig()

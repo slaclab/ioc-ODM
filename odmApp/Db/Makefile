@@ -20,19 +20,12 @@ IOCRELEASE_DB += iocRelease.db
 
 #DB += xxx.db
 DB += odm-sys0-pilz.db
+DB += bkh_odm_common.db
+DB += bkh_odm_supervisor.db
 DB += odm-sys0-od01.db
+DB += odm-sys0-od02.db
 DB += odm-cp00.db
 DB += odm-test.db
-DB += bkh_odm_common.db
-DB += bkh_odm_li00.db
-DB += bkh_odm_li01.db
-DB += bkh_odm_li02.db
-DB += bkh_odm_li03.db
-DB += bkh_odm_supervisor.db
-DB += bkh_odm_li04.db
-DB += bkh_odm_li05.db
-DB += bkh_odm_li06.db
-DB += bkh_odm_li07.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
