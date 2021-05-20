@@ -28,8 +28,8 @@ pattern
     {"BKH:LI03:OD01:3012_01_CH01_I", "ODM:LI03:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
     {"BKH:LI04:OD01:3012_01_CH01_I", "ODM:LI04:1:Cell:O2", "Sector 04, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
     {"BKH:LI04:OD01:3012_01_CH02_I", "ODM:LI04:2:Cell:O2", "Sector 04, Sensor 02",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
-    {"BKH:LI05:OD01:3012_01_CH01_I", "ODM:LI05:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
-    {"BKH:LI06:OD01:3012_01_CH01_I", "ODM:LI06:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
-    {"BKH:LI07:OD01:3012_01_CH01_I", "ODM:LI07:1:Cell:O2", "Sector 03, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI05:OD01:3012_01_CH01_I", "ODM:LI05:1:Cell:O2", "Sector 05, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI06:OD01:3012_01_CH01_I", "ODM:LI06:1:Cell:O2", "Sector 06, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+    {"BKH:LI07:OD01:3012_01_CH01_I", "ODM:LI07:1:Cell:O2", "Sector 07, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
 }
 
