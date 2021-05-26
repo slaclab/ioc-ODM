@@ -18,6 +18,7 @@ pattern
     {BKH:LI03:OD02, BKH09, L2KA03-07}
 }
 
+# Conversions --------------------------------
 file ai_convert_autosave.template {
 pattern
     {                          INPV,                OUTPV,                   DESC,    C0,    C1, EGU, PREC, LOLO,  LOW, HIGH, HIHI,     LLSV,      LSV,      HSV,     HHSV}
@@ -31,5 +32,30 @@ pattern
     {"BKH:LI05:OD01:3012_01_CH01_I", "ODM:LI05:1:Cell:O2", "Sector 05, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
     {"BKH:LI06:OD01:3012_01_CH01_I", "ODM:LI06:1:Cell:O2", "Sector 06, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
     {"BKH:LI07:OD01:3012_01_CH01_I", "ODM:LI07:1:Cell:O2", "Sector 07, Sensor 01",  -7.5, 1.875, "%",    1, 19.0, 20.0, 23.0, 24.0, NO_ALARM, NO_ALARM, NO_ALARM, NO_ALARM}
+}
+
+file bi_convert.template {
+pattern
+    {                   INPV,                OUTPV,     DESC, ZNAM, ONAM,      ZSV,      OSV}
+    {"BKH:LI03:OD02:CH01 MS", "ODM:LI03:OD02:CH01", "Chan01",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH02 MS", "ODM:LI03:OD02:CH02", "Chan02",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH03 MS", "ODM:LI03:OD02:CH03", "Chan03",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH04 MS", "ODM:LI03:OD02:CH04", "Chan04",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH05 MS", "ODM:LI03:OD02:CH05", "Chan04",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH06 MS", "ODM:LI03:OD02:CH06", "Chan06",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH07 MS", "ODM:LI03:OD02:CH07", "Chan07",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH08 MS", "ODM:LI03:OD02:CH08", "Chan08",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH09 MS", "ODM:LI03:OD02:CH09", "Chan09",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH10 MS", "ODM:LI03:OD02:CH10", "Chan10",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH11 MS", "ODM:LI03:OD02:CH11", "Chan11",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH12 MS", "ODM:LI03:OD02:CH12", "Chan12",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH13 MS", "ODM:LI03:OD02:CH13", "Chan13",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH14 MS", "ODM:LI03:OD02:CH14", "Chan14",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH15 MS", "ODM:LI03:OD02:CH15", "Chan15",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH16 MS", "ODM:LI03:OD02:CH16", "Chan16",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH17 MS", "ODM:LI03:OD02:CH17", "Chan17",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH18 MS", "ODM:LI03:OD02:CH18", "Chan18",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH19 MS", "ODM:LI03:OD02:CH19", "Chan19",  Off,   On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:CH20 MS", "ODM:LI03:OD02:CH20", "Chan20",  Off,   On, NO_ALARM, NO_ALARM}
 }
 
