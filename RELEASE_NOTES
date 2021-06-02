@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.9        Garth Brown (GWBROWN):
+2-June-2021   Update Oxigraf module to release with corrected PREC and DESC fields.
+
 R1.0.8        M. Dunning (mdunning)
 20-May-2021   Merge databases for sioc-sys0-od02 into single db; add current (mA) PVs
 
