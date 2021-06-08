@@ -36,6 +36,7 @@ drvBkhAsynConfig("$(BKH_PORT)_BK9000W", "$(BKH_PORT)", 0, 3, 0x110a,  26, 26,   
 #
 # These are for the bus terminals
 drvBkhAsynConfig("$(BKH_PORT)_1104_01", "$(BKH_PORT)", 3, 2,      0,  20, 20,  250)
+drvBkhAsynConfig("$(BKH_PORT)_2114_01", "$(BKH_PORT)", 4, 5,      0,   4,  4,    0)
 
 # End of file
 
