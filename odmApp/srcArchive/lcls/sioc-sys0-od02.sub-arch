@@ -28,26 +28,18 @@ pattern
 	{ODM:LI07:1:Cell:O2}
 	{BKH:LI07:OD01:3012_01_ERROR}
 	{BKH:LI07:OD01:Error}
-    {ODM:LI03:OD02:CH01}
-    {ODM:LI03:OD02:CH02}
-    {ODM:LI03:OD02:CH03}
-    {ODM:LI03:OD02:CH04}
-    {ODM:LI03:OD02:CH05}
-    {ODM:LI03:OD02:CH06}
-    {ODM:LI03:OD02:CH07}
-    {ODM:LI03:OD02:CH08}
-    {ODM:LI03:OD02:CH09}
-    {ODM:LI03:OD02:CH10}
-    {ODM:LI03:OD02:CH11}
-    {ODM:LI03:OD02:CH12}
-    {ODM:LI03:OD02:CH13}
-    {ODM:LI03:OD02:CH14}
-    {ODM:LI03:OD02:CH15}
-    {ODM:LI03:OD02:CH16}
-    {ODM:LI03:OD02:CH17}
-    {ODM:LI03:OD02:CH18}
-    {ODM:LI03:OD02:CH19}
-    {ODM:LI03:OD02:CH20}
+    {ODM:LI01:1:Cell:AlarmStatus}
+    {ODM:LI01:2:Cell:AlarmStatus}
+    {ODM:LI02:1:Cell:AlarmStatus}
+    {ODM:LI02:2:Cell:AlarmStatus}
+    {ODM:LI03:1:Cell:AlarmStatus}
+    {ODM:LI04:1:Cell:AlarmStatus}
+    {ODM:LI04:2:Cell:AlarmStatus}
+    {ODM:LI05:1:Cell:AlarmStatus}
+    {ODM:LI06:1:Cell:AlarmStatus}
+    {ODM:LI07:1:Cell:AlarmStatus}
+    {ODM:SYS0:OD02:Cell:HrtbtAlarm}
+    {ODM:SYS0:OD02:Cell:AlarmReset}
 	{BKH:LI03:OD02:1104_01_ERROR}
 	{BKH:LI03:OD02:Error}
 }
