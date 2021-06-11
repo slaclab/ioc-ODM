@@ -11,6 +11,10 @@
 #  Mod
 #==============================================================
 
+R1.0.10       M. Dunning (mdunning)
+8-Jun-2021    Add real names for sensor cell supervisor PVs
+              Add KL2124 output module for supervisor alarm reset
+
 R1.0.9        Garth Brown (GWBROWN):
 2-June-2021   Update Oxigraf module to release with corrected PREC and DESC fields.
 

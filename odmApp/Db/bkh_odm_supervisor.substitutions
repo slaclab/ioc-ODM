@@ -1,27 +1,36 @@
 
 file bkhBi_simple.db {
 pattern
-    {ADDR,  ATTR,     DESC,         PORT,      ZSV,      OSV}
-    {   0, :CH01, "Chan01", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   1, :CH02, "Chan02", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   2, :CH03, "Chan03", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   3, :CH04, "Chan04", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   4, :CH05, "Chan05", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   5, :CH06, "Chan06", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   6, :CH07, "Chan07", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   7, :CH08, "Chan08", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   8, :CH09, "Chan09", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {   9, :CH10, "Chan10", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  10, :CH11, "Chan11", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  11, :CH12, "Chan12", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  12, :CH13, "Chan13", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  13, :CH14, "Chan14", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  14, :CH15, "Chan15", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  15, :CH16, "Chan16", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  16, :CH17, "Chan17", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  17, :CH18, "Chan18", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  18, :CH19, "Chan19", $(M)_1104_01, NO_ALARM, NO_ALARM}
-    {  19, :CH20, "Chan20", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {ADDR,          ATTR,     DESC,         PORT,      ZSV,      OSV}
+    {   0, :1104_01_CH01, "Chan01", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   1, :1104_01_CH02, "Chan02", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   2, :1104_01_CH03, "Chan03", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   3, :1104_01_CH04, "Chan04", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   4, :1104_01_CH05, "Chan05", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   5, :1104_01_CH06, "Chan06", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   6, :1104_01_CH07, "Chan07", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   7, :1104_01_CH08, "Chan08", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   8, :1104_01_CH09, "Chan09", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {   9, :1104_01_CH10, "Chan10", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  10, :1104_01_CH11, "Chan11", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  11, :1104_01_CH12, "Chan12", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  12, :1104_01_CH13, "Chan13", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  13, :1104_01_CH14, "Chan14", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  14, :1104_01_CH15, "Chan15", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  15, :1104_01_CH16, "Chan16", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  16, :1104_01_CH17, "Chan17", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  17, :1104_01_CH18, "Chan18", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  18, :1104_01_CH19, "Chan19", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  19, :1104_01_CH20, "Chan20", $(M)_1104_01, NO_ALARM, NO_ALARM}
+}
+
+file bkhBo_simple.db {
+pattern
+    {ADDR,          ATTR,     DESC,         PORT}
+    {   0, :2114_01_CH01, "Chan01", $(M)_2114_01}
+    {   1, :2114_01_CH02, "Chan02", $(M)_2114_01}
+    {   2, :2114_01_CH03, "Chan03", $(M)_2114_01}
+    {   3, :2114_01_CH04, "Chan04", $(M)_2114_01}
 }
 
 # Not needed for digitial I/O modules
@@ -35,6 +44,7 @@ file bkhAErr.db {
 pattern
     {    MOD,         PORT}
     {1104_01, $(M)_1104_01}
+    {2114_01, $(M)_2114_01}
 }
 
 # For bus coupler

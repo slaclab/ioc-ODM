@@ -36,26 +36,24 @@ pattern
 
 file bi_convert.template {
 pattern
-    {                   INPV,                OUTPV,     DESC, ZNAM, ONAM,      ZSV,      OSV}
-    {"BKH:LI03:OD02:CH01 MS", "ODM:LI03:OD02:CH01", "Chan01",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH02 MS", "ODM:LI03:OD02:CH02", "Chan02",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH03 MS", "ODM:LI03:OD02:CH03", "Chan03",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH04 MS", "ODM:LI03:OD02:CH04", "Chan04",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH05 MS", "ODM:LI03:OD02:CH05", "Chan04",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH06 MS", "ODM:LI03:OD02:CH06", "Chan06",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH07 MS", "ODM:LI03:OD02:CH07", "Chan07",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH08 MS", "ODM:LI03:OD02:CH08", "Chan08",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH09 MS", "ODM:LI03:OD02:CH09", "Chan09",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH10 MS", "ODM:LI03:OD02:CH10", "Chan10",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH11 MS", "ODM:LI03:OD02:CH11", "Chan11",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH12 MS", "ODM:LI03:OD02:CH12", "Chan12",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH13 MS", "ODM:LI03:OD02:CH13", "Chan13",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH14 MS", "ODM:LI03:OD02:CH14", "Chan14",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH15 MS", "ODM:LI03:OD02:CH15", "Chan15",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH16 MS", "ODM:LI03:OD02:CH16", "Chan16",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH17 MS", "ODM:LI03:OD02:CH17", "Chan17",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH18 MS", "ODM:LI03:OD02:CH18", "Chan18",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH19 MS", "ODM:LI03:OD02:CH19", "Chan19",  Off,   On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:CH20 MS", "ODM:LI03:OD02:CH20", "Chan20",  Off,   On, NO_ALARM, NO_ALARM}
+    {                           INPV,                           OUTPV,                         DESC,    ZNAM,  ONAM,      ZSV,      OSV}
+    {"BKH:LI03:OD02:1104_01_CH03 MS",   "ODM:LI01:1:Cell:AlarmStatus", "Sector 01, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH04 MS",   "ODM:LI01:2:Cell:AlarmStatus", "Sector 01, L2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH05 MS",   "ODM:LI02:1:Cell:AlarmStatus", "Sector 02, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH06 MS",   "ODM:LI02:2:Cell:AlarmStatus", "Sector 02, L2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH07 MS",   "ODM:LI03:1:Cell:AlarmStatus", "Sector 03, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH09 MS",   "ODM:LI04:1:Cell:AlarmStatus", "Sector 04, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH10 MS",   "ODM:LI04:2:Cell:AlarmStatus", "Sector 04, L2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH11 MS",   "ODM:LI05:1:Cell:AlarmStatus", "Sector 05, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH13 MS",   "ODM:LI06:1:Cell:AlarmStatus", "Sector 06, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH15 MS",   "ODM:LI07:1:Cell:AlarmStatus", "Sector 07, L1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH17 MS", "ODM:SYS0:OD02:Cell:HrtbtAlarm", "Supervisor heartbeat alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH18 MS",      "ODM:SYS0:OD02:Cell:Hrtbt",       "Supervisor heartbeat",     Off,    On, NO_ALARM, NO_ALARM}
+}
+
+file bo_convert.template {
+pattern
+    {                       OUTPV,                             INPV,                     DESC,    ZNAM,  ONAM, HIGH}
+    {"BKH:LI03:OD02:2114_01_CH01",  "ODM:SYS0:OD02:Cell:AlarmReset", "Supervisor alarm reset", Standby, Reset, 0.25}
 }
 
