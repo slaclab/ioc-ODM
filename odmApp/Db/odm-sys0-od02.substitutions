@@ -38,31 +38,31 @@ pattern
 # Supervisor
 file bi_convert.template {
 pattern
-    {                           INPV,                          OUTPV,                           DESC,    ZNAM,  ONAM,      ZSV,      OSV}
-    {"BKH:LI03:OD02:1104_01_CH01 MS",       "ODM:LI00:L1AlarmStatus", "Sec 00, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH02 MS",       "ODM:LI00:L2AlarmStatus", "Sec 00, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH03 MS",       "ODM:LI01:L1AlarmStatus", "Sec 01, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH04 MS",       "ODM:LI01:L2AlarmStatus", "Sec 01, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH05 MS",       "ODM:LI02:L1AlarmStatus", "Sec 02, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH06 MS",       "ODM:LI02:L2AlarmStatus", "Sec 02, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH07 MS",       "ODM:LI03:L1AlarmStatus", "Sec 03, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH08 MS",       "ODM:LI03:L2AlarmStatus", "Sec 03, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH09 MS",       "ODM:LI04:L1AlarmStatus", "Sec 04, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH10 MS",       "ODM:LI04:L2AlarmStatus", "Sec 04, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH11 MS",       "ODM:LI05:L1AlarmStatus", "Sec 05, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH12 MS",       "ODM:LI05:L2AlarmStatus", "Sec 05, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH13 MS",       "ODM:LI06:L1AlarmStatus", "Sec 06, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH14 MS",       "ODM:LI06:L2AlarmStatus", "Sec 06, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH15 MS",       "ODM:LI07:L1AlarmStatus", "Sec 07, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH16 MS",       "ODM:LI07:L2AlarmStatus", "Sec 07, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH17 MS", "ODM:SYS0:OD01:SuprHrtbtAlarm",   "Supervisor Heartbeat Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH18 MS",      "ODM:SYS0:OD01:SuprHrtbt",         "Supervisor Heartbeat",     Off,    On, NO_ALARM, NO_ALARM}
+    {                           INPV,                               OUTPV,                           DESC,    ZNAM,  ONAM,      ZSV,      OSV}
+    {"BKH:LI03:OD02:1104_01_CH01 MS",       "ODM:LI00:OD02:L1AlarmStatus", "Sec 00, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH02 MS",       "ODM:LI00:OD02:L2AlarmStatus", "Sec 00, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH03 MS",       "ODM:LI01:OD02:L1AlarmStatus", "Sec 01, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH04 MS",       "ODM:LI01:OD02:L2AlarmStatus", "Sec 01, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH05 MS",       "ODM:LI02:OD02:L1AlarmStatus", "Sec 02, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH06 MS",       "ODM:LI02:OD02:L2AlarmStatus", "Sec 02, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH07 MS",       "ODM:LI03:OD02:L1AlarmStatus", "Sec 03, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH08 MS",       "ODM:LI03:OD02:L2AlarmStatus", "Sec 03, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH09 MS",       "ODM:LI04:OD02:L1AlarmStatus", "Sec 04, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH10 MS",       "ODM:LI04:OD02:L2AlarmStatus", "Sec 04, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH11 MS",       "ODM:LI05:OD02:L1AlarmStatus", "Sec 05, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH12 MS",       "ODM:LI05:OD02:L2AlarmStatus", "Sec 05, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH13 MS",       "ODM:LI06:OD02:L1AlarmStatus", "Sec 06, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH14 MS",       "ODM:LI06:OD02:L2AlarmStatus", "Sec 06, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH15 MS",       "ODM:LI07:OD02:L1AlarmStatus", "Sec 07, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH16 MS",       "ODM:LI07:OD02:L2AlarmStatus", "Sec 07, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH17 MS", "ODM:SYS0:OD02:SuprHrtbtAlarm",   "Supervisor Heartbeat Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH18 MS",      "ODM:SYS0:OD02:SuprHrtbt",         "Supervisor Heartbeat",     Off,    On, NO_ALARM, NO_ALARM}
 }
 
 # Supervisor
 file bo_convert.template {
 pattern
     {                       OUTPV,                              INPV,                    DESC,    ZNAM,  ONAM, HIGH}
-    {"BKH:LI03:OD02:2114_01_CH01", "ODM:SYS0:OD01:SuprHrtbtAlmReset", "Heartbeat Alarm Reset", Standby, Reset, 0.25}
+    {"BKH:LI03:OD02:2114_01_CH01", "ODM:SYS0:OD02:SuprHrtbtAlmReset", "Heartbeat Alarm Reset", Standby, Reset, 0.25}
 }
 
