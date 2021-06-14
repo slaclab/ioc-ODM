@@ -12,7 +12,7 @@
 #==============================================================
 
 R1.0.10       M. Dunning (mdunning)
-8-Jun-2021    Add real names for sensor cell supervisor PVs
+8-Jun-2021    Add real names for supervisor PVs
               Add KL2124 output module for supervisor alarm reset
 
 R1.0.9        Garth Brown (GWBROWN):
