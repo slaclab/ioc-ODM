@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.11       Garth Brown (GWBROWN):
+2-June-2021   Fix can't push linac PLC buttons.
+
 R1.0.10       M. Dunning (mdunning)
 8-Jun-2021    Add real names for supervisor PVs
               Add KL2124 output module for supervisor alarm reset
