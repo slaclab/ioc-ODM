@@ -2,7 +2,7 @@
 # Archive List for ODM per-sector Pilz signals
 #
 # Signal Name    Period (sec)    Type
-
+#Inputs
 ODM:$(SECTOR):101:Air:FaultStatus 1 monitor
 ODM:$(SECTOR):101:Air:FaultLatched 1 monitor
 ODM:$(SECTOR):102:Air:FaultStatus 1 monitor
@@ -32,6 +32,22 @@ ODM:$(SECTOR):100:L2AlarmSum 1 monitor
 ODM:$(SECTOR):100:L1AlarmStatus 1 monitor
 ODM:$(SECTOR):100:L2AlarmStatus 1 monitor
 ODM:$(SECTOR):100:AOR:AlarmStatus 1 monitor
+PLC:$(SECTOR):OD01:TestMode 1 monitor
+ODM:$(SECTOR):100:AHU:FaultLatched 1 monitor
+ODM:$(SECTOR):101:Cell:FaultLatched 1 monitor
+ODM:$(SECTOR):101:Cell:L1AlarmLatched 1 monitor
+ODM:$(SECTOR):101:Cell:L2AlarmLatched 1 monitor
+ODM:$(SECTOR):102:Cell:FaultLatched 1 monitor
+ODM:$(SECTOR):102:Cell:L1AlarmLatched 1 monitor
+ODM:$(SECTOR):102:Cell:L2AlarmLatched 1 monitor
+ODM:$(SECTOR):101:Cell:FaultStatus 1 monitor
+ODM:$(SECTOR):101:Cell:L1AlarmStatus 1 monitor
+ODM:$(SECTOR):101:Cell:L2AlarmStatus 1 monitor
+ODM:$(SECTOR):102:Cell:FaultStatus 1 monitor
+ODM:$(SECTOR):102:Cell:L1AlarmStatus 1 monitor
+ODM:$(SECTOR):102:Cell:L2AlarmStatus 1 monitor
+
+#Outputs
 ODM:$(SECTOR):100:AlarmReset 1 monitor
 ODM:$(SECTOR):100:Air:AlarmByp 1 monitor
 ODM:$(SECTOR):101:Cell:AlarmByp 1 monitor
@@ -39,6 +55,7 @@ ODM:$(SECTOR):102:Cell:AlarmByp 1 monitor
 ODM:$(SECTOR):100:AlarmMute 1 monitor
 ODM:$(SECTOR):100:Ahu:AlarmByp 1 monitor
 
+# PLC status
 PLC:$(SECTOR):OD01:HeartBeat 1 monitor
 PLC:$(SECTOR):OD01:TestMode 1 monitor
 PLC:$(SECTOR):OD01:REQ_TABLE 1 monitor
