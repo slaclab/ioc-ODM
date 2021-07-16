@@ -35,7 +35,7 @@ file pilz-plc-bi-table9seg1.template
          { ODM,$(SECTOR):100,L2AlarmStatus,           "L2 Alarm from Pilz, <18% O2",           NO_ALARM,      ALARM,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_RD,  91,   PLC:$(SECTOR):OD01 }
          { ODM,$(SECTOR):100,AOR:AlarmStatus,         "AOR DP Switch fault & No PPS Clear",    Normal,        Alert,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_RD,  90,   PLC:$(SECTOR):OD01 }
          { PLC,$(SECTOR):OD01,TestMode,               "PLC in Test mode from Supervisor",      Normal,        Test,       NO_ALARM,  MAJOR,     ODM_$(SECTOR)_RD,  89,   PLC:$(SECTOR):OD01 }
-         { ODM,$(SECTOR):100,PWR:FaultLatched,        "Power Fault Latch",                     Not_Latched,   Latched,    MAJOR,  NO_ALARM,     ODM_$(SECTOR)_RD,  103,  PLC:$(SECTOR):OD01 }
+         { ODM,$(SECTOR):100,Pwr:FaultLatched,        "Power Fault Latch",                     Not_Latched,   Latched,    MAJOR,  NO_ALARM,     ODM_$(SECTOR)_RD,  103,  PLC:$(SECTOR):OD01 }
          { ODM,$(SECTOR):101,DC:FaultStatus,          "Power Supply 1 DC OK Real",             Fault,         Ok,         MAJOR,  NO_ALARM,     ODM_$(SECTOR)_RD,  125,  PLC:$(SECTOR):OD01 }
          { ODM,$(SECTOR):102,DC:FaultStatus,          "Power Supply 2 DC OK Real",             Fault,         Ok,         MAJOR,  NO_ALARM,     ODM_$(SECTOR)_RD,  124,  PLC:$(SECTOR):OD01 }
          { ODM,$(SECTOR):101,DC:UpsFaultStatus,       "UPS1 DC OK Real",                       Fault,         Ok,         MAJOR,  NO_ALARM,     ODM_$(SECTOR)_RD,  123,  PLC:$(SECTOR):OD01 }
