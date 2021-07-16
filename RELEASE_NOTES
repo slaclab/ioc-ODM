@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.12       Garth Brown (GWBROWN):
+15-Jul-2021   Add real time power status signals.
+
 R1.0.11       Garth Brown (GWBROWN):
 2-June-2021   Fix can't push linac PLC buttons.
 
