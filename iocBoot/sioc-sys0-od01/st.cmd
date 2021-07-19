@@ -48,6 +48,8 @@ dbLoadRecords("db/odm-sys0-od01.db")
 
 # Setup autosave/restore
 < iocBoot/common/init_restore.cmd.soft
+# Also save-restore alarm reset high
+set_pass0_restoreFile("SIOC-SYS0-OD01.sav")
 # Initialize caPutLog
 caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
 # Start autosave routines to save our data
