@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.13       Garth Brown (GWBROWN):
+19-Jul-2021   Tie all alarm resets to one PV that stays high for 1 second.
+
 R1.0.12       Garth Brown (GWBROWN):
 15-Jul-2021   Add real time power status signals.
 

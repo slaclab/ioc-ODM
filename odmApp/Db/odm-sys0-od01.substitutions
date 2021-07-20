@@ -32,4 +32,9 @@ pattern{ P               , R          , PORT, ADDR, IMAX, OMAX }
 		{ SIOC:LI00:OD01:, ASYNDRIVER , OXI_LI00,  0,0, 0    }
 }
 
+file sioc-sys0-od01.db
+{
+  {NULL=NULL}
+}
+
 
