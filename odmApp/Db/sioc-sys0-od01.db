@@ -20,3 +20,26 @@ record(dfanout, "ODM:SYS0:100:AlarmResetFan2") {
   field(OUTB, "ODM:LI08:100:AlarmReset PP")
   field(OUTC, "ODM:SYS0:OD02:SuprHrtbtAlmReset PP")
 }
+
+record( bo, "ODM:SYS0:100:AlarmMute")
+{
+  field(OUT, "ODM:SYS0:100:AlarmMuteFan1 PP")
+  field(HIGH, 1)
+}
+
+record(dfanout, "ODM:SYS0:100:AlarmMuteFan1") {
+  field(OUTA, "ODM:LI00:100:AlarmMute PP")
+  field(OUTB, "ODM:LI01:100:AlarmMute PP")
+  field(OUTC, "ODM:LI02:100:AlarmMute PP")
+  field(OUTD, "ODM:LI03:100:AlarmMute PP")
+  field(OUTE, "ODM:LI04:100:AlarmMute PP")
+  field(OUTF, "ODM:LI05:100:AlarmMute PP")
+  field(OUTG, "ODM:LI06:100:AlarmMute PP")
+  field(OUTH, "ODM:SYS0:100:AlarmMuteFan2 PP")
+}
+
+record(dfanout, "ODM:SYS0:100:AlarmMuteFan2") {
+  field(OUTA, "ODM:LI07:100:AlarmMute PP")
+  field(OUTB, "ODM:LI08:100:AlarmMute PP")
+  field(OUTC, "ODM:SYS0:OD02:SuprHrtbtAlmMute PP")
+}
