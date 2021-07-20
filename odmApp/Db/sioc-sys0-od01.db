@@ -41,5 +41,4 @@ record(dfanout, "ODM:SYS0:100:AlarmMuteFan1") {
 record(dfanout, "ODM:SYS0:100:AlarmMuteFan2") {
   field(OUTA, "ODM:LI07:100:AlarmMute PP")
   field(OUTB, "ODM:LI08:100:AlarmMute PP")
-  field(OUTC, "ODM:SYS0:OD02:SuprHrtbtAlmMute PP")
 }
