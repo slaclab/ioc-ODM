@@ -47,6 +47,14 @@ pattern
     {ODM:SYS0:OD02:SuprHrtbtAlarm}
     {ODM:SYS0:OD02:SuprHrtbt}
     {ODM:SYS0:OD02:SuprHrtbtAlmReset}
+    {ODM:LI00:OD02:PilzHBAlarm}
+    {ODM:LI01:OD02:PilzHBAlarm}
+    {ODM:LI02:OD02:PilzHBAlarm}
+    {ODM:LI03:OD02:PilzHBAlarm}
+    {ODM:LI04:OD02:PilzHBAlarm}
+    {ODM:LI05:OD02:PilzHBAlarm}
+    {ODM:LI06:OD02:PilzHBAlarm}
+    {ODM:LI07:OD02:PilzHBAlarm}
 	{BKH:LI03:OD02:1104_01_ERROR}
 	{BKH:LI03:OD02:Error}
 }
