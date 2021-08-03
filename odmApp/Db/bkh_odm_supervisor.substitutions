@@ -22,6 +22,14 @@ pattern
     {  17, :1104_01_CH18, "Chan18", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  18, :1104_01_CH19, "Chan19", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  19, :1104_01_CH20, "Chan20", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  20, :1104_01_CH21, "Chan21", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  21, :1104_01_CH22, "Chan22", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  22, :1104_01_CH23, "Chan23", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  23, :1104_01_CH24, "Chan24", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  24, :1104_01_CH25, "Chan25", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  25, :1104_01_CH26, "Chan26", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  26, :1104_01_CH27, "Chan27", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  27, :1104_01_CH28, "Chan28", $(M)_1104_01, NO_ALARM, NO_ALARM}
 }
 
 file bkhBo_simple.db {
