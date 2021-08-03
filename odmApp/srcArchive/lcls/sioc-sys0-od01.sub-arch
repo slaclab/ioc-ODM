@@ -15,15 +15,15 @@ pattern	{ SECTOR }
 file MO2i.tpl-arch
 {
 pattern	{ PRIM, LOCA, UNIT }
-		{ ODM,  LI00, 1,   }
-		{ ODM,  LI01, 1,   }
-		{ ODM,  LI02, 1,   }
-		{ ODM,  LI03, 1,   }
-		{ ODM,  LI04, 1,   }
-		{ ODM,  LI05, 1,   }
-		{ ODM,  LI06, 1,   }
-		{ ODM,  LI07, 1,   }
-		{ ODM,  LI08, 1,   }
+		{ ODM,  LI00, 100   }
+		{ ODM,  LI01, 100   }
+		{ ODM,  LI02, 100   }
+		{ ODM,  LI03, 100   }
+		{ ODM,  LI04, 100   }
+		{ ODM,  LI05, 100   }
+		{ ODM,  LI06, 100   }
+		{ ODM,  LI07, 100   }
+		{ ODM,  LI08, 100   }
 }
 
 file odm_pilz_diags.tpl-arch
