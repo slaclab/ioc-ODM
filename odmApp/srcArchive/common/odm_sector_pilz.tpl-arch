@@ -19,13 +19,16 @@ ODM:$(SECTOR):100:HornStatus 1 monitor
 ODM:$(SECTOR):100:KeyStatus 1 monitor
 ODM:$(SECTOR):101:Cell:KeyStatus 1 monitor
 ODM:$(SECTOR):102:Cell:KeyStatus 1 monitor
-ODM:$(SECTOR):101:DC:FaultStatus 1 monitor
-ODM:$(SECTOR):102:DC:FaultStatus 1 monitor
-ODM:$(SECTOR):101:DC:UpsFaultStatus 1 monitor
-ODM:$(SECTOR):102:DC:UpsFaultStatus 1 monitor
-ODM:$(SECTOR):100:AC:FaultStatus 1 monitor
+
+ODM:$(SECTOR):101:DC:FaultLatched 1 monitor
+ODM:$(SECTOR):102:DC:FaultLatched 1 monitor
+ODM:$(SECTOR):101:DC:UpsFaultLatched 1 monitor
+ODM:$(SECTOR):102:DC:UpsFaultLatched 1 monitor
+ODM:$(SECTOR):100:AC:FaultLatched 1 monitor
 ODM:$(SECTOR):100:AOR:FaultStatus 1 monitor
 ODM:$(SECTOR):100:AHU:FaultStatus 1 monitor
+PLC:$(SECTOR):OD01:HeartBeat 1 monitor
+
 ODM:$(SECTOR):100:ACRAlarmStatus 1 monitor
 ODM:$(SECTOR):100:L1AlarmSum 1 monitor
 ODM:$(SECTOR):100:L2AlarmSum 1 monitor
@@ -33,6 +36,11 @@ ODM:$(SECTOR):100:L1AlarmStatus 1 monitor
 ODM:$(SECTOR):100:L2AlarmStatus 1 monitor
 ODM:$(SECTOR):100:AOR:AlarmStatus 1 monitor
 PLC:$(SECTOR):OD01:TestMode 1 monitor
+ODM:$(SECTOR):100:Pwr:FaultLatched 1 monitor
+ODM:$(SECTOR):101:DC:FaultStatus 1 monitor
+ODM:$(SECTOR):102:DC:FaultStatus 1 monitor
+ODM:$(SECTOR):101:DC:UpsFaultStatus 1 monitor
+ODM:$(SECTOR):100:AC:FaultStatus 1 monitor
 ODM:$(SECTOR):100:AHU:FaultLatched 1 monitor
 ODM:$(SECTOR):101:Cell:FaultLatched 1 monitor
 ODM:$(SECTOR):101:Cell:L1AlarmLatched 1 monitor
