@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.15       Garth Brown (GBROWN)
+25-Oct-2021   State name and severity changes for more intuitive interface.
+
 R1.0.14       M. Dunning (mdunning)
 21-Jul-2021   Add beckhoff inputs to monitor each sector's pilz HB
 
