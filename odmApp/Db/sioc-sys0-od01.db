@@ -28,7 +28,7 @@ record( bo, "ODM:SYS0:100:AlarmMute")
   field(OUT, "ODM:SYS0:100:AlarmMuteFan1 PP")
   field(HIGH, 1)
   field(ZNAM,"Normal")
-  field(ONAM,"Request")
+  field(ONAM,"Mute")
 
 }
 
