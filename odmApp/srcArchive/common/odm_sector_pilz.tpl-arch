@@ -16,7 +16,7 @@ ODM:$(SECTOR):100:SysReadyLatched 1 monitor
 ODM:$(SECTOR):100:AlarmMuteStatus 1 monitor
 ODM:$(SECTOR):100:StrobeStatus 1 monitor
 ODM:$(SECTOR):100:HornStatus 1 monitor
-ODM:$(SECTOR):100:KeyStatus 1 monitor
+ODM:$(SECTOR):100:Air:KeyStatus 1 monitor
 ODM:$(SECTOR):101:Cell:KeyStatus 1 monitor
 ODM:$(SECTOR):102:Cell:KeyStatus 1 monitor
 
@@ -36,6 +36,7 @@ ODM:$(SECTOR):100:L1AlarmStatus 1 monitor
 ODM:$(SECTOR):100:L2AlarmStatus 1 monitor
 ODM:$(SECTOR):100:AOR:AlarmStatus 1 monitor
 PLC:$(SECTOR):OD01:TestMode 1 monitor
+ODM:$(SECTOR):100:PpsClear 1 monitor
 ODM:$(SECTOR):100:Pwr:FaultLatched 1 monitor
 ODM:$(SECTOR):101:DC:FaultStatus 1 monitor
 ODM:$(SECTOR):102:DC:FaultStatus 1 monitor
