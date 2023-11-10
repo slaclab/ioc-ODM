@@ -11,13 +11,26 @@ record(bi, "$(plc):Bi$(bit)") {
   field(INP, "@asynMask($(port), $(bit), 1, 1)")
   field(ZNAM, "$(zname)")
   field(ONAM, "$(oname)")
-  field(FLNK, "$(dtype):$(areapos):$(attribute)_calc PP MS")
+  field(FLNK, "$(dtype):$(areapos):$(attribute)_calc PP NMS")
+  field(ASG,  "Internal")
+}
+
+record(calcout, "$(plc):Bi$(bit)Valid") {
+  field(INPA, "$(plc):Bi$(bit).SEVR NPP NMS")
+  field(CALC, "A=3?VAL+1:0")
+#Go invalid if input is invalid for 3 seconds
+  field(HIHI, 9)
+  field(HHSV, "INVALID")
+  field(OUT, "$(dtype):$(areapos):$(attribute)_calc.C PP MSI")
+  field(SCAN, "1 second")
   field(ASG,  "Internal")
 }
 
 record(calcout, "$(dtype):$(areapos):$(attribute)_calc") {
-  field(INPA, "$(plc):Bi$(bit) NPP MS")
-  field(INPB, "$(plc):TABLE_9_SEG_1 CP MS")
+  field(INPA, "$(plc):Bi$(bit) NPP NMS")
+  field(INPB, "$(plc):TABLE_9_SEG_1 CP NMS")
+# Input C is for setting invalid severity, not used otherwise
+  field(INPC, "$(plc):Bi$(bit)Valid NPP MSI")
   field(CALC, "B")
   field(OCAL, "A")
   field(DOPT, "Use OCAL")
