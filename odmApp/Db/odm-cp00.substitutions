@@ -93,7 +93,7 @@ file pilz-plc-bi-table9seg1.template
 	{ ODM, CP00,     L1_ALARM,      "L1 Alarm",                          ODM_RD,      147, NO_L1_ALARM,   L1_ALARM,            NO_ALARM,   MINOR, PLC:CP00:OD01 }
 #	level 2 alarm
 	{ ODM, CP00,     L2_ALARM,      "L2 Alarm",                          ODM_RD,      146, NO_L2_ALARM,   L2_ALARM,            NO_ALARM,   MAJOR, PLC:CP00:OD01 }
-	{ ODM, CP00,     HEARTBEAT,     "PLC Heart Beat",                    ODM_RD,      145, LOW,           HIGH,                MAJOR,   NO_ALARM, PLC:CP00:OD01 }
+	{ ODM, CP00,     HEARTBEAT,     "PLC Heart Beat",                    ODM_RD,      145, LOW,           HIGH,                NO_ALARM,NO_ALARM, PLC:CP00:OD01 }
 	{ ODM, CP00,     ACR_ALARM,     "ACR Alarm",                         ODM_RD,      144, NO_ACR_ALARM,  ACR_ALARM,           NO_ALARM,   MAJOR, PLC:CP00:OD01 }
 
 }
@@ -121,6 +121,11 @@ file pilz-plc-bo.template
 	{ ODM, CR0,      SET_FAN,              "CB Ventilation Request",         ODM_WRT,     20,  "NOT REQUESTED",  REQUESTED,        NO_ALARM,NO_ALARM }
 	{ ODM, CR2,      SET_AL_MUTE,          "C2 Alarm Mute",                  ODM_WRT,     17,  NOT_MUTE,         MUTE,             NO_ALARM,NO_ALARM }
 	{ ODM, CR2,      SET_FAN,              "C2 Ventilation Request",         ODM_WRT,     16,  "NOT REQUESTED",  REQUESTED,        NO_ALARM,NO_ALARM }
+}
+
+file "sioc-cp00-od01.db"
+{
+    {NULL=NULL}
 }
 
 file "pilz-plc-request.template"

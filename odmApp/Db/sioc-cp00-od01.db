@@ -1,0 +1,36 @@
+# This system doesn't have the supervisor to monitor PLC heartbeat status.
+# Do that here to provide an alarm if the heartbeat stops changing.
+#
+# Alarm if no heartbeat change for 4 seconds. It's expected to change
+# once a second. This timeout is longer to avoid nuisance alarms from
+# short duration problems.
+# 
+# Logic:
+#  If heartbeat changed
+#     Set VAL to 0, good state
+#  Else
+#     Increment VAL
+#  alarm when VAL > 20
+# Store previous heartbeat val in B for the next cycle.
+# D increments each cycle, or is set to 0 if heartbeat val has changed.
+
+record(calcout, "ODM:CP00:HEARTBEAT_OK_calc_") {
+  field(INPA, "ODM:CP00:HEARTBEAT NPP MSI")
+  field(INPC, "20")
+  field(CALC, "D:=(A=B?D+1:0);B:=A;D<=C")
+#Go invalid if input is invalid for 4 seconds = processing 20 times at 5 Hz
+  field(SCAN, ".2 second")
+  field(LOLO, 0.5)
+  field(LLSV, "MAJOR")
+  field(OUT, "ODM:CP00:HEARTBEAT_OK PP MSI")
+  field(ASG,  "Internal")
+#  field(OOPT, "On Change") Don't do this, it keeps alarm status from updating in OUT link.
+}
+
+record(bi, "ODM:CP00:HEARTBEAT_OK") {
+  field(DESC, "CP ODM PLC HB OK")
+  field(ZNAM, "FAULT")
+  field(ONAM, "OK")
+  field(ZSV, "MAJOR")
+  field(INP, "ODM:CP00:HEARTBEAT_OK_calc_ NPP MS")
+}
