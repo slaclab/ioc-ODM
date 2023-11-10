@@ -11,6 +11,11 @@
 #  Mod
 #==============================================================
 
+R1.0.17       G. Brown (gwbrown)
+9-Nov-2023    Update to RHEL7
+              Merge Pilz connection robustness from PPS code, ignore short drops
+              PV to feed alarm when cryoplant PLC HB stops changing
+
 R1.0.16       M. Dunning (mdunning)
 23-Aug-2022   Update bkhAsyn, asyn, modbus, stream
 
