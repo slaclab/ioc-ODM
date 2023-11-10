@@ -1,4 +1,4 @@
-#!../../bin/rhel6-x86_64/odm
+#!../../bin/rhel7-x86_64/odm
 #==============================================================
 #
 #  Abs:  Startup Script for the Cryoplant ODM
@@ -23,6 +23,7 @@
 
 # Set environment variables
 epicsEnvSet("IOC_NAME"  ,"SIOC:B34:OD01")
+epicsEnvSet("IOC_NAME"  ,"SIOC:SYS0:OD01")
 epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 
 # Siemens supervisory PLC Node
@@ -35,11 +36,15 @@ epicsEnvSet("IOC","sioc-b34-od01")
 
 # Initialize Modbus communications
 cd ${IOC_BOOT}
-< init_asyn.cmd
+#< init_asyn.cmd
+iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI01")
 cd ${TOP}
 
 # Load Additional databases:
-dbLoadRecords("db/odm-test.db")
+dbLoadRecords("db/odm-sys0-od01.db")
+
+# Load Additional databases:
+#dbLoadRecords("db/odm-test.db")
 
 # Setup autosave/restore
 < iocBoot/common/init_restore.cmd.soft

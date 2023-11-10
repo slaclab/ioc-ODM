@@ -1,4 +1,4 @@
-#!../../bin/rhel6-x86_64/odm
+#!../../bin/rhel7-x86_64/odm
 #==============================================================
 #
 #  Abs:  Startup Script for the Cryoplant ODM

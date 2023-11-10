@@ -21,11 +21,10 @@ CHECK_RELEASE = YES
 #   that Base is built for.
 CROSS_COMPILER_TARGET_ARCHS = 
 
-
 # =============================
 # Define the archiecture versions
 # =============================
-LINUX_VERSION=rhel6
+LINUX_VERSION=rhel7
 
 # To install files into a location other than $(TOP) define
 #   INSTALL_LOCATION here.
@@ -40,6 +39,16 @@ LINUX_VERSION=rhel6
 #   or CROSS_OPT settings from base/configure/CONFIG_SITE
 #HOST_OPT = NO
 #CROSS_OPT = NO
+
+# ======================================
+# Support for Stream Devices
+# ======================================
+PCRE=YES
+PCRE_PACKAGE_NAME=pcre
+PCRE_VERSION=8.37
+PCRE_TOP=$(PACKAGE_SITE_TOP)/$(PCRE_PACKAGE_NAME)/$(PCRE_VERSION)
+PCRE_LIB=$(PCRE_TOP)/$(PKG_ARCH)/lib
+PCRE_INCLUDE=$(PCRE_TOP)/$(PKG_ARCH)/include
 
 # These allow developers to override the CONFIG_SITE variable
 # settings without having to modify the configure/CONFIG_SITE
