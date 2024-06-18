@@ -89,3 +89,16 @@ file      "statistics.template"
 {PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WRT,   ODM_$(SECTOR)_WRT,       "10 second"}
 {PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WD,    ODM_$(SECTOR)_WD,        "10 second"}
 }
+
+file      "odm_sector_alarms.template"
+{       
+pattern  {$(SECTOR)}
+         {$(SECTOR)}
+}
+
+
+
+
+
+
+

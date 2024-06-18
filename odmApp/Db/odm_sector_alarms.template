@@ -1,0 +1,17 @@
+record(calcout, "ODM:$(SECTOR):100:PpsAlarmLogic"){
+    field(DESC, "PPS alarm calc record")
+    field(INPA, "ODM:$(SECTOR):100:PpsClear CPP MSS")
+    field(INPB, "ODM:$(SECTOR):100:ACRAlarmStatus CPP MSS")
+    field(CALC, "A ? 0 : B")
+    field(OUT, "ODM:$(SECTOR):100:PpsAlarm PP")
+}
+
+
+record(bi, "ODM:$(SECTOR):100:PpsAlarm"){
+    field(DESC, "PPS Alarm")
+    field(ZNAM, "NO_ALARM")
+    field(ONAM, "ALARM")
+    field(ZSV, "NO_ALARM")
+    field(OSV, "MAJOR")
+}
+

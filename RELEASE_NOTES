@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.18       C. Myers (cmyers)
+18-Jun-2024   Added new alarm logic per CATER 170066
+
 R1.0.17       G. Brown (gwbrown)
 9-Nov-2023    Update to RHEL7
               Merge Pilz connection robustness from PPS code, ignore short drops

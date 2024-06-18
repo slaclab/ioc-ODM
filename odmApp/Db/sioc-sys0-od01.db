@@ -47,3 +47,24 @@ record(dfanout, "ODM:SYS0:100:AlarmMuteFan2") {
   field(OUTA, "ODM:LI07:100:AlarmMute PP")
   field(OUTB, "ODM:LI08:100:AlarmMute PP")
 }
+
+record(calcout, "ODM:SYS0:100:AHU:PpsBypassLogic"){
+    field(DESC, "PPS Bypass logic calculation")
+    field(INPA, "PPS:SYSW:1:ZoneEntryA CPP MSS")
+    field(INPB, "ODM:LI00:100:AHU:FaultStatus CPP MSS")
+    field(INPC, "ODM:LI00:100:Ahu:AlarmByp CPP MSS")
+    field(INPD, "ODM:LI07:100:AHU:FaultStatus CPP MSS")
+    field(INPE, "ODM:LI07:100:Ahu:AlarmByp CPP MSS")
+    field(CALC, "(A && (B || C) && (D || E)) || !A ? 0 : 1")
+    field(OUT, "ODM:SYS0:100:AHU:PpsBypassAlarm PP")
+}
+
+record(bi, "ODM:SYS0:100:AHU:PpsBypassAlarm"){
+    field(DESC, "PPS Bypass Alarm")
+    field(ZNAM, "NO_ALARM")
+    field(ONAM, "ALARM")
+    field(ZSV, "NO_ALARM")
+    field(OSV, "MAJOR")
+}
+
+

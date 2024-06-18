@@ -63,6 +63,8 @@ ODM:$(SECTOR):101:Cell:AlarmByp 1 monitor
 ODM:$(SECTOR):102:Cell:AlarmByp 1 monitor
 ODM:$(SECTOR):100:AlarmMute 1 monitor
 ODM:$(SECTOR):100:Ahu:AlarmByp 1 monitor
+ODM:$(SECTOR):100:PpsAlarmLogic
+ODM:$(SECTOR):100:PpsAlarm
 
 # PLC status
 PLC:$(SECTOR):OD01:HeartBeat 1 monitor
