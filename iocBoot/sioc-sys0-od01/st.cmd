@@ -50,15 +50,13 @@ dbLoadRecords("db/odm-sys0-od01.db")
 < iocBoot/common/init_restore.cmd.soft
 # Also save-restore alarm reset high
 set_pass0_restoreFile("SIOC-SYS0-OD01.sav")
-# Initialize caPutLog
-caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
-# Start autosave routines to save our data
-< iocBoot/common/restore.cmd.soft
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
 
-## Start any sequence programs
-#seq sncxxx,"user=gwbrown"
+# Initialize caPutLog
+caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
+# Start autosave routines to save our data
+< iocBoot/common/restore.cmd.soft
 
 # End of file st.cmd

@@ -43,15 +43,14 @@ dbLoadRecords("db/odm-cp00.db")
 
 # Setup autosave/restore
 < iocBoot/common/init_restore.cmd.soft
-# Initialize caPutLog
-caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
-# Start autosave routines to save our data
-< iocBoot/common/restore.cmd.soft
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
 
-## Start any sequence programs
-#seq sncxxx,"user=gwbrown"
+# Initialize caPutLog
+caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
+
+# Start autosave routines to save our data
+< iocBoot/common/restore.cmd.soft
 
 # End of file st.cmd
