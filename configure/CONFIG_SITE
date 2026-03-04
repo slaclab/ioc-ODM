@@ -19,12 +19,16 @@ CHECK_RELEASE = YES
 # Set this when you only want to compile this application
 #   for a subset of the cross-compiled target architectures
 #   that Base is built for.
-CROSS_COMPILER_TARGET_ARCHS = 
+CROSS_COMPILER_TARGET_ARCHS =
 
 # =============================
 # Define the archiecture versions
 # =============================
-LINUX_VERSION=rhel7
+LINUX_VERSION=$(EPICS_HOST_ARCH)
+
+ifdef T_A
+PKG_ARCH=$(T_A)
+endif
 
 # To install files into a location other than $(TOP) define
 #   INSTALL_LOCATION here.
