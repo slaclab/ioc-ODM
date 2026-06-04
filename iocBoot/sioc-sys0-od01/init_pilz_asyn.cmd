@@ -27,6 +27,7 @@ drvAsynIPPortConfigure ("ODM_$(SECTOR)", "plc-$(SECTOR)-od01:502"   ,0,0,0)
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
 modbusInterposeConfig ("ODM_$(SECTOR)", 0, 250, 0)
+dbLoadRecords("${TOP}/db/asynRecord.db","P=PLC:$(SECTOR):OD01,R=:ASYNDRIVER,PORT=ODM_$(SECTOR),ADDR=0,IMAX=0,OMAX=0")
 
 
 #drvModbusAsynConfigure(portName,

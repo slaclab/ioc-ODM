@@ -2,7 +2,7 @@
 #
 #  Abs:  Autosave initalization for soft IOCs
 #
-#  Name: init_restore.cmd.soft
+#  Name: init_restore.soft.cmd
 #
 #  Rem:  Upon entry we expect to be at location TOP
 #        and the following macros must be defined.
@@ -60,4 +60,4 @@ save_restoreSet_SeqPeriodInSeconds(600)
 # Time between failed .sav-file write and the retry.
 save_restoreSet_RetrySeconds(60)
 
-# End of script init_restore.cmd.soft
+# End of script init_restore.soft.cmd

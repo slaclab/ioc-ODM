@@ -1,0 +1,79 @@
+#==============================================================================
+#
+# Abs:  PILZ PNOZ 2 PLC status LEDs
+#
+# Name: pilz-plc-leds.template
+#
+# Facility: LCLS Personnel Protection Controls
+#
+# Auth: 11-Dec-2018, Garth Brown   (GWBROWN)
+# Rev : dd-mmm-yyyy, Reviewer's Name  (USERNAME)
+#
+# Read state of OFAULT, IFAULT, DIAG, and RUN LEDS. Equivalent to plc-plc-request for older PNOZ.
+#
+#-----------------------------------------------------------------------------
+#  Mod:
+#
+#==============================================================================
+#
+
+record(bi, "$(dtype):$(areapos):RUNLED") {
+	field(DESC, "ODM-Run_LED_A")
+	field(SCAN, "I/O Intr")
+	field(DTYP, "asynUInt32Digital")
+	field(INP,  "@asynMask($(port), 511, 0x0020, 1)")
+	field(ZNAM, "Off")
+	field(ONAM, "On")
+	field(ZSV,  "MAJOR")
+	field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(areapos):DIAGLED") {
+	field(DESC, "ODM-Diag_LED_A")
+	field(SCAN, "I/O Intr")
+	field(DTYP, "asynUInt32Digital")
+	field(INP,  "@asynMask($(port), 511, 0x0010, 1)")
+	field(ZNAM, "Off")
+	field(ONAM, "On")
+	field(ZSV,  "NO_ALARM")
+	field(OSV,  "NO_ALARM")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(areapos):FAULTLED") {
+	field(DESC, "ODM-Fault_LED_A")
+	field(SCAN, "I/O Intr")
+	field(DTYP, "asynUInt32Digital")
+	field(INP,  "@asynMask($(port), 511, 0x0004, 1)")
+	field(ZNAM, "Off")
+	field(ONAM, "On")
+	field(ZSV,  "NO_ALARM")
+	field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(areapos):IFAULTLED") {
+	field(DESC, "ODM-IFault_LED_A")
+	field(SCAN, "I/O Intr")
+	field(DTYP, "asynUInt32Digital")
+	field(INP,  "@asynMask($(port), 511, 0x0002, 1)")
+	field(ZNAM, "Off")
+	field(ONAM, "On")
+	field(ZSV,  "NO_ALARM")
+	field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+
+record(bi, "$(dtype):$(areapos):OFAULTLED") {
+	field(DESC, "ODM-OFault_LED_A")
+	field(SCAN, "I/O Intr")
+	field(DTYP, "asynUInt32Digital")
+	field(INP,  "@asynMask($(port), 511, 0x0001, 1)")
+	field(ZNAM, "Off")
+	field(ONAM, "On")
+	field(ZSV,  "NO_ALARM")
+	field(OSV,  "MAJOR")
+  info(autosaveFields_pass0, "SEVR")
+}
+

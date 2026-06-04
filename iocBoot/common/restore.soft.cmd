@@ -2,7 +2,7 @@
 #
 #  Abs:  Start the autosave task (for a soft IOC)
 #
-#  Name: restore.cmd.soft
+#  Name: restore.soft.cmd
 #
 #  Rem:  Upon entry we expect to be at location TOP
 #        and the following macros must be defined.
@@ -58,4 +58,4 @@ create_monitor_set("info_settings.req" , 30)
 cd("${TOP}")
 pwd()
 
-# End of script restore.cmd.soft
+# End of script restore.soft.cmd

@@ -1,0 +1,94 @@
+file pnoz2-plc-bi.template
+{
+  pattern{ dtype, areapos,  attribute,             description,                             zname,         oname,      zsv,       osv,       port,               word, bitmask,  plc                }
+          { ODM,$(SECTOR):101,Air:FaultStatus,      "Air Sample Oxigraf1 Ch0 Real",          Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0001, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Air:FaultLatched,     "Air Sample Oxigraf1 Ch0 Latch",         Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0002, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Air:FaultStatus,      "Air Sample Oxigraf1 Ch1 Real",          Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0004, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Air:FaultLatched,     "Air Sample Oxigraf1 Ch1 Latch",         Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0008, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):103,Air:FaultStatus,      "Air Sample Oxigraf1 Ch2 Real",          Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0010, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):103,Air:FaultLatched,     "Air Sample Oxigraf1 Ch2 Latch",         Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0020, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):104,Air:FaultStatus,      "Air Sample Oxigraf1 Ch3 Real",          Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0040, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):104,Air:FaultLatched,     "Air Sample Oxigraf1 Ch3 Latch",         Ok,            Fault,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 512, 0x0080, PLC:$(SECTOR):OD01 }
+
+          { ODM,$(SECTOR):100,SysReady,             "Oxigraf1 SYS OK Real",                  Ok,            Fault,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x0100, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,SysReadyLatched,      "Oxigraf1 SYS OK Latch",                 Ok,            Fault,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x0200, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AlarmMuteStatus,      "Alarm Mute Sts",                        Normal,        Mute,       NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x0400, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,StrobeStatus,         "Strobe Sts",                            Off,           On,         NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDRD, 512, 0x0800, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,HornStatus,           "Horn Sts",                              Off,           On,         NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDRD, 512, 0x1000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,Air:KeyStatus,        "Oxigraf1 Disable Key Sts",              Enabled,       Disabled,   NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x2000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:KeyStatus,       "Oldham Sensor Cell 1 Disable Key Sts",  Enabled,       Disabled,   NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x4000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:KeyStatus,       "Oldham Sensor Cell 2 Disable Key Sts",  Enabled,       Disabled,   NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 512, 0x8000, PLC:$(SECTOR):OD01 }
+
+          { ODM,$(SECTOR):101,DC:FaultLatched,      "Power Supply 1 DC OK",                  Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0001, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,DC:FaultLatched,      "Power Supply 2 DC OK",                  Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0002, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,DC:UpsFaultLatched,   "UPS 1 DC OK",                           Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0004, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,DC:UpsFaultLatched,   "UPS 2 DC OK",                           Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0008, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AC:FaultLatched,      "Oxigraf AC OK",                         Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0010, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AOR:FaultStatus,      "Area Of Refuge Sw OK",                  Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0020, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AHU:FaultStatus,      "Air Handling Unit Sw OK",               Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x0040, PLC:$(SECTOR):OD01 }
+          { PLC,$(SECTOR):OD01,HeartBeat,           "Heart Beat",                            Off,           On,         NO_ALARM, NO_ALARM,   ODM_$(SECTOR)_WDRD, 513, 0x0080, PLC:$(SECTOR):OD01 }
+
+          { ODM,$(SECTOR):100,ACRAlarmStatus,       "ODH $(SECTOR) Alarm",                   NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x0100, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,L1AlarmSum,           "L1 Alarm from Supervisor, <19.5% O2",   NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x0200, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,L2AlarmSum,           "L2 Alarm from Supervisor <18% O2",      NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x0400, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,L1AlarmStatus,        "L1 Alarm from Pilz, <19.5% O2",         NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x0800, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,L2AlarmStatus,        "L2 Alarm from Pilz, <18% O2",           NO_ALARM,      ALARM,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 513, 0x1000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AOR:AlarmStatus,      "AOR DP Switch fault & No PPS Clear",    Normal,        Alert,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x2000, PLC:$(SECTOR):OD01 }
+          { PLC,$(SECTOR):OD01,TestMode,            "PLC in Test mode from Supervisor",      Normal,        Test,       NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 513, 0x4000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,PpsClear,             "PPS Clear",                             Not_Clear,     Clear,      MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 513, 0x8000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,Pwr:FaultLatched,     "Power Fault Latch",                     Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0001, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,DC:FaultStatus,       "Power Supply 1 DC OK Real",             Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0002, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,DC:FaultStatus,       "Power Supply 2 DC OK Real",             Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0004, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,DC:UpsFaultStatus,    "UPS1 DC OK Real",                       Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0008, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AC:FaultStatus,       "Oxigraf AC OK Real",                    Fault,         Ok,         MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0010, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):100,AHU:FaultLatched,     "Air Handling Unit Latch",               Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0020, PLC:$(SECTOR):OD01 }
+
+          { ODM,$(SECTOR):101,Cell:FaultLatched,    "OK Latch Sts",                          Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0040, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:L1AlarmLatched,  "L1 Latch Sts",                          Not_Latched,   Latched,    NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 514, 0x0080, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:L2AlarmLatched,  "L2 Latch Sts",                          Not_Latched,   Latched,    NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 514, 0x0100, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:FaultLatched,    "OK Latch Sts",                          Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x0200, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:L1AlarmLatched,  "L1 Latch Sts",                          Not_Latched,   Latched,    NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 514, 0x0400, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:L2AlarmLatched,  "L2 Latch Sts",                          Not_Latched,   Latched,    NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 514, 0x0800, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:FaultStatus,     "OK Real Sts",                           Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x1000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:L1AlarmStatus,   "L1 Real Sts",                           NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 514, 0x2000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):101,Cell:L2AlarmStatus,   "L2 Real Sts",                           NO_ALARM,      ALARM,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 514, 0x4000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:FaultStatus,     "OK Real Sts",                           Not_Latched,   Latched,    MINOR,  NO_ALARM,     ODM_$(SECTOR)_WDRD, 514, 0x8000, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:L1AlarmStatus,   "L1 Real Sts",                           NO_ALARM,      ALARM,      NO_ALARM,  MINOR,     ODM_$(SECTOR)_WDRD, 515, 0x0001, PLC:$(SECTOR):OD01 }
+          { ODM,$(SECTOR):102,Cell:L2AlarmStatus,   "L2 Real Sts",                           NO_ALARM,      ALARM,      NO_ALARM,  MAJOR,     ODM_$(SECTOR)_WDRD, 515, 0x0002, PLC:$(SECTOR):OD01 }
+}
+
+file pnoz2-plc-bo.template
+{
+  pattern{ dtype, areapos,  attribute,             description,                               zname,  oname,   zsv,       osv,       port,             word, bitmask  }
+         { ODM,$(SECTOR):100,AlarmReset,           "Alarm Reset",                             Normal, Reset,   NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0001   }
+         { ODM,$(SECTOR):100,Air:AlarmByp,         "Oxigraf 1 Disable Request",               Normal, Disable, NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0002   }
+         { ODM,$(SECTOR):101,Cell:AlarmByp,        "Oldham Sensor Cell 1 Disable Request",    Normal, Disable, NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0004   }
+         { ODM,$(SECTOR):102,Cell:AlarmByp,        "Oldham Sensor Cell 2 Disable Request",    Normal, Disable, NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0010   }
+         { ODM,$(SECTOR):100,AlarmMute,            "Alarm Mute Request",                      Normal, Mute,    NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0020   }
+         { ODM,$(SECTOR):100,Ahu:AlarmByp,         "Air Handling unit DP sw Disable Request", Normal, Disable, NO_ALARM,  NO_ALARM,  ODM_$(SECTOR)_WDWT,  0, 0x0040   }
+}
+
+file      "pnoz2-plc-led.template"
+{
+pattern {dtype,areapos,        port_wdrd          }
+        {PLC,$(SECTOR):OD01,   ODM_$(SECTOR)_WDRD }
+}
+
+####file      "pnoz2-plc-checksum.template"
+####{
+####pattern {dtype,areapos,        port             }
+####        {PLC,  $(SECTOR):OD01, ODM_$(SECTOR)_WD }
+####}
+
+file      "statistics.template"
+{ pattern
+{P,                    R,                   PORT,               SCAN       }
+{PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WDRD,  ODM_$(SECTOR)_WDRD, "10 second"}
+{PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WDWT,  ODM_$(SECTOR)_WDWT, "10 second"}
+}
+
+file      "odm_sector_alarms.template"
+{
+pattern  {$(SECTOR)}
+         {$(SECTOR)}
+}

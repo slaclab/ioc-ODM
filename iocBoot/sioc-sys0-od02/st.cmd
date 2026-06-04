@@ -16,10 +16,10 @@ epicsEnvSet("IOC_NAME"  ,"SIOC:SYS0:OD02")
 epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 
 # Load generic environment variables and database
-< ../common/st.cmd.soft
+< ../common/st.soft.cmd
 
 # Set up autosave/restore
-< $(TOP)/iocBoot/common/init_restore.cmd.soft
+< $(TOP)/iocBoot/common/init_restore.soft.cmd
 
 # **** Beckhoff driver initialization ****
 iocshLoad("$(TOP)/iocBoot/common/init_bkh_odm.iocsh", "BKH_PORT=BKH01,BKH_IP=apc-li01-od01")
@@ -41,7 +41,7 @@ iocInit
 caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
 
 # Start autosave routines to save our data
-< $(TOP)/iocBoot/common/restore.cmd.soft
+< $(TOP)/iocBoot/common/restore.soft.cmd
 
 
 # End of file st.cmd

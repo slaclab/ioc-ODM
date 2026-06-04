@@ -2,7 +2,7 @@
 #
 #  Abs:  Script to Initialize PLC hardware for a soft IOC
 #
-#  Name: init_plc.cmd.soft
+#  Name: init_plc.soft.cmd
 #
 #  Rem:  Upon entry we expect to be at location TOP
 #        and the following macros must be defined.
@@ -30,6 +30,6 @@ drvEtherIP_define_PLC(${PLC_NAME},${PLC_NODE}, 0)
 EIP_verbosity(0)
 drvEtherIP_default_rate(0.5)
 
-# End of script init_plc.cmd.soft
+# End of script init_plc.soft.cmd
 
 

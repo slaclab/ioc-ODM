@@ -20,6 +20,7 @@ IOCRELEASE_DB += iocRelease.db
 
 #DB += xxx.db
 DB += odm-sys0-pilz.db
+DB += odm-sys0-pnoz2.db
 DB += bkh_odm_common.db
 DB += bkh_odm_supervisor.db
 DB += sioc-sys0-od01.db

@@ -2,7 +2,7 @@
 #
 #  Abs:  Generic piece of startup script for soft IOCs
 #
-#  Name: st.cmd.soft
+#  Name: st.soft.cmd
 #
 #  Side: Upon entry to this script, the following macros
 #        are expected:
@@ -62,5 +62,5 @@ dbLoadRecords("db/iocRelease.db"  ,"IOC=${IOC_NAME}")
 #==============================================================
 < ${LOG_INIT}
 
-# End of script st.cmd.soft
+# End of script st.soft.cmd
 

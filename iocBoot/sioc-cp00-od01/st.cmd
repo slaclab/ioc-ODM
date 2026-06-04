@@ -30,7 +30,7 @@ epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 epicsEnvSet("ODM_NODE"      ,"plc-cryo-od01")
 
 # Load generic environment variables and database
-< ../common/st.cmd.soft
+< ../common/st.soft.cmd
 epicsEnvSet("IOC","sioc-cp00-od01")
 
 # Initialize Modbus communications
@@ -42,7 +42,7 @@ cd ${TOP}
 dbLoadRecords("db/odm-cp00.db")
 
 # Setup autosave/restore
-< iocBoot/common/init_restore.cmd.soft
+< iocBoot/common/init_restore.soft.cmd
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
@@ -51,6 +51,6 @@ iocInit
 caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
 
 # Start autosave routines to save our data
-< iocBoot/common/restore.cmd.soft
+< iocBoot/common/restore.soft.cmd
 
 # End of file st.cmd

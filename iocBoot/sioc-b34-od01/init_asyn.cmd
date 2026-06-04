@@ -22,12 +22,13 @@
 #                       unsigned int priority,
 #                       int noAutoConnect,
 #                       int noProcessEos);
-drvAsynIPPortConfigure ("ODM", "$(ODM_NODE):502"   ,0,0,0)
-asynSetOption("ODM",0,"disconnectOnReadTimeout", "Y")
+drvAsynIPPortConfigure ("ODM_$(SECTOR)", "$(ODM_NODE):502"   ,0,0,0)
+asynSetOption("ODM_$(SECTOR)",0,"disconnectOnReadTimeout", "Y")
 
 # Initialize Pliz PLC MODBUS Interpose Layer
 #modbusInterposeConfig(const char *portName, modbusLinkType linkType, int timeoutMsec, int writeDelayMsec)
-modbusInterposeConfig ("ODM", 0, 250, 0)
+modbusInterposeConfig ("ODM_$(SECTOR)", 0, 250, 0)
+dbLoadRecords("${TOP}/db/asynRecord.db","P=PLC:$(SECTOR):OD01,R=:ASYNDRIVER,PORT=ODM_$(SECTOR),ADDR=0,IMAX=0,OMAX=0")
 
 
 #drvModbusAsynConfigure(portName,
@@ -74,9 +75,16 @@ modbusInterposeConfig ("ODM", 0, 250, 0)
 # PILZ PLC MODBUS ASYN Configuration for ODMs
 
 ## ODM
-drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  250, "PILZ")
-drvModbusAsynConfigure ("ODM_WD",  "ODM", 1, 3,  0, 10,  0,   250, "PILZ")
-drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  250, "PILZ")
+####XXXX With the PNOZ 2, switch to 16 bit word access instead of bit access. Should help with the bit ordering weirdness.
+####drvModbusAsynConfigure ("ODM_RD",  "ODM", 1, 1,  0, 160,  0,  250, "PILZ")
+####XXXX
+
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WDRD",  "ODM_$(SECTOR)", 1, 3,  0, 10,  0,   250, "PILZ")
+####XXXX With the PNOZ 2, switch to 16 bit word access instead of bit access. Should help with the bit ordering weirdness.
+# Switch from function code 5, write single coil (1 bit), to code 6, write single register (16 bit)
+####drvModbusAsynConfigure ("ODM_WRT", "ODM", 1, 5,  16384 , 48,  0,  250, "PILZ")
+####XXXX
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WDWT",  "ODM_$(SECTOR)", 1, 3,  0, 10,  0,   250, "PILZ")
 
 # Oxigraf devices
 #drvAsynIPPortConfigure( "OXI_CR11", "ts-b905-od01:2101", 0, 0, 0 )

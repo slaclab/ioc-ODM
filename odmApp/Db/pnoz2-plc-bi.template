@@ -1,0 +1,12 @@
+record(bi, "$(dtype):$(areapos):$(attribute)") {
+  field(DESC, "$(description)")
+  field(ZNAM, "$(zname)")
+  field(ONAM, "$(oname)")
+  field(ZSV, "$(zsv)")
+  field(OSV, "$(osv)")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynUInt32Digital")
+#  field(INP,"@asynMask(portName,addr,mask,timeout)drvParams")
+  field(INP, "@asynMask($(port), $(word), $(bitmask), 1)")
+  info(autosaveFields_pass0, "ZSV OSV")
+}

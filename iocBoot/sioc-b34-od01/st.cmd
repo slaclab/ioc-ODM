@@ -1,4 +1,4 @@
-#!../../bin/rhel7-x86_64/odm
+#!../../bin/rhel9-x86_64/odm
 #==============================================================
 #
 #  Abs:  Startup Script for the Cryoplant ODM
@@ -24,20 +24,20 @@
 # Set environment variables
 epicsEnvSet("IOC_NAME"  ,"SIOC:B34:OD01")
 epicsEnvSet("IOC_NAME"  ,"SIOC:SYS0:OD01")
-epicsEnvSet("LOCATION"  ,"lcls-daemon1")
+epicsEnvSet("LOCATION"  ,"dev-daemon9")
 
 # Siemens supervisory PLC Node
 # Note cannot use nodename must use ip
 epicsEnvSet("ODM_NODE"      ,"134.79.217.31")
 
 # Load generic environment variables and database
-< ../common/st.cmd.soft
+< ../common/st.soft.cmd
 epicsEnvSet("IOC","sioc-b34-od01")
 
 # Initialize Modbus communications
 cd ${IOC_BOOT}
 #< init_asyn.cmd
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI01")
+iocshLoad( "init_asyn.cmd", "SECTOR=LI01")
 cd ${TOP}
 
 # Load Additional databases:
@@ -47,11 +47,11 @@ dbLoadRecords("db/odm-sys0-od01.db")
 #dbLoadRecords("db/odm-test.db")
 
 # Setup autosave/restore
-< iocBoot/common/init_restore.cmd.soft
+< iocBoot/common/init_restore.soft.cmd
 # Initialize caPutLog
 caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
 # Start autosave routines to save our data
-< iocBoot/common/restore.cmd.soft
+< iocBoot/common/restore.soft.cmd
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
