@@ -16,6 +16,7 @@ DB_INSTALLS += $(OXIGRAFMO2I)/db/MO2i.template
 DB_INSTALLS += $(OXIGRAFMO2I)/db/MO2i.proto
 DB_INSTALLS += $(ASYN)/db/asynRecord.db
 DB_INSTALLS += $(MODBUS)/db/statistics.template
+DB_INSTALLS += $(MODBUS)/db/longin.template
 IOCRELEASE_DB += iocRelease.db
 
 #DB += xxx.db
@@ -28,6 +29,7 @@ DB += odm-sys0-od01.db
 DB += odm-sys0-od02.db
 DB += odm-cp00.db
 DB += odm-test.db
+DB += pnoz2_raw_words.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

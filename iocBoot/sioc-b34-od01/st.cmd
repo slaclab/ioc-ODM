@@ -35,10 +35,9 @@ epicsEnvSet("ODM_NODE"      ,"134.79.217.31")
 epicsEnvSet("IOC","sioc-b34-od01")
 
 # Initialize Modbus communications
-cd ${IOC_BOOT}
-#< init_asyn.cmd
-iocshLoad( "init_asyn.cmd", "SECTOR=LI01")
 cd ${TOP}
+#< init_pnoz2_asyn.cmd
+iocshLoad( "iocBoot/common/init_pnoz2_dev_asyn.cmd", "SECTOR=LI08")
 
 # Load Additional databases:
 dbLoadRecords("db/odm-sys0-od01.db")
