@@ -5,8 +5,8 @@ record(bi, "$(dtype):$(areapos):$(attribute)") {
   field(ZSV, "$(zsv=0)")
   field(OSV, "$(osv=0)")
   field(SCAN, "I/O Intr")
-  field(DTYP, "asynUInt32Digital")
-#  field(INP,"@asynMask(portName,addr,mask,timeout)drvParams")
-  field(INP, "@asynMask($(port), $(word), $(bitmask), 1)")
+  field(DTYP, "asynInt32")
+#  field(INP,"@asynMask(portName,addr,timeout)drvParams")
+  field(INP,  "@asynMask($(port), $(bit), 1, 1)")
   info(autosaveFields_pass0, "ZSV OSV")
 }

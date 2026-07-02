@@ -14,6 +14,9 @@
 R1.0.20       S. Condamoor (scondam)
 22-Sep-2025   Add PVs for the added supervisory channels for LCLSHE
 
+R1.0.20       G. Brown (gwbrown)
+2-Jul-2026    Add new model PLC, PILZ PNOZ2, for LCLS-HE in sectors LI08, LI09, LI10
+
 R1.0.19       G. Brown (gwbrown)
 22-Sep-2025   Update to Rocky9
 

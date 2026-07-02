@@ -1,0 +1,227 @@
+file      "pnoz2-plc-led.template"
+{
+pattern {dtype,areapos,      port               }
+        {PLC,$(SECTOR):OD01, ODM_$(SECTOR)_WDRD }
+}
+
+file "longin.template"
+{
+pattern { P,                       R, PORT,               OFFSET,  SCAN      }
+# r0 is the status LEDs, so readback PVs go to r8 where 1-8 are PLC's "virtual outputs"
+        {PLC:$(SECTOR):OD01,     :r0, ODM_$(SECTOR)_WDRD,     0,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r1, ODM_$(SECTOR)_WDRD,     1,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r2, ODM_$(SECTOR)_WDRD,     2,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r3, ODM_$(SECTOR)_WDRD,     3,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r4, ODM_$(SECTOR)_WDRD,     4,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r5, ODM_$(SECTOR)_WDRD,     5,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r6, ODM_$(SECTOR)_WDRD,     6,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r7, ODM_$(SECTOR)_WDRD,     7,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :r8, ODM_$(SECTOR)_WDRD,     8,    "I/O Intr" }
+# PLC's "virtual inputs"
+        {PLC:$(SECTOR):OD01,     :w0, ODM_$(SECTOR)_WDWT,     0,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w1, ODM_$(SECTOR)_WDWT,     1,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w2, ODM_$(SECTOR)_WDWT,     2,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w3, ODM_$(SECTOR)_WDWT,     3,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w4, ODM_$(SECTOR)_WDWT,     4,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w5, ODM_$(SECTOR)_WDWT,     5,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w6, ODM_$(SECTOR)_WDWT,     6,    "I/O Intr" }
+        {PLC:$(SECTOR):OD01,     :w7, ODM_$(SECTOR)_WDWT,     7,    "I/O Intr" }
+# PLC's checksums, date, name
+        {PLC:$(SECTOR):OD01,   :CS00, ODM_$(SECTOR)_CHKSUM,   0,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS01, ODM_$(SECTOR)_CHKSUM,   1,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS02, ODM_$(SECTOR)_CHKSUM,   2,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS03, ODM_$(SECTOR)_CHKSUM,   3,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS04, ODM_$(SECTOR)_CHKSUM,   4,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS05, ODM_$(SECTOR)_CHKSUM,   5,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS06, ODM_$(SECTOR)_CHKSUM,   6,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS07, ODM_$(SECTOR)_CHKSUM,   7,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS08, ODM_$(SECTOR)_CHKSUM,   8,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS09, ODM_$(SECTOR)_CHKSUM,   9,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS10, ODM_$(SECTOR)_CHKSUM,  10,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS11, ODM_$(SECTOR)_CHKSUM,  11,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS12, ODM_$(SECTOR)_CHKSUM,  12,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS13, ODM_$(SECTOR)_CHKSUM,  13,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS14, ODM_$(SECTOR)_CHKSUM,  14,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS15, ODM_$(SECTOR)_CHKSUM,  15,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS16, ODM_$(SECTOR)_CHKSUM,  16,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS17, ODM_$(SECTOR)_CHKSUM,  17,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS18, ODM_$(SECTOR)_CHKSUM,  18,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS19, ODM_$(SECTOR)_CHKSUM,  19,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS20, ODM_$(SECTOR)_CHKSUM,  20,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS21, ODM_$(SECTOR)_CHKSUM,  21,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS22, ODM_$(SECTOR)_CHKSUM,  22,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS23, ODM_$(SECTOR)_CHKSUM,  23,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS24, ODM_$(SECTOR)_CHKSUM,  24,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS25, ODM_$(SECTOR)_CHKSUM,  25,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS26, ODM_$(SECTOR)_CHKSUM,  26,  "I/O Intr" }
+        {PLC:$(SECTOR):OD01,   :CS27, ODM_$(SECTOR)_CHKSUM,  27,  "I/O Intr" }
+}
+
+file "pnoz2-plc-bi-word.template"
+{
+pattern{ dtype, areapos,       attribute,  port,            word, bitmask  }
+# r0 is the status LEDs, so readback PVs go to r8 where 1-8 are PLC's "virtual outputs"
+        {PLC,  $(SECTOR):OD01, r0b0x0001, ODM_$(SECTOR)_WDRD,   0,  0x0001 }
+        {PLC,  $(SECTOR):OD01, r0b0x0002, ODM_$(SECTOR)_WDRD,   0,  0x0002 }
+        {PLC,  $(SECTOR):OD01, r0b0x0004, ODM_$(SECTOR)_WDRD,   0,  0x0004 }
+        {PLC,  $(SECTOR):OD01, r0b0x0008, ODM_$(SECTOR)_WDRD,   0,  0x0008 }
+        {PLC,  $(SECTOR):OD01, r0b0x0010, ODM_$(SECTOR)_WDRD,   0,  0x0010 }
+        {PLC,  $(SECTOR):OD01, r0b0x0020, ODM_$(SECTOR)_WDRD,   0,  0x0020 }
+        {PLC,  $(SECTOR):OD01, r0b0x0040, ODM_$(SECTOR)_WDRD,   0,  0x0040 }
+        {PLC,  $(SECTOR):OD01, r0b0x0080, ODM_$(SECTOR)_WDRD,   0,  0x0080 }
+        {PLC,  $(SECTOR):OD01, r0b0x0100, ODM_$(SECTOR)_WDRD,   0,  0x0100 }
+        {PLC,  $(SECTOR):OD01, r0b0x0200, ODM_$(SECTOR)_WDRD,   0,  0x0200 }
+        {PLC,  $(SECTOR):OD01, r0b0x0400, ODM_$(SECTOR)_WDRD,   0,  0x0400 }
+        {PLC,  $(SECTOR):OD01, r0b0x0800, ODM_$(SECTOR)_WDRD,   0,  0x0800 }
+        {PLC,  $(SECTOR):OD01, r0b0x1000, ODM_$(SECTOR)_WDRD,   0,  0x1000 }
+        {PLC,  $(SECTOR):OD01, r0b0x2000, ODM_$(SECTOR)_WDRD,   0,  0x2000 }
+        {PLC,  $(SECTOR):OD01, r0b0x4000, ODM_$(SECTOR)_WDRD,   0,  0x4000 }
+        {PLC,  $(SECTOR):OD01, r0b0x8000, ODM_$(SECTOR)_WDRD,   0,  0x8000 }
+        {PLC,  $(SECTOR):OD01, r1b0x0001, ODM_$(SECTOR)_WDRD,   1,  0x0001 }
+        {PLC,  $(SECTOR):OD01, r1b0x0002, ODM_$(SECTOR)_WDRD,   1,  0x0002 }
+        {PLC,  $(SECTOR):OD01, r1b0x0004, ODM_$(SECTOR)_WDRD,   1,  0x0004 }
+        {PLC,  $(SECTOR):OD01, r1b0x0008, ODM_$(SECTOR)_WDRD,   1,  0x0008 }
+        {PLC,  $(SECTOR):OD01, r1b0x0010, ODM_$(SECTOR)_WDRD,   1,  0x0010 }
+        {PLC,  $(SECTOR):OD01, r1b0x0020, ODM_$(SECTOR)_WDRD,   1,  0x0020 }
+        {PLC,  $(SECTOR):OD01, r1b0x0040, ODM_$(SECTOR)_WDRD,   1,  0x0040 }
+        {PLC,  $(SECTOR):OD01, r1b0x0080, ODM_$(SECTOR)_WDRD,   1,  0x0080 }
+        {PLC,  $(SECTOR):OD01, r1b0x0100, ODM_$(SECTOR)_WDRD,   1,  0x0100 }
+        {PLC,  $(SECTOR):OD01, r1b0x0200, ODM_$(SECTOR)_WDRD,   1,  0x0200 }
+        {PLC,  $(SECTOR):OD01, r1b0x0400, ODM_$(SECTOR)_WDRD,   1,  0x0400 }
+        {PLC,  $(SECTOR):OD01, r1b0x0800, ODM_$(SECTOR)_WDRD,   1,  0x0800 }
+        {PLC,  $(SECTOR):OD01, r1b0x1000, ODM_$(SECTOR)_WDRD,   1,  0x1000 }
+        {PLC,  $(SECTOR):OD01, r1b0x2000, ODM_$(SECTOR)_WDRD,   1,  0x2000 }
+        {PLC,  $(SECTOR):OD01, r1b0x4000, ODM_$(SECTOR)_WDRD,   1,  0x4000 }
+        {PLC,  $(SECTOR):OD01, r1b0x8000, ODM_$(SECTOR)_WDRD,   1,  0x8000 }
+        {PLC,  $(SECTOR):OD01, r2b0x0001, ODM_$(SECTOR)_WDRD,   2,  0x0001 }
+        {PLC,  $(SECTOR):OD01, r2b0x0002, ODM_$(SECTOR)_WDRD,   2,  0x0002 }
+        {PLC,  $(SECTOR):OD01, r2b0x0004, ODM_$(SECTOR)_WDRD,   2,  0x0004 }
+        {PLC,  $(SECTOR):OD01, r2b0x0008, ODM_$(SECTOR)_WDRD,   2,  0x0008 }
+        {PLC,  $(SECTOR):OD01, r2b0x0010, ODM_$(SECTOR)_WDRD,   2,  0x0010 }
+        {PLC,  $(SECTOR):OD01, r2b0x0020, ODM_$(SECTOR)_WDRD,   2,  0x0020 }
+        {PLC,  $(SECTOR):OD01, r2b0x0040, ODM_$(SECTOR)_WDRD,   2,  0x0040 }
+        {PLC,  $(SECTOR):OD01, r2b0x0080, ODM_$(SECTOR)_WDRD,   2,  0x0080 }
+        {PLC,  $(SECTOR):OD01, r2b0x0100, ODM_$(SECTOR)_WDRD,   2,  0x0100 }
+        {PLC,  $(SECTOR):OD01, r2b0x0200, ODM_$(SECTOR)_WDRD,   2,  0x0200 }
+        {PLC,  $(SECTOR):OD01, r2b0x0400, ODM_$(SECTOR)_WDRD,   2,  0x0400 }
+        {PLC,  $(SECTOR):OD01, r2b0x0800, ODM_$(SECTOR)_WDRD,   2,  0x0800 }
+        {PLC,  $(SECTOR):OD01, r2b0x1000, ODM_$(SECTOR)_WDRD,   2,  0x1000 }
+        {PLC,  $(SECTOR):OD01, r2b0x2000, ODM_$(SECTOR)_WDRD,   2,  0x2000 }
+        {PLC,  $(SECTOR):OD01, r2b0x4000, ODM_$(SECTOR)_WDRD,   2,  0x4000 }
+        {PLC,  $(SECTOR):OD01, r2b0x8000, ODM_$(SECTOR)_WDRD,   2,  0x8000 }
+        {PLC,  $(SECTOR):OD01, r3b0x0001, ODM_$(SECTOR)_WDRD,   3,  0x0001 }
+        {PLC,  $(SECTOR):OD01, r3b0x0002, ODM_$(SECTOR)_WDRD,   3,  0x0002 }
+        {PLC,  $(SECTOR):OD01, r3b0x0004, ODM_$(SECTOR)_WDRD,   3,  0x0004 }
+        {PLC,  $(SECTOR):OD01, r3b0x0008, ODM_$(SECTOR)_WDRD,   3,  0x0008 }
+        {PLC,  $(SECTOR):OD01, r3b0x0010, ODM_$(SECTOR)_WDRD,   3,  0x0010 }
+        {PLC,  $(SECTOR):OD01, r3b0x0020, ODM_$(SECTOR)_WDRD,   3,  0x0020 }
+        {PLC,  $(SECTOR):OD01, r3b0x0040, ODM_$(SECTOR)_WDRD,   3,  0x0040 }
+        {PLC,  $(SECTOR):OD01, r3b0x0080, ODM_$(SECTOR)_WDRD,   3,  0x0080 }
+        {PLC,  $(SECTOR):OD01, r3b0x0100, ODM_$(SECTOR)_WDRD,   3,  0x0100 }
+        {PLC,  $(SECTOR):OD01, r3b0x0200, ODM_$(SECTOR)_WDRD,   3,  0x0200 }
+        {PLC,  $(SECTOR):OD01, r3b0x0400, ODM_$(SECTOR)_WDRD,   3,  0x0400 }
+        {PLC,  $(SECTOR):OD01, r3b0x0800, ODM_$(SECTOR)_WDRD,   3,  0x0800 }
+        {PLC,  $(SECTOR):OD01, r3b0x1000, ODM_$(SECTOR)_WDRD,   3,  0x1000 }
+        {PLC,  $(SECTOR):OD01, r3b0x2000, ODM_$(SECTOR)_WDRD,   3,  0x2000 }
+        {PLC,  $(SECTOR):OD01, r3b0x4000, ODM_$(SECTOR)_WDRD,   3,  0x4000 }
+        {PLC,  $(SECTOR):OD01, r3b0x8000, ODM_$(SECTOR)_WDRD,   3,  0x8000 }
+}
+
+file "pnoz2-plc-bi.template"
+{
+pattern{ dtype, areapos,       attribute,  port,          bit }
+        {PLC,  $(SECTOR):OD01, Bi0,  ODM_$(SECTOR)_RD, 0   }
+        {PLC,  $(SECTOR):OD01, Bi1,  ODM_$(SECTOR)_RD, 1   }
+        {PLC,  $(SECTOR):OD01, Bi2,  ODM_$(SECTOR)_RD, 2   }
+        {PLC,  $(SECTOR):OD01, Bi3,  ODM_$(SECTOR)_RD, 3   }
+        {PLC,  $(SECTOR):OD01, Bi4,  ODM_$(SECTOR)_RD, 4   }
+        {PLC,  $(SECTOR):OD01, Bi5,  ODM_$(SECTOR)_RD, 5   }
+        {PLC,  $(SECTOR):OD01, Bi6,  ODM_$(SECTOR)_RD, 6   }
+        {PLC,  $(SECTOR):OD01, Bi7,  ODM_$(SECTOR)_RD, 7   }
+        {PLC,  $(SECTOR):OD01, Bi8,  ODM_$(SECTOR)_RD, 8   }
+        {PLC,  $(SECTOR):OD01, Bi9,  ODM_$(SECTOR)_RD, 9   }
+        {PLC,  $(SECTOR):OD01, Bi10, ODM_$(SECTOR)_RD, 10  }
+        {PLC,  $(SECTOR):OD01, Bi11, ODM_$(SECTOR)_RD, 11  }
+        {PLC,  $(SECTOR):OD01, Bi12, ODM_$(SECTOR)_RD, 12  }
+        {PLC,  $(SECTOR):OD01, Bi13, ODM_$(SECTOR)_RD, 13  }
+        {PLC,  $(SECTOR):OD01, Bi14, ODM_$(SECTOR)_RD, 14  }
+        {PLC,  $(SECTOR):OD01, Bi15, ODM_$(SECTOR)_RD, 15  }
+        {PLC,  $(SECTOR):OD01, Bi16, ODM_$(SECTOR)_RD, 16  }
+        {PLC,  $(SECTOR):OD01, Bi17, ODM_$(SECTOR)_RD, 17  }
+        {PLC,  $(SECTOR):OD01, Bi18, ODM_$(SECTOR)_RD, 18  }
+        {PLC,  $(SECTOR):OD01, Bi19, ODM_$(SECTOR)_RD, 19  }
+        {PLC,  $(SECTOR):OD01, Bi10, ODM_$(SECTOR)_RD, 20  }
+        {PLC,  $(SECTOR):OD01, Bi11, ODM_$(SECTOR)_RD, 21  }
+        {PLC,  $(SECTOR):OD01, Bi12, ODM_$(SECTOR)_RD, 22  }
+        {PLC,  $(SECTOR):OD01, Bi13, ODM_$(SECTOR)_RD, 23  }
+        {PLC,  $(SECTOR):OD01, Bi14, ODM_$(SECTOR)_RD, 24  }
+        {PLC,  $(SECTOR):OD01, Bi15, ODM_$(SECTOR)_RD, 25  }
+        {PLC,  $(SECTOR):OD01, Bi26, ODM_$(SECTOR)_RD, 26  }
+        {PLC,  $(SECTOR):OD01, Bi27, ODM_$(SECTOR)_RD, 27  }
+        {PLC,  $(SECTOR):OD01, Bi28, ODM_$(SECTOR)_RD, 28  }
+        {PLC,  $(SECTOR):OD01, Bi29, ODM_$(SECTOR)_RD, 29  }
+        {PLC,  $(SECTOR):OD01, Bi30, ODM_$(SECTOR)_RD, 30  }
+        {PLC,  $(SECTOR):OD01, Bi31, ODM_$(SECTOR)_RD, 31  }
+        {PLC,  $(SECTOR):OD01, Bi32, ODM_$(SECTOR)_RD, 32  }
+        {PLC,  $(SECTOR):OD01, Bi33, ODM_$(SECTOR)_RD, 33  }
+        {PLC,  $(SECTOR):OD01, Bi34, ODM_$(SECTOR)_RD, 34  }
+        {PLC,  $(SECTOR):OD01, Bi35, ODM_$(SECTOR)_RD, 35  }
+        {PLC,  $(SECTOR):OD01, Bi36, ODM_$(SECTOR)_RD, 36  }
+        {PLC,  $(SECTOR):OD01, Bi37, ODM_$(SECTOR)_RD, 37  }
+        {PLC,  $(SECTOR):OD01, Bi38, ODM_$(SECTOR)_RD, 38  }
+        {PLC,  $(SECTOR):OD01, Bi39, ODM_$(SECTOR)_RD, 39  }
+        {PLC,  $(SECTOR):OD01, Bi40, ODM_$(SECTOR)_RD, 40  }
+        {PLC,  $(SECTOR):OD01, Bi41, ODM_$(SECTOR)_RD, 41  }
+        {PLC,  $(SECTOR):OD01, Bi42, ODM_$(SECTOR)_RD, 42  }
+        {PLC,  $(SECTOR):OD01, Bi43, ODM_$(SECTOR)_RD, 43  }
+        {PLC,  $(SECTOR):OD01, Bi44, ODM_$(SECTOR)_RD, 44  }
+        {PLC,  $(SECTOR):OD01, Bi45, ODM_$(SECTOR)_RD, 45  }
+        {PLC,  $(SECTOR):OD01, Bi46, ODM_$(SECTOR)_RD, 46  }
+        {PLC,  $(SECTOR):OD01, Bi47, ODM_$(SECTOR)_RD, 47  }
+        {PLC,  $(SECTOR):OD01, Bi48, ODM_$(SECTOR)_RD, 48  }
+        {PLC,  $(SECTOR):OD01, Bi49, ODM_$(SECTOR)_RD, 49  }
+        {PLC,  $(SECTOR):OD01, Bi50, ODM_$(SECTOR)_RD, 50  }
+        {PLC,  $(SECTOR):OD01, Bi51, ODM_$(SECTOR)_RD, 51  }
+        {PLC,  $(SECTOR):OD01, Bi52, ODM_$(SECTOR)_RD, 52  }
+        {PLC,  $(SECTOR):OD01, Bi53, ODM_$(SECTOR)_RD, 53  }
+        {PLC,  $(SECTOR):OD01, Bi54, ODM_$(SECTOR)_RD, 54  }
+        {PLC,  $(SECTOR):OD01, Bi55, ODM_$(SECTOR)_RD, 55  }
+        {PLC,  $(SECTOR):OD01, Bi56, ODM_$(SECTOR)_RD, 56  }
+        {PLC,  $(SECTOR):OD01, Bi57, ODM_$(SECTOR)_RD, 57  }
+        {PLC,  $(SECTOR):OD01, Bi58, ODM_$(SECTOR)_RD, 58  }
+        {PLC,  $(SECTOR):OD01, Bi59, ODM_$(SECTOR)_RD, 59  }
+        {PLC,  $(SECTOR):OD01, Bi60, ODM_$(SECTOR)_RD, 60  }
+        {PLC,  $(SECTOR):OD01, Bi61, ODM_$(SECTOR)_RD, 61  }
+        {PLC,  $(SECTOR):OD01, Bi62, ODM_$(SECTOR)_RD, 62  }
+        {PLC,  $(SECTOR):OD01, Bi63, ODM_$(SECTOR)_RD, 63  }
+        {PLC,  $(SECTOR):OD01, Bi64, ODM_$(SECTOR)_RD, 64  }
+        {PLC,  $(SECTOR):OD01, Bi65, ODM_$(SECTOR)_RD, 65  }
+        {PLC,  $(SECTOR):OD01, Bi66, ODM_$(SECTOR)_RD, 66  }
+        {PLC,  $(SECTOR):OD01, Bi67, ODM_$(SECTOR)_RD, 67  }
+        {PLC,  $(SECTOR):OD01, Bi68, ODM_$(SECTOR)_RD, 68  }
+        {PLC,  $(SECTOR):OD01, Bi69, ODM_$(SECTOR)_RD, 69  }
+        {PLC,  $(SECTOR):OD01, Bi70, ODM_$(SECTOR)_RD, 70  }
+        {PLC,  $(SECTOR):OD01, Bi71, ODM_$(SECTOR)_RD, 71  }
+        {PLC,  $(SECTOR):OD01, Bi72, ODM_$(SECTOR)_RD, 72  }
+        {PLC,  $(SECTOR):OD01, Bi73, ODM_$(SECTOR)_RD, 73  }
+        {PLC,  $(SECTOR):OD01, Bi74, ODM_$(SECTOR)_RD, 74  }
+        {PLC,  $(SECTOR):OD01, Bi75, ODM_$(SECTOR)_RD, 75  }
+        {PLC,  $(SECTOR):OD01, Bi76, ODM_$(SECTOR)_RD, 76  }
+        {PLC,  $(SECTOR):OD01, Bi77, ODM_$(SECTOR)_RD, 77  }
+        {PLC,  $(SECTOR):OD01, Bi78, ODM_$(SECTOR)_RD, 78  }
+        {PLC,  $(SECTOR):OD01, Bi79, ODM_$(SECTOR)_RD, 79  }
+}
+
+####file      "pnoz2-plc-checksum.template"
+####{
+####pattern {dtype,areapos,        port             }
+####        {PLC,  $(SECTOR):OD01, ODM_$(SECTOR)_WD }
+####}
+
+####file      "statistics.template"
+####{ pattern
+####{P,                    R,                   PORT,               SCAN       }
+####{PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WDRD,  ODM_$(SECTOR)_WDRD, "10 second"}
+####{PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_WDWT,  ODM_$(SECTOR)_WDWT, "10 second"}
+####{PLC:$(SECTOR):OD01,  :ODM_$(SECTOR)_CHKSUM,  ODM_$(SECTOR)_CHKSUM, "10 second"}
+####}

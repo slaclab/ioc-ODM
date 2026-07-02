@@ -1,0 +1,7 @@
+record(bi, "$(dtype):$(areapos):$(attribute)") {
+  field(DESC, "$(description)")
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynInt32")
+#  field(INP,"@asynMask(portName,addr,mask,timeout)drvParams")
+  field(INP, "@asynMask($(port), $(word), $(bitmask='0xFFFFFFFF'), 1)")
+}

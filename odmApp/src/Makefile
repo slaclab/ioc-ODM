@@ -44,6 +44,8 @@ $(PROD_NAME)_DBD += drvAsynIPPort.dbd
 $(PROD_NAME)_DBD += stream.dbd
 $(PROD_NAME)_DBD += drvBkhAsyn.dbd
 $(PROD_NAME)_DBD += system.dbd
+$(PROD_NAME)_DBD += sCalcoutRecord.dbd
+$(PROD_NAME)_DBD += aCalcoutRecord.dbd
 
 ifdef EPICS_QSRV_MAJOR_VERSION
 $(PROD_NAME)_DBD += PVAServerRegister.dbd
@@ -69,6 +71,7 @@ $(PROD_NAME)_LIBS += modbus
 $(PROD_NAME)_LIBS += stream
 $(PROD_NAME)_LIBS += bkhAsyn
 $(PROD_NAME)_LIBS += asyn
+$(PROD_NAME)_LIBS += calc
 # Add support from base/src/vxWorks if needed
 #odm_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
 

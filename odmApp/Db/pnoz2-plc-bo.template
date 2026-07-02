@@ -1,7 +1,7 @@
 record(bo, "$(dtype):$(areapos):$(attribute)") {
   field(DESC, "$(description)")
   field(DTYP, "asynUInt32Digital")
-  field(OUT,  "@asynMask($(port), $(word), $(bitmask), 1)")
+  field(OUT,  "@asynMask($(port), $(bit), 1, 1)")
   field(ZNAM, "$(zname)")
   field(ONAM, "$(oname)")
 }

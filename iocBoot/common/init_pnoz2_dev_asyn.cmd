@@ -32,6 +32,7 @@ dbLoadRecords("${TOP}/db/asynRecord.db","P=PLC:$(SECTOR):OD01,R=:ASYNDRIVER,PORT
 
 #drvModbusAsynConfigure(portName,
 #                       tcpPortName,
+#                       slaveAddress,
 #                       modbusFunction,
 #                       modbusStartAddress,
 #                       modbusLength,
@@ -74,9 +75,13 @@ dbLoadRecords("${TOP}/db/asynRecord.db","P=PLC:$(SECTOR):OD01,R=:ASYNDRIVER,PORT
 # PILZ PLC MODBUS ASYN Configuration for ODMs
 
 ## ODM
-drvModbusAsynConfigure ("ODM_$(SECTOR)_WDRD",  "ODM_$(SECTOR)", 1, 2,  511,  144,  0,   250, "PILZ")
-drvModbusAsynConfigure ("ODM_$(SECTOR)_CHKSUM","ODM_$(SECTOR)", 1, 3,  4096,28,  0,   250, "PILZ")
-drvModbusAsynConfigure ("ODM_$(SECTOR)_WDWT",  "ODM_$(SECTOR)", 1, 3,  0,    8,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WDRD",  "ODM_$(SECTOR)", 1, 3,  511,    9,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_CHKSUM","ODM_$(SECTOR)", 1, 3,  4096,  28,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WDWT",  "ODM_$(SECTOR)", 1, 6,  0,      8,  0,   250, "PILZ")
+
+drvModbusAsynConfigure ("ODM_$(SECTOR)_RD",    "ODM_$(SECTOR)", 1, 1,  512,  144,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WD",    "ODM_$(SECTOR)", 1, 3,  4096,  28,  0,   250, "PILZ")
+drvModbusAsynConfigure ("ODM_$(SECTOR)_WRT",   "ODM_$(SECTOR)", 1, 5,  0,      8,  0,   250, "PILZ")
 
 dbLoadRecords("${TOP}/db/odm-sys0-pnoz2.db", "SECTOR=$(SECTOR)")
 dbLoadRecords("${TOP}/db/pnoz2_raw_words.db", "SECTOR=$(SECTOR)")

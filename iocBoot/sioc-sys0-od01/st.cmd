@@ -30,17 +30,19 @@ epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 epicsEnvSet("IOC","sioc-sys0-od01")
 
 # Initialize Modbus communications
-cd ${IOC_BOOT}
-iocshLoad( "init_MO2i_asyn.cmd")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI00")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI01")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI02")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI03")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI04")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI05")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI06")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI07")
-iocshLoad( "init_pilz_asyn.cmd", "SECTOR=LI08")
+cd ${EPICS_IOC_APP}
+iocshLoad( "../common/init_MO2i_asyn.cmd")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI00")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI01")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI02")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI03")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI04")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI05")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI06")
+iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI07")
+iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI08")
+iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI09")
+iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI10")
 cd ${TOP}
 
 # Load Additional databases:

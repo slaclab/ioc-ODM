@@ -70,9 +70,8 @@ file pilz-plc-bo.template
 
 file      "pilz-plc-request.template"
 {
-,pattern
-	{dtype,areapos,   port_rd, port_wrt  }
-	{PLC,$(SECTOR):OD01,   ODM_$(SECTOR)_RD,  ODM_$(SECTOR)_WRT   }
+pattern {dtype,areapos,        port_rd,           port_wrt  }
+        {PLC,$(SECTOR):OD01,   ODM_$(SECTOR)_RD,  ODM_$(SECTOR)_WRT   }
 }
 
 file      "pilz-plc-checksum.template"
