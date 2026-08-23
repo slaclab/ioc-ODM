@@ -64,6 +64,8 @@ CALC         = $(EPICS_MODULES)/calc/$(CALC_MODULE_VERSION)
 # If using the sequencer, point SNCSEQ at its top directory:
 #SNCSEQ = $(MODULES)/seq-ver
 
+EIPSCANNER_HOME=$(TOP)/EIPScanner/install
+
 # EPICS_BASE should appear last so earlier modules can override stuff:
 EPICS_BASE=$(EPICS_SITE_TOP)/base/$(BASE_MODULE_VERSION)
 

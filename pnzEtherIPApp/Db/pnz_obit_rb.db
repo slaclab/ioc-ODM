@@ -1,0 +1,1408 @@
+record(calc, "ODM:$(SECTOR):ORB:C000") {
+    field(DESC, "Out bit 0 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B000") {
+    field(DESC, "Out bit 0 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C000 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C001") {
+    field(DESC, "Out bit 1 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B001") {
+    field(DESC, "Out bit 1 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C001 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C002") {
+    field(DESC, "Out bit 2 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B002") {
+    field(DESC, "Out bit 2 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C002 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C003") {
+    field(DESC, "Out bit 3 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B003") {
+    field(DESC, "Out bit 3 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C003 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C004") {
+    field(DESC, "Out bit 4 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B004") {
+    field(DESC, "Out bit 4 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C004 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C005") {
+    field(DESC, "Out bit 5 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B005") {
+    field(DESC, "Out bit 5 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C005 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C006") {
+    field(DESC, "Out bit 6 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B006") {
+    field(DESC, "Out bit 6 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C006 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C007") {
+    field(DESC, "Out bit 7 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE00:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B007") {
+    field(DESC, "Out bit 7 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C007 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C008") {
+    field(DESC, "Out bit 8 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B008") {
+    field(DESC, "Out bit 8 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C008 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C009") {
+    field(DESC, "Out bit 9 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B009") {
+    field(DESC, "Out bit 9 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C009 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C010") {
+    field(DESC, "Out bit 10 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B010") {
+    field(DESC, "Out bit 10 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C010 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C011") {
+    field(DESC, "Out bit 11 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B011") {
+    field(DESC, "Out bit 11 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C011 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C012") {
+    field(DESC, "Out bit 12 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B012") {
+    field(DESC, "Out bit 12 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C012 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C013") {
+    field(DESC, "Out bit 13 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B013") {
+    field(DESC, "Out bit 13 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C013 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C014") {
+    field(DESC, "Out bit 14 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B014") {
+    field(DESC, "Out bit 14 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C014 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C015") {
+    field(DESC, "Out bit 15 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE01:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B015") {
+    field(DESC, "Out bit 15 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C015 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C016") {
+    field(DESC, "Out bit 16 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B016") {
+    field(DESC, "Out bit 16 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C016 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C017") {
+    field(DESC, "Out bit 17 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B017") {
+    field(DESC, "Out bit 17 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C017 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C018") {
+    field(DESC, "Out bit 18 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B018") {
+    field(DESC, "Out bit 18 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C018 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C019") {
+    field(DESC, "Out bit 19 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B019") {
+    field(DESC, "Out bit 19 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C019 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C020") {
+    field(DESC, "Out bit 20 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B020") {
+    field(DESC, "Out bit 20 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C020 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C021") {
+    field(DESC, "Out bit 21 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B021") {
+    field(DESC, "Out bit 21 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C021 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C022") {
+    field(DESC, "Out bit 22 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B022") {
+    field(DESC, "Out bit 22 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C022 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C023") {
+    field(DESC, "Out bit 23 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE02:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B023") {
+    field(DESC, "Out bit 23 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C023 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C024") {
+    field(DESC, "Out bit 24 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B024") {
+    field(DESC, "Out bit 24 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C024 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C025") {
+    field(DESC, "Out bit 25 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B025") {
+    field(DESC, "Out bit 25 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C025 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C026") {
+    field(DESC, "Out bit 26 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B026") {
+    field(DESC, "Out bit 26 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C026 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C027") {
+    field(DESC, "Out bit 27 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B027") {
+    field(DESC, "Out bit 27 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C027 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C028") {
+    field(DESC, "Out bit 28 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B028") {
+    field(DESC, "Out bit 28 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C028 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C029") {
+    field(DESC, "Out bit 29 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B029") {
+    field(DESC, "Out bit 29 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C029 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C030") {
+    field(DESC, "Out bit 30 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B030") {
+    field(DESC, "Out bit 30 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C030 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C031") {
+    field(DESC, "Out bit 31 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE03:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B031") {
+    field(DESC, "Out bit 31 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C031 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C032") {
+    field(DESC, "Out bit 32 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B032") {
+    field(DESC, "Out bit 32 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C032 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C033") {
+    field(DESC, "Out bit 33 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B033") {
+    field(DESC, "Out bit 33 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C033 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C034") {
+    field(DESC, "Out bit 34 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B034") {
+    field(DESC, "Out bit 34 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C034 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C035") {
+    field(DESC, "Out bit 35 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B035") {
+    field(DESC, "Out bit 35 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C035 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C036") {
+    field(DESC, "Out bit 36 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B036") {
+    field(DESC, "Out bit 36 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C036 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C037") {
+    field(DESC, "Out bit 37 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B037") {
+    field(DESC, "Out bit 37 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C037 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C038") {
+    field(DESC, "Out bit 38 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B038") {
+    field(DESC, "Out bit 38 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C038 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C039") {
+    field(DESC, "Out bit 39 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE04:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B039") {
+    field(DESC, "Out bit 39 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C039 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C040") {
+    field(DESC, "Out bit 40 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B040") {
+    field(DESC, "Out bit 40 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C040 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C041") {
+    field(DESC, "Out bit 41 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B041") {
+    field(DESC, "Out bit 41 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C041 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C042") {
+    field(DESC, "Out bit 42 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B042") {
+    field(DESC, "Out bit 42 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C042 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C043") {
+    field(DESC, "Out bit 43 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B043") {
+    field(DESC, "Out bit 43 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C043 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C044") {
+    field(DESC, "Out bit 44 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B044") {
+    field(DESC, "Out bit 44 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C044 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C045") {
+    field(DESC, "Out bit 45 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B045") {
+    field(DESC, "Out bit 45 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C045 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C046") {
+    field(DESC, "Out bit 46 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B046") {
+    field(DESC, "Out bit 46 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C046 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C047") {
+    field(DESC, "Out bit 47 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE05:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B047") {
+    field(DESC, "Out bit 47 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C047 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C048") {
+    field(DESC, "Out bit 48 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B048") {
+    field(DESC, "Out bit 48 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C048 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C049") {
+    field(DESC, "Out bit 49 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B049") {
+    field(DESC, "Out bit 49 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C049 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C050") {
+    field(DESC, "Out bit 50 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B050") {
+    field(DESC, "Out bit 50 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C050 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C051") {
+    field(DESC, "Out bit 51 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B051") {
+    field(DESC, "Out bit 51 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C051 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C052") {
+    field(DESC, "Out bit 52 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B052") {
+    field(DESC, "Out bit 52 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C052 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C053") {
+    field(DESC, "Out bit 53 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B053") {
+    field(DESC, "Out bit 53 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C053 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C054") {
+    field(DESC, "Out bit 54 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B054") {
+    field(DESC, "Out bit 54 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C054 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C055") {
+    field(DESC, "Out bit 55 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE06:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B055") {
+    field(DESC, "Out bit 55 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C055 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C056") {
+    field(DESC, "Out bit 56 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B056") {
+    field(DESC, "Out bit 56 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C056 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C057") {
+    field(DESC, "Out bit 57 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B057") {
+    field(DESC, "Out bit 57 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C057 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C058") {
+    field(DESC, "Out bit 58 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B058") {
+    field(DESC, "Out bit 58 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C058 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C059") {
+    field(DESC, "Out bit 59 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B059") {
+    field(DESC, "Out bit 59 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C059 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C060") {
+    field(DESC, "Out bit 60 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B060") {
+    field(DESC, "Out bit 60 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C060 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C061") {
+    field(DESC, "Out bit 61 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B061") {
+    field(DESC, "Out bit 61 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C061 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C062") {
+    field(DESC, "Out bit 62 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B062") {
+    field(DESC, "Out bit 62 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C062 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C063") {
+    field(DESC, "Out bit 63 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE07:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B063") {
+    field(DESC, "Out bit 63 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C063 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C064") {
+    field(DESC, "Out bit 64 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B064") {
+    field(DESC, "Out bit 64 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C064 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C065") {
+    field(DESC, "Out bit 65 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B065") {
+    field(DESC, "Out bit 65 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C065 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C066") {
+    field(DESC, "Out bit 66 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B066") {
+    field(DESC, "Out bit 66 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C066 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C067") {
+    field(DESC, "Out bit 67 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B067") {
+    field(DESC, "Out bit 67 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C067 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C068") {
+    field(DESC, "Out bit 68 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B068") {
+    field(DESC, "Out bit 68 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C068 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C069") {
+    field(DESC, "Out bit 69 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B069") {
+    field(DESC, "Out bit 69 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C069 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C070") {
+    field(DESC, "Out bit 70 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B070") {
+    field(DESC, "Out bit 70 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C070 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C071") {
+    field(DESC, "Out bit 71 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE08:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B071") {
+    field(DESC, "Out bit 71 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C071 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C072") {
+    field(DESC, "Out bit 72 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B072") {
+    field(DESC, "Out bit 72 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C072 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C073") {
+    field(DESC, "Out bit 73 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B073") {
+    field(DESC, "Out bit 73 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C073 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C074") {
+    field(DESC, "Out bit 74 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B074") {
+    field(DESC, "Out bit 74 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C074 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C075") {
+    field(DESC, "Out bit 75 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B075") {
+    field(DESC, "Out bit 75 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C075 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C076") {
+    field(DESC, "Out bit 76 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B076") {
+    field(DESC, "Out bit 76 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C076 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C077") {
+    field(DESC, "Out bit 77 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B077") {
+    field(DESC, "Out bit 77 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C077 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C078") {
+    field(DESC, "Out bit 78 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B078") {
+    field(DESC, "Out bit 78 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C078 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C079") {
+    field(DESC, "Out bit 79 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE09:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B079") {
+    field(DESC, "Out bit 79 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C079 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C080") {
+    field(DESC, "Out bit 80 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B080") {
+    field(DESC, "Out bit 80 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C080 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C081") {
+    field(DESC, "Out bit 81 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B081") {
+    field(DESC, "Out bit 81 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C081 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C082") {
+    field(DESC, "Out bit 82 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B082") {
+    field(DESC, "Out bit 82 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C082 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C083") {
+    field(DESC, "Out bit 83 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B083") {
+    field(DESC, "Out bit 83 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C083 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C084") {
+    field(DESC, "Out bit 84 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B084") {
+    field(DESC, "Out bit 84 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C084 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C085") {
+    field(DESC, "Out bit 85 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B085") {
+    field(DESC, "Out bit 85 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C085 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C086") {
+    field(DESC, "Out bit 86 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B086") {
+    field(DESC, "Out bit 86 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C086 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C087") {
+    field(DESC, "Out bit 87 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE10:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B087") {
+    field(DESC, "Out bit 87 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C087 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C088") {
+    field(DESC, "Out bit 88 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B088") {
+    field(DESC, "Out bit 88 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C088 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C089") {
+    field(DESC, "Out bit 89 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B089") {
+    field(DESC, "Out bit 89 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C089 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C090") {
+    field(DESC, "Out bit 90 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B090") {
+    field(DESC, "Out bit 90 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C090 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C091") {
+    field(DESC, "Out bit 91 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B091") {
+    field(DESC, "Out bit 91 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C091 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C092") {
+    field(DESC, "Out bit 92 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B092") {
+    field(DESC, "Out bit 92 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C092 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C093") {
+    field(DESC, "Out bit 93 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B093") {
+    field(DESC, "Out bit 93 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C093 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C094") {
+    field(DESC, "Out bit 94 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B094") {
+    field(DESC, "Out bit 94 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C094 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C095") {
+    field(DESC, "Out bit 95 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE11:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B095") {
+    field(DESC, "Out bit 95 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C095 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C096") {
+    field(DESC, "Out bit 96 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B096") {
+    field(DESC, "Out bit 96 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C096 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C097") {
+    field(DESC, "Out bit 97 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B097") {
+    field(DESC, "Out bit 97 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C097 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C098") {
+    field(DESC, "Out bit 98 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B098") {
+    field(DESC, "Out bit 98 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C098 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C099") {
+    field(DESC, "Out bit 99 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B099") {
+    field(DESC, "Out bit 99 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C099 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C100") {
+    field(DESC, "Out bit 100 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B100") {
+    field(DESC, "Out bit 100 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C100 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C101") {
+    field(DESC, "Out bit 101 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B101") {
+    field(DESC, "Out bit 101 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C101 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C102") {
+    field(DESC, "Out bit 102 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B102") {
+    field(DESC, "Out bit 102 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C102 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C103") {
+    field(DESC, "Out bit 103 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE12:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B103") {
+    field(DESC, "Out bit 103 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C103 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C104") {
+    field(DESC, "Out bit 104 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B104") {
+    field(DESC, "Out bit 104 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C104 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C105") {
+    field(DESC, "Out bit 105 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B105") {
+    field(DESC, "Out bit 105 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C105 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C106") {
+    field(DESC, "Out bit 106 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B106") {
+    field(DESC, "Out bit 106 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C106 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C107") {
+    field(DESC, "Out bit 107 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B107") {
+    field(DESC, "Out bit 107 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C107 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C108") {
+    field(DESC, "Out bit 108 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B108") {
+    field(DESC, "Out bit 108 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C108 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C109") {
+    field(DESC, "Out bit 109 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B109") {
+    field(DESC, "Out bit 109 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C109 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C110") {
+    field(DESC, "Out bit 110 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B110") {
+    field(DESC, "Out bit 110 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C110 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C111") {
+    field(DESC, "Out bit 111 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE13:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B111") {
+    field(DESC, "Out bit 111 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C111 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C112") {
+    field(DESC, "Out bit 112 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B112") {
+    field(DESC, "Out bit 112 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C112 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C113") {
+    field(DESC, "Out bit 113 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B113") {
+    field(DESC, "Out bit 113 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C113 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C114") {
+    field(DESC, "Out bit 114 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B114") {
+    field(DESC, "Out bit 114 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C114 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C115") {
+    field(DESC, "Out bit 115 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B115") {
+    field(DESC, "Out bit 115 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C115 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C116") {
+    field(DESC, "Out bit 116 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B116") {
+    field(DESC, "Out bit 116 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C116 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C117") {
+    field(DESC, "Out bit 117 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B117") {
+    field(DESC, "Out bit 117 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C117 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C118") {
+    field(DESC, "Out bit 118 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B118") {
+    field(DESC, "Out bit 118 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C118 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C119") {
+    field(DESC, "Out bit 119 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE14:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B119") {
+    field(DESC, "Out bit 119 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C119 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C120") {
+    field(DESC, "Out bit 120 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B120") {
+    field(DESC, "Out bit 120 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C120 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C121") {
+    field(DESC, "Out bit 121 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B121") {
+    field(DESC, "Out bit 121 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C121 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C122") {
+    field(DESC, "Out bit 122 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B122") {
+    field(DESC, "Out bit 122 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C122 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C123") {
+    field(DESC, "Out bit 123 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B123") {
+    field(DESC, "Out bit 123 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C123 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C124") {
+    field(DESC, "Out bit 124 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B124") {
+    field(DESC, "Out bit 124 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C124 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C125") {
+    field(DESC, "Out bit 125 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B125") {
+    field(DESC, "Out bit 125 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C125 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C126") {
+    field(DESC, "Out bit 126 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B126") {
+    field(DESC, "Out bit 126 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C126 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):ORB:C127") {
+    field(DESC, "Out bit 127 readback calc")
+    field(INPA, "ODM:$(SECTOR):OBYTE15:RB CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):ORB:B127") {
+    field(DESC, "Out bit 127 readback")
+    field(INP,  "ODM:$(SECTOR):ORB:C127 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
