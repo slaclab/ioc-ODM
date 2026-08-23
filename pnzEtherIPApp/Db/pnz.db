@@ -1,0 +1,3200 @@
+record(longin, "ODM:$(SECTOR):CONNECTED") {
+    field(DESC, "Class-1 connection established")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@CONNECTED")
+    field(SCAN, "I/O Intr")
+}
+record(longin, "ODM:$(SECTOR):RUNNING") {
+    field(DESC, "Cyclic input traffic received")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@RUNNING")
+    field(SCAN, "I/O Intr")
+}
+record(longin, "ODM:$(SECTOR):RPI_US") {
+    field(DESC, "Configured RPI microseconds")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@RPI_US")
+    field(SCAN, "I/O Intr")    
+}
+record(longin, "ODM:$(SECTOR):LED") {
+    field(DESC, "Assembly 100 byte 16 LED status")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@LED")
+    field(SCAN, "I/O Intr")
+}
+record(longin, "ODM:$(SECTOR):TABLE") {
+    field(DESC, "Assembly 100 byte 17 table number")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@TABLE")
+    field(SCAN, "I/O Intr")
+}
+record(longin, "ODM:$(SECTOR):SEGMENT") {
+    field(DESC, "Assembly 100 byte 18 segment number")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@SEGMENT")
+    field(SCAN, "I/O Intr")
+}
+record(longin, "ODM:$(SECTOR):ARMED") {
+    field(DESC, "O->T write state 1=armed,0=disarmed")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@ARMED")
+    field(SCAN, ".1 second")
+}
+record(bi, "ODM:$(SECTOR):ARMED:STS") {
+    field(DESC, "Arm state (enum)")
+    field(INP,  "ODM:$(SECTOR):ARMED CP")
+    field(ZNAM, "DISARMED")
+    field(ONAM, "ARMED")
+    field(ZSV,  "NO_ALARM")
+    field(OSV,  "MINOR")
+}
+
+#--------------------------------------------------------------
+# Operator ARM control (Design B: boot DISARMED, arm from panel).
+# PINI NO -> does NOT process at boot, so boot state = driver default (disarmed).
+# *** MUST NOT be autosaved -- a restored ARM=1 would auto-arm on boot. ***
+#--------------------------------------------------------------
+record(bo, "ODM:$(SECTOR):ARM:CMD") {
+    field(DESC, "Operator ARM/DISARM O->T outputs")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT,  "@ARMCMD")
+    field(ZNAM, "DISARM")
+    field(ONAM, "ARM")
+    field(PINI, "NO")
+    field(OSV,  "MINOR")
+}
+
+#--------------------------------------------------------------
+# Comm-loss annunciation.
+# Fail-safe behavior unchanged (outputs go to 0 on reconnect);
+# this only makes a drop VISIBLE and latched until acknowledged.
+#--------------------------------------------------------------
+record(longin, "ODM:$(SECTOR):DROPCOUNT") {
+    field(DESC, "Cumulative connection-loss count")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@DROPCOUNT")
+    field(SCAN, "1 second")
+}
+
+# Live comm state; DISCONNECTED => MAJOR (momentary, self-clears on reconnect)
+record(bi, "ODM:$(SECTOR):COMM:STS") {
+    field(DESC, "Live comm state")
+    field(INP,  "ODM:$(SECTOR):CONNECTED CP")
+    field(ZNAM, "DISCONNECTED")
+    field(ONAM, "CONNECTED")
+    field(ZSV,  "MAJOR")
+    field(OSV,  "NO_ALARM")
+}
+
+# Operator ack: holds the last-acknowledged drop count.
+# *** MUST NOT be autosaved. ***
+record(longout, "ODM:$(SECTOR):COMM:DROP:ACK") {
+    field(DESC, "Ack comm-drop latch (= DROPCOUNT)")
+    field(VAL,  "0")
+    field(PINI, "YES")
+}
+
+# Latched unacked-drop alarm: 1 (MAJOR) while DROPCOUNT > ACK.
+# Stays latched through reconnect (DROPCOUNT monotonic) until acked.
+record(calc, "ODM:$(SECTOR):COMM:DROP:LATCH") {
+    field(DESC, "Unacked comm drop (1=drop since ack)")
+    field(INPA, "ODM:$(SECTOR):DROPCOUNT CP")
+    field(INPB, "ODM:$(SECTOR):COMM:DROP:ACK CP")
+    field(CALC, "A>B")
+    field(HIGH, "0.5")
+    field(HSV,  "MAJOR")
+}
+
+# One-click ACK helper: process this to copy DROPCOUNT -> ACK (clears latch).
+record(calcout, "ODM:$(SECTOR):COMM:DROP:ACK:DO") {
+    field(DESC, "Trigger: copy DROPCOUNT into ACK")
+    field(INPA, "ODM:$(SECTOR):DROPCOUNT")
+    field(CALC, "A")
+    field(OUT,  "ODM:$(SECTOR):COMM:DROP:ACK PP")
+}
+
+record(waveform, "ODM:$(SECTOR):INPUT:RAW") {
+    field(DESC, "Assembly 100 raw 32-byte input")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@RAWIN")
+    field(FTVL, "UCHAR")
+    field(NELM, "32")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "ODM:$(SECTOR):OUTPUT:DIAG") {
+    field(DESC, "Assembly 150 32-byte output image")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@OUTDIAG")
+    field(FTVL, "UCHAR")
+    field(NELM, "32")
+    field(SCAN, "10 second")
+}
+
+record(waveform, "ODM:$(SECTOR):OUTPUT:RAW") {
+    field(DESC, "Assembly 150 raw 32-byte output diag")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OUTDIAG")
+    field(FTVL, "UCHAR")
+    field(NELM, "32")
+    field(SCAN, "Passive")
+}
+
+record(bi, "ODM:$(SECTOR):I000") {
+    field(DESC, "PNOZ virtual input I0")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I0")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I001") {
+    field(DESC, "PNOZ virtual input I1")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I1")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I002") {
+    field(DESC, "PNOZ virtual input I2")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I2")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I003") {
+    field(DESC, "PNOZ virtual input I3")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I3")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I004") {
+    field(DESC, "PNOZ virtual input I4")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I4")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I005") {
+    field(DESC, "PNOZ virtual input I5")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I5")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I006") {
+    field(DESC, "PNOZ virtual input I6")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I6")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I007") {
+    field(DESC, "PNOZ virtual input I7")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I7")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I008") {
+    field(DESC, "PNOZ virtual input I8")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I8")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I009") {
+    field(DESC, "PNOZ virtual input I9")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I9")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I010") {
+    field(DESC, "PNOZ virtual input I10")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I10")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I011") {
+    field(DESC, "PNOZ virtual input I11")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I11")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I012") {
+    field(DESC, "PNOZ virtual input I12")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I12")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I013") {
+    field(DESC, "PNOZ virtual input I13")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I13")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I014") {
+    field(DESC, "PNOZ virtual input I14")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I14")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I015") {
+    field(DESC, "PNOZ virtual input I15")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I15")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I016") {
+    field(DESC, "PNOZ virtual input I16")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I16")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I017") {
+    field(DESC, "PNOZ virtual input I17")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I17")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I018") {
+    field(DESC, "PNOZ virtual input I18")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I18")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I019") {
+    field(DESC, "PNOZ virtual input I19")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I19")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I020") {
+    field(DESC, "PNOZ virtual input I20")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I20")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I021") {
+    field(DESC, "PNOZ virtual input I21")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I21")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I022") {
+    field(DESC, "PNOZ virtual input I22")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I22")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I023") {
+    field(DESC, "PNOZ virtual input I23")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I23")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I024") {
+    field(DESC, "PNOZ virtual input I24")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I24")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I025") {
+    field(DESC, "PNOZ virtual input I25")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I25")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I026") {
+    field(DESC, "PNOZ virtual input I26")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I26")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I027") {
+    field(DESC, "PNOZ virtual input I27")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I27")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I028") {
+    field(DESC, "PNOZ virtual input I28")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I28")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I029") {
+    field(DESC, "PNOZ virtual input I29")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I29")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I030") {
+    field(DESC, "PNOZ virtual input I30")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I30")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I031") {
+    field(DESC, "PNOZ virtual input I31")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I31")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I032") {
+    field(DESC, "PNOZ virtual input I32")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I32")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I033") {
+    field(DESC, "PNOZ virtual input I33")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I33")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I034") {
+    field(DESC, "PNOZ virtual input I34")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I34")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I035") {
+    field(DESC, "PNOZ virtual input I35")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I35")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I036") {
+    field(DESC, "PNOZ virtual input I36")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I36")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I037") {
+    field(DESC, "PNOZ virtual input I37")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I37")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I038") {
+    field(DESC, "PNOZ virtual input I38")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I38")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I039") {
+    field(DESC, "PNOZ virtual input I39")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I39")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I040") {
+    field(DESC, "PNOZ virtual input I40")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I40")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I041") {
+    field(DESC, "PNOZ virtual input I41")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I41")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I042") {
+    field(DESC, "PNOZ virtual input I42")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I42")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I043") {
+    field(DESC, "PNOZ virtual input I43")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I43")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I044") {
+    field(DESC, "PNOZ virtual input I44")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I44")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I045") {
+    field(DESC, "PNOZ virtual input I45")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I45")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I046") {
+    field(DESC, "PNOZ virtual input I46")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I46")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I047") {
+    field(DESC, "PNOZ virtual input I47")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I47")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I048") {
+    field(DESC, "PNOZ virtual input I48")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I48")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I049") {
+    field(DESC, "PNOZ virtual input I49")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I49")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I050") {
+    field(DESC, "PNOZ virtual input I50")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I50")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I051") {
+    field(DESC, "PNOZ virtual input I51")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I51")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I052") {
+    field(DESC, "PNOZ virtual input I52")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I52")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I053") {
+    field(DESC, "PNOZ virtual input I53")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I53")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I054") {
+    field(DESC, "PNOZ virtual input I54")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I54")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I055") {
+    field(DESC, "PNOZ virtual input I55")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I55")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I056") {
+    field(DESC, "PNOZ virtual input I56")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I56")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I057") {
+    field(DESC, "PNOZ virtual input I57")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I57")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I058") {
+    field(DESC, "PNOZ virtual input I58")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I58")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I059") {
+    field(DESC, "PNOZ virtual input I59")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I59")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I060") {
+    field(DESC, "PNOZ virtual input I60")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I60")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I061") {
+    field(DESC, "PNOZ virtual input I61")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I61")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I062") {
+    field(DESC, "PNOZ virtual input I62")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I62")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I063") {
+    field(DESC, "PNOZ virtual input I63")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I63")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I064") {
+    field(DESC, "PNOZ virtual input I64")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I64")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I065") {
+    field(DESC, "PNOZ virtual input I65")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I65")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I066") {
+    field(DESC, "PNOZ virtual input I66")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I66")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I067") {
+    field(DESC, "PNOZ virtual input I67")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I67")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I068") {
+    field(DESC, "PNOZ virtual input I68")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I68")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I069") {
+    field(DESC, "PNOZ virtual input I69")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I69")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I070") {
+    field(DESC, "PNOZ virtual input I70")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I70")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I071") {
+    field(DESC, "PNOZ virtual input I71")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I71")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I072") {
+    field(DESC, "PNOZ virtual input I72")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I72")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I073") {
+    field(DESC, "PNOZ virtual input I73")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I73")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I074") {
+    field(DESC, "PNOZ virtual input I74")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I74")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I075") {
+    field(DESC, "PNOZ virtual input I75")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I75")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I076") {
+    field(DESC, "PNOZ virtual input I76")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I76")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I077") {
+    field(DESC, "PNOZ virtual input I77")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I77")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I078") {
+    field(DESC, "PNOZ virtual input I78")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I78")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I079") {
+    field(DESC, "PNOZ virtual input I79")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I79")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I080") {
+    field(DESC, "PNOZ virtual input I80")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I80")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I081") {
+    field(DESC, "PNOZ virtual input I81")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I81")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I082") {
+    field(DESC, "PNOZ virtual input I82")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I82")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I083") {
+    field(DESC, "PNOZ virtual input I83")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I83")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I084") {
+    field(DESC, "PNOZ virtual input I84")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I84")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I085") {
+    field(DESC, "PNOZ virtual input I85")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I85")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I086") {
+    field(DESC, "PNOZ virtual input I86")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I86")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I087") {
+    field(DESC, "PNOZ virtual input I87")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I87")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I088") {
+    field(DESC, "PNOZ virtual input I88")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I88")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I089") {
+    field(DESC, "PNOZ virtual input I89")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I89")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I090") {
+    field(DESC, "PNOZ virtual input I90")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I90")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I091") {
+    field(DESC, "PNOZ virtual input I91")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I91")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I092") {
+    field(DESC, "PNOZ virtual input I92")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I92")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I093") {
+    field(DESC, "PNOZ virtual input I93")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I93")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I094") {
+    field(DESC, "PNOZ virtual input I94")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I94")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I095") {
+    field(DESC, "PNOZ virtual input I95")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I95")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I096") {
+    field(DESC, "PNOZ virtual input I96")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I96")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I097") {
+    field(DESC, "PNOZ virtual input I97")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I97")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I098") {
+    field(DESC, "PNOZ virtual input I98")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I98")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I099") {
+    field(DESC, "PNOZ virtual input I99")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I99")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I100") {
+    field(DESC, "PNOZ virtual input I100")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I100")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I101") {
+    field(DESC, "PNOZ virtual input I101")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I101")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I102") {
+    field(DESC, "PNOZ virtual input I102")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I102")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I103") {
+    field(DESC, "PNOZ virtual input I103")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I103")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I104") {
+    field(DESC, "PNOZ virtual input I104")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I104")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I105") {
+    field(DESC, "PNOZ virtual input I105")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I105")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I106") {
+    field(DESC, "PNOZ virtual input I106")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I106")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I107") {
+    field(DESC, "PNOZ virtual input I107")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I107")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I108") {
+    field(DESC, "PNOZ virtual input I108")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I108")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I109") {
+    field(DESC, "PNOZ virtual input I109")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I109")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I110") {
+    field(DESC, "PNOZ virtual input I110")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I110")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I111") {
+    field(DESC, "PNOZ virtual input I111")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I111")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I112") {
+    field(DESC, "PNOZ virtual input I112")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I112")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I113") {
+    field(DESC, "PNOZ virtual input I113")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I113")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I114") {
+    field(DESC, "PNOZ virtual input I114")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I114")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I115") {
+    field(DESC, "PNOZ virtual input I115")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I115")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I116") {
+    field(DESC, "PNOZ virtual input I116")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I116")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I117") {
+    field(DESC, "PNOZ virtual input I117")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I117")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I118") {
+    field(DESC, "PNOZ virtual input I118")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I118")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I119") {
+    field(DESC, "PNOZ virtual input I119")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I119")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I120") {
+    field(DESC, "PNOZ virtual input I120")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I120")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I121") {
+    field(DESC, "PNOZ virtual input I121")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I121")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I122") {
+    field(DESC, "PNOZ virtual input I122")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I122")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I123") {
+    field(DESC, "PNOZ virtual input I123")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I123")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I124") {
+    field(DESC, "PNOZ virtual input I124")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I124")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I125") {
+    field(DESC, "PNOZ virtual input I125")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I125")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I126") {
+    field(DESC, "PNOZ virtual input I126")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I126")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bi, "ODM:$(SECTOR):I127") {
+    field(DESC, "PNOZ virtual input I127")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@I127")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")    
+    field(SCAN, "I/O Intr")
+}
+
+record(bo, "ODM:$(SECTOR):O000") {
+    field(DESC, "PNOZ Alarm Reset (edge, one-shot)")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT,  "@O0")
+    field(ZNAM, "IDLE")
+    field(ONAM, "RESET")
+    field(HIGH, "0.5")
+}
+
+record(bo, "ODM:$(SECTOR):O001") {
+    field(DESC, "PNOZ virtual output O1")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O1")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O002") {
+    field(DESC, "PNOZ virtual output O2")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O2")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O003") {
+    field(DESC, "PNOZ virtual output O3")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O3")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O004") {
+    field(DESC, "PNOZ virtual output O4")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O4")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O005") {
+    field(DESC, "PNOZ virtual output O5")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O5")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O006") {
+    field(DESC, "PNOZ virtual output O6")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O6")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O007") {
+    field(DESC, "PNOZ virtual output O7")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O7")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O008") {
+    field(DESC, "PNOZ virtual output O8")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O8")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O009") {
+    field(DESC, "PNOZ virtual output O9")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O9")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O010") {
+    field(DESC, "PNOZ virtual output O10")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O10")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O011") {
+    field(DESC, "PNOZ virtual output O11")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O11")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O012") {
+    field(DESC, "PNOZ virtual output O12")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O12")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O013") {
+    field(DESC, "PNOZ virtual output O13")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O13")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O014") {
+    field(DESC, "PNOZ virtual output O14")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O14")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O015") {
+    field(DESC, "PNOZ virtual output O15")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O15")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O016") {
+    field(DESC, "PNOZ virtual output O16")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O16")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O017") {
+    field(DESC, "PNOZ virtual output O17")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O17")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O018") {
+    field(DESC, "PNOZ virtual output O18")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O18")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O019") {
+    field(DESC, "PNOZ virtual output O19")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O19")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O020") {
+    field(DESC, "PNOZ virtual output O20")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O20")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O021") {
+    field(DESC, "PNOZ virtual output O21")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O21")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O022") {
+    field(DESC, "PNOZ virtual output O22")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O22")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O023") {
+    field(DESC, "PNOZ virtual output O23")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O23")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O024") {
+    field(DESC, "PNOZ virtual output O24")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O24")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O025") {
+    field(DESC, "PNOZ virtual output O25")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O25")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O026") {
+    field(DESC, "PNOZ virtual output O26")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O26")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O027") {
+    field(DESC, "PNOZ virtual output O27")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O27")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O028") {
+    field(DESC, "PNOZ virtual output O28")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O28")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O029") {
+    field(DESC, "PNOZ virtual output O29")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O29")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O030") {
+    field(DESC, "PNOZ virtual output O30")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O30")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O031") {
+    field(DESC, "PNOZ virtual output O31")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O31")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O032") {
+    field(DESC, "PNOZ virtual output O32")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O32")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O033") {
+    field(DESC, "PNOZ virtual output O33")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O33")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O034") {
+    field(DESC, "PNOZ virtual output O34")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O34")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O035") {
+    field(DESC, "PNOZ virtual output O35")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O35")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O036") {
+    field(DESC, "PNOZ virtual output O36")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O36")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O037") {
+    field(DESC, "PNOZ virtual output O37")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O37")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O038") {
+    field(DESC, "PNOZ virtual output O38")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O38")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O039") {
+    field(DESC, "PNOZ virtual output O39")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O39")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O040") {
+    field(DESC, "PNOZ virtual output O40")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O40")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O041") {
+    field(DESC, "PNOZ virtual output O41")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O41")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O042") {
+    field(DESC, "PNOZ virtual output O42")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O42")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O043") {
+    field(DESC, "PNOZ virtual output O43")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O43")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O044") {
+    field(DESC, "PNOZ virtual output O44")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O44")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O045") {
+    field(DESC, "PNOZ virtual output O45")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O45")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O046") {
+    field(DESC, "PNOZ virtual output O46")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O46")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O047") {
+    field(DESC, "PNOZ virtual output O47")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O47")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O048") {
+    field(DESC, "PNOZ virtual output O48")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O48")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O049") {
+    field(DESC, "PNOZ virtual output O49")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O49")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O050") {
+    field(DESC, "PNOZ virtual output O50")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O50")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O051") {
+    field(DESC, "PNOZ virtual output O51")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O51")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O052") {
+    field(DESC, "PNOZ virtual output O52")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O52")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O053") {
+    field(DESC, "PNOZ virtual output O53")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O53")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O054") {
+    field(DESC, "PNOZ virtual output O54")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O54")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O055") {
+    field(DESC, "PNOZ virtual output O55")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O55")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O056") {
+    field(DESC, "PNOZ virtual output O56")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O56")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O057") {
+    field(DESC, "PNOZ virtual output O57")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O57")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O058") {
+    field(DESC, "PNOZ virtual output O58")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O58")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O059") {
+    field(DESC, "PNOZ virtual output O59")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O59")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O060") {
+    field(DESC, "PNOZ virtual output O60")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O60")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O061") {
+    field(DESC, "PNOZ virtual output O61")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O61")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O062") {
+    field(DESC, "PNOZ virtual output O62")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O62")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O063") {
+    field(DESC, "PNOZ virtual output O63")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O63")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O064") {
+    field(DESC, "PNOZ virtual output O64")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O64")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O065") {
+    field(DESC, "PNOZ virtual output O65")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O65")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O066") {
+    field(DESC, "PNOZ virtual output O66")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O66")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O067") {
+    field(DESC, "PNOZ virtual output O67")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O67")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O068") {
+    field(DESC, "PNOZ virtual output O68")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O68")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O069") {
+    field(DESC, "PNOZ virtual output O69")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O69")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O070") {
+    field(DESC, "PNOZ virtual output O70")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O70")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O071") {
+    field(DESC, "PNOZ virtual output O71")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O71")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O072") {
+    field(DESC, "PNOZ virtual output O72")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O72")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O073") {
+    field(DESC, "PNOZ virtual output O73")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O73")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O074") {
+    field(DESC, "PNOZ virtual output O74")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O74")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O075") {
+    field(DESC, "PNOZ virtual output O75")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O75")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O076") {
+    field(DESC, "PNOZ virtual output O76")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O76")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O077") {
+    field(DESC, "PNOZ virtual output O77")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O77")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O078") {
+    field(DESC, "PNOZ virtual output O78")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O78")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O079") {
+    field(DESC, "PNOZ virtual output O79")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O79")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O080") {
+    field(DESC, "PNOZ virtual output O80")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O80")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O081") {
+    field(DESC, "PNOZ virtual output O81")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O81")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O082") {
+    field(DESC, "PNOZ virtual output O82")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O82")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O083") {
+    field(DESC, "PNOZ virtual output O83")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O83")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O084") {
+    field(DESC, "PNOZ virtual output O84")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O84")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O085") {
+    field(DESC, "PNOZ virtual output O85")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O85")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O086") {
+    field(DESC, "PNOZ virtual output O86")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O86")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O087") {
+    field(DESC, "PNOZ virtual output O87")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O87")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O088") {
+    field(DESC, "PNOZ virtual output O88")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O88")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O089") {
+    field(DESC, "PNOZ virtual output O89")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O89")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O090") {
+    field(DESC, "PNOZ virtual output O90")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O90")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O091") {
+    field(DESC, "PNOZ virtual output O91")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O91")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O092") {
+    field(DESC, "PNOZ virtual output O92")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O92")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O093") {
+    field(DESC, "PNOZ virtual output O93")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O93")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O094") {
+    field(DESC, "PNOZ virtual output O94")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O94")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O095") {
+    field(DESC, "PNOZ virtual output O95")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O95")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O096") {
+    field(DESC, "PNOZ virtual output O96")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O96")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O097") {
+    field(DESC, "PNOZ virtual output O97")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O97")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O098") {
+    field(DESC, "PNOZ virtual output O98")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O98")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O099") {
+    field(DESC, "PNOZ virtual output O99")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O99")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O100") {
+    field(DESC, "PNOZ virtual output O100")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O100")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O101") {
+    field(DESC, "PNOZ virtual output O101")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O101")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O102") {
+    field(DESC, "PNOZ virtual output O102")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O102")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O103") {
+    field(DESC, "PNOZ virtual output O103")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O103")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O104") {
+    field(DESC, "PNOZ virtual output O104")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O104")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O105") {
+    field(DESC, "PNOZ virtual output O105")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O105")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O106") {
+    field(DESC, "PNOZ virtual output O106")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O106")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O107") {
+    field(DESC, "PNOZ virtual output O107")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O107")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O108") {
+    field(DESC, "PNOZ virtual output O108")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O108")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O109") {
+    field(DESC, "PNOZ virtual output O109")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O109")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O110") {
+    field(DESC, "PNOZ virtual output O110")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O110")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O111") {
+    field(DESC, "PNOZ virtual output O111")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O111")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O112") {
+    field(DESC, "PNOZ virtual output O112")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O112")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O113") {
+    field(DESC, "PNOZ virtual output O113")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O113")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O114") {
+    field(DESC, "PNOZ virtual output O114")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O114")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O115") {
+    field(DESC, "PNOZ virtual output O115")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O115")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O116") {
+    field(DESC, "PNOZ virtual output O116")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O116")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O117") {
+    field(DESC, "PNOZ virtual output O117")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O117")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O118") {
+    field(DESC, "PNOZ virtual output O118")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O118")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O119") {
+    field(DESC, "PNOZ virtual output O119")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O119")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O120") {
+    field(DESC, "PNOZ virtual output O120")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O120")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O121") {
+    field(DESC, "PNOZ virtual output O121")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O121")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O122") {
+    field(DESC, "PNOZ virtual output O122")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O122")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O123") {
+    field(DESC, "PNOZ virtual output O123")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O123")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O124") {
+    field(DESC, "PNOZ virtual output O124")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O124")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O125") {
+    field(DESC, "PNOZ virtual output O125")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O125")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O126") {
+    field(DESC, "PNOZ virtual output O126")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O126")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bo, "ODM:$(SECTOR):O127") {
+    field(DESC, "PNOZ virtual output O127")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@O127")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE00") {
+    field(DESC, "Assembly 100 byte 0")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE0")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE01") {
+    field(DESC, "Assembly 100 byte 1")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE1")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE02") {
+    field(DESC, "Assembly 100 byte 2")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE2")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE03") {
+    field(DESC, "Assembly 100 byte 3")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE3")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE04") {
+    field(DESC, "Assembly 100 byte 4")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE4")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE05") {
+    field(DESC, "Assembly 100 byte 5")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE5")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE06") {
+    field(DESC, "Assembly 100 byte 6")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE6")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE07") {
+    field(DESC, "Assembly 100 byte 7")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE7")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE08") {
+    field(DESC, "Assembly 100 byte 8")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE8")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE09") {
+    field(DESC, "Assembly 100 byte 9")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE9")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE10") {
+    field(DESC, "Assembly 100 byte 10")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE10")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE11") {
+    field(DESC, "Assembly 100 byte 11")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE11")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE12") {
+    field(DESC, "Assembly 100 byte 12")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE12")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE13") {
+    field(DESC, "Assembly 100 byte 13")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE13")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE14") {
+    field(DESC, "Assembly 100 byte 14")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE14")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE15") {
+    field(DESC, "Assembly 100 byte 15")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE15")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE16") {
+    field(DESC, "Assembly 100 byte 16")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE16")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE17") {
+    field(DESC, "Assembly 100 byte 17")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE17")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE18") {
+    field(DESC, "Assembly 100 byte 18")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE18")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE19") {
+    field(DESC, "Assembly 100 byte 19")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE19")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE20") {
+    field(DESC, "Assembly 100 byte 20")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE20")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE21") {
+    field(DESC, "Assembly 100 byte 21")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE21")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE22") {
+    field(DESC, "Assembly 100 byte 22")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE22")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE23") {
+    field(DESC, "Assembly 100 byte 23")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE23")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE24") {
+    field(DESC, "Assembly 100 byte 24")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE24")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE25") {
+    field(DESC, "Assembly 100 byte 25")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE25")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE26") {
+    field(DESC, "Assembly 100 byte 26")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE26")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE27") {
+    field(DESC, "Assembly 100 byte 27")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE27")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE28") {
+    field(DESC, "Assembly 100 byte 28")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE28")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE29") {
+    field(DESC, "Assembly 100 byte 29")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE29")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE30") {
+    field(DESC, "Assembly 100 byte 30")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE30")
+    field(SCAN, "I/O Intr")
+}
+
+record(longin, "ODM:$(SECTOR):IBYTE31") {
+    field(DESC, "Assembly 100 byte 31")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@IBYTE31")
+    field(SCAN, "I/O Intr")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE00") {
+    field(DESC, "Assembly 150 byte 0")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE0")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE01") {
+    field(DESC, "Assembly 150 byte 1")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE1")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE02") {
+    field(DESC, "Assembly 150 byte 2")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE2")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE03") {
+    field(DESC, "Assembly 150 byte 3")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE3")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE04") {
+    field(DESC, "Assembly 150 byte 4")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE4")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE05") {
+    field(DESC, "Assembly 150 byte 5")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE5")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE06") {
+    field(DESC, "Assembly 150 byte 6")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE6")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE07") {
+    field(DESC, "Assembly 150 byte 7")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE7")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE08") {
+    field(DESC, "Assembly 150 byte 8")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE8")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE09") {
+    field(DESC, "Assembly 150 byte 9")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE9")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE10") {
+    field(DESC, "Assembly 150 byte 10")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE10")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE11") {
+    field(DESC, "Assembly 150 byte 11")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE11")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE12") {
+    field(DESC, "Assembly 150 byte 12")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE12")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE13") {
+    field(DESC, "Assembly 150 byte 13")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE13")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE14") {
+    field(DESC, "Assembly 150 byte 14")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE14")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE15") {
+    field(DESC, "Assembly 150 byte 15")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE15")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE16") {
+    field(DESC, "Assembly 150 byte 16")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE16")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE17") {
+    field(DESC, "Assembly 150 byte 17")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE17")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE18") {
+    field(DESC, "Assembly 150 byte 18")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE18")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE19") {
+    field(DESC, "Assembly 150 byte 19")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE19")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE20") {
+    field(DESC, "Assembly 150 byte 20")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE20")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE21") {
+    field(DESC, "Assembly 150 byte 21")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE21")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE22") {
+    field(DESC, "Assembly 150 byte 22")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE22")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE23") {
+    field(DESC, "Assembly 150 byte 23")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE23")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE24") {
+    field(DESC, "Assembly 150 byte 24")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE24")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE25") {
+    field(DESC, "Assembly 150 byte 25")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE25")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE26") {
+    field(DESC, "Assembly 150 byte 26")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE26")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE27") {
+    field(DESC, "Assembly 150 byte 27")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE27")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE28") {
+    field(DESC, "Assembly 150 byte 28")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE28")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE29") {
+    field(DESC, "Assembly 150 byte 29")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE29")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE30") {
+    field(DESC, "Assembly 150 byte 30")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE30")
+}
+
+record(longout, "ODM:$(SECTOR):OBYTE31") {
+    field(DESC, "Assembly 150 byte 31")
+    field(DTYP, "PNZ EtherIP")
+    field(OUT, "@OBYTE31")
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE00:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 0")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE0")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE01:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 1")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE1")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE02:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 2")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE2")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE03:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 3")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE3")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE04:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 4")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE4")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE05:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 5")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE5")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE06:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 6")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE6")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE07:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 7")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE7")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE08:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 8")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE8")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE09:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 9")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE9")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE10:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 10")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE10")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE11:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 11")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE11")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE12:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 12")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE12")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE13:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 13")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE13")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE14:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 14")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE14")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE15:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 15")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE15")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE16:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 16")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE16")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE17:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 17")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE17")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE18:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 18")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE18")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE19:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 19")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE19")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE20:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 20")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE20")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE21:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 21")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE21")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE22:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 22")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE22")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE23:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 23")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE23")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE24:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 24")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE24")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE25:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 25")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE25")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE26:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 26")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE26")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE27:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 27")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE27")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE28:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 28")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE28")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE29:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 29")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE29")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE30:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 30")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE30")
+    field(SCAN, "I/O Intr")   
+}
+
+record(longin, "ODM:$(SECTOR):OBYTE31:RB") {
+    field(DESC, "Assembly 150 output byte rdbk 31")
+    field(DTYP, "PNZ EtherIP")
+    field(INP, "@OBYTE31")
+    field(SCAN, "I/O Intr")   
+}
+
+
+record(calc, "ODM:$(SECTOR):LED:C0") {
+    field(DESC, "LED bit 0 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>0)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B0") {
+    field(DESC, "LED bit 0")
+    field(INP,  "ODM:$(SECTOR):LED:C0 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C1") {
+    field(DESC, "LED bit 1 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>1)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B1") {
+    field(DESC, "LED bit 1")
+    field(INP,  "ODM:$(SECTOR):LED:C1 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C2") {
+    field(DESC, "LED bit 2 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>2)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B2") {
+    field(DESC, "LED bit 2")
+    field(INP,  "ODM:$(SECTOR):LED:C2 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C3") {
+    field(DESC, "LED bit 3 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>3)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B3") {
+    field(DESC, "LED bit 3")
+    field(INP,  "ODM:$(SECTOR):LED:C3 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C4") {
+    field(DESC, "LED bit 4 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>4)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B4") {
+    field(DESC, "LED bit 4")
+    field(INP,  "ODM:$(SECTOR):LED:C4 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C5") {
+    field(DESC, "LED bit 5 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>5)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B5") {
+    field(DESC, "LED bit 5")
+    field(INP,  "ODM:$(SECTOR):LED:C5 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C6") {
+    field(DESC, "LED bit 6 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>6)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B6") {
+    field(DESC, "LED bit 6")
+    field(INP,  "ODM:$(SECTOR):LED:C6 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+record(calc, "ODM:$(SECTOR):LED:C7") {
+    field(DESC, "LED bit 7 calc")
+    field(INPA, "ODM:$(SECTOR):LED CP")
+    field(CALC, "(A>>7)&1")
+}
+record(bi, "ODM:$(SECTOR):LED:B7") {
+    field(DESC, "LED bit 7")
+    field(INP,  "ODM:$(SECTOR):LED:C7 CP")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(waveform, "ODM:$(SECTOR):INPUT:RAW:HEX") {
+    field(DESC, "Input image as hex string")
+    field(DTYP, "PNZ EtherIP")        
+    field(INP,  "@RAWINHEX")
+    field(FTVL, "CHAR")
+    field(NELM, "100")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "ODM:$(SECTOR):OUTPUT:RAW:HEX") {
+    field(DESC, "Output image (commanded) as hex string")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@RAWOUTHEX")
+    field(FTVL, "CHAR")
+    field(NELM, "100")
+    field(SCAN, "1 second")
+}
+
+#--------------------------------------------------------------
+# PLC diagnostics (explicit messaging). Slow scan; static except DevStatus.
+# DIAG:VALID goes 1 once Identity read succeeds.
+#--------------------------------------------------------------
+record(calc, "ODM:$(SECTOR):DIAG:VALID") {
+    field(DESC, "Identity read OK")
+    field(INPA, "ODM:$(SECTOR):IDCODE CP")
+    field(CALC, "A > 0")
+    field(HIGH, "0")          # A>0 -> 1 (valid); =0 -> 0 (no data)
+}
+
+record(calc, "ODM:$(SECTOR):FWREV") {
+    field(DESC, "Firmware rev (maj.min as number)")
+    field(INPA, "ODM:$(SECTOR):IDREVMAJ CP")
+    field(INPB, "ODM:$(SECTOR):IDREVMIN CP")
+    field(CALC, "A + B/10")
+    field(PREC, "1")
+}
+
+#--------------------------------------------------------------
+# PLC / module Identity (CIP Identity Object 0x01) - read once via
+# explicit messaging at connect. Static. VERIFIED on bench.
+#--------------------------------------------------------------
+
+record(longin, "ODM:$(SECTOR):IDVENDOR") { field(DTYP,"PNZ EtherIP") field(INP,"@IDVENDOR") field(SCAN,"5 second") field(DESC,"CIP Vendor ID (181=Pilz)") }
+record(longin, "ODM:$(SECTOR):IDTYPE")   { field(DTYP,"PNZ EtherIP") field(INP,"@IDTYPE")   field(SCAN,"5 second") field(DESC,"CIP Device Type") }
+record(longin, "ODM:$(SECTOR):IDCODE")   { field(DTYP,"PNZ EtherIP") field(INP,"@IDCODE")   field(SCAN,"5 second") field(DESC,"CIP Product Code (85)") }
+record(longin, "ODM:$(SECTOR):IDREVMAJ") { field(DTYP,"PNZ EtherIP") field(INP,"@IDREVMAJ") field(SCAN,"5 second") field(DESC,"Firmware rev major") }
+record(longin, "ODM:$(SECTOR):IDREVMIN") { field(DTYP,"PNZ EtherIP") field(INP,"@IDREVMIN") field(SCAN,"5 second") field(DESC,"Firmware rev minor") }
+record(longin, "ODM:$(SECTOR):IDSTATUS") { field(DTYP,"PNZ EtherIP") field(INP,"@IDSTATUS") field(SCAN,"5 second") field(DESC,"CIP Status word") }
+record(longin, "ODM:$(SECTOR):IDSERIAL") { field(DTYP,"PNZ EtherIP") field(INP,"@IDSERIAL") field(SCAN,"5 second") field(DESC,"Serial number") }
+
+record(waveform, "ODM:$(SECTOR):IDNAME") {
+    field(DESC, "CIP Product Name")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@IDNAME")
+    field(FTVL, "CHAR")
+    field(NELM, "64")
+    field(SCAN, "5 second")
+}
+
+#--------------------------------------------------------------
+# Base-unit LED byte (cyclic input byte 16).
+# BENCH-CONFIRMED: byte = 0xF0 when PLC RUNNING, 0xA8 when STOPPED.
+# b6 & b4 = Run indicators (on when running, off when stopped).
+# NOTE: LED byte does NOT change on faults (bench finding) -> this is a
+#       RUN/STOP indicator only, NOT a fault/diagnostic source.
+#--------------------------------------------------------------
+record(longin, "ODM:$(SECTOR):PLC:LED") {
+    field(DESC, "Base unit LED byte (raw)")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@LED")
+    field(SCAN, "1 second")
+    field(FLNK, "ODM:$(SECTOR):PLC:Running_calc")
+}
+
+# Per-bit breakout for engineering visibility (meanings partial).
+record(mbbiDirect, "ODM:$(SECTOR):PLC:LED:Bits") {
+    field(DESC, "LED byte per-bit")
+    field(INP,  "ODM:$(SECTOR):PLC:LED CP")
+    field(NOBT, "8")
+}
+
+# PLC Running: conservative decode -- both Run bits (b6 AND b4) set.
+# 0xF0 running -> b6=1,b4=1 -> RUNNING; 0xA8 stopped -> b6=0,b4=0 -> STOPPED.
+record(calc, "ODM:$(SECTOR):PLC:Running_calc") {
+    field(DESC, "PLC running (b6 AND b4)")
+    field(INPA, "ODM:$(SECTOR):PLC:LED")
+    field(CALC, "((A & 0x40) && (A & 0x10)) ? 1 : 0")
+    field(FLNK, "ODM:$(SECTOR):PLC:Running")
+}
+record(bi, "ODM:$(SECTOR):PLC:Running") {
+    field(DESC, "Safety PLC run state")
+    field(INP,  "ODM:$(SECTOR):PLC:Running_calc")
+    field(ZNAM, "STOPPED")
+    field(ONAM, "RUNNING")
+    field(ZSV,  "MAJOR")
+    field(OSV,  "NO_ALARM")
+}
+
+# Power indicator. b7 and b5 stayed ON in both observed states -> one is
+# supply-present. We use b7. *** ASSUMED: b7=Power (NOT isolated on bench).
+# Also note: read from cyclic input, so this is only meaningful while the
+# connection is live; CONNECTED/COMM:STS is the truer "unit alive" signal.
+record(calc, "ODM:$(SECTOR):PLC:Power_calc") {
+    field(DESC, "Power present (b7) - ASSUMED bit")
+    field(INPA, "ODM:$(SECTOR):PLC:LED CP")
+    field(CALC, "(A & 0x80) ? 1 : 0")
+    field(FLNK, "ODM:$(SECTOR):PLC:Power")
+}
+record(bi, "ODM:$(SECTOR):PLC:Power") {
+    field(DESC, "Base unit power (b7, assumed)")
+    field(INP,  "ODM:$(SECTOR):PLC:Power_calc")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+    field(ZSV,  "MINOR")
+}
+
+#--------------------------------------------------------------
+# Synthetic PLC status -- single-enum device health, built ENTIRELY from
+# LIVE signals (NOT the Assembly-5 DevStatus, which this device does not
+# serve via explicit Get -> 0x16). This replaces the dead DEVSTATUS mbbi.
+#
+# Priority (highest first):
+#   DISCONNECTED : no Class-1 connection (CONNECTED=0)          -> MAJOR
+#   COMM FAULT   : connected now, but an unacked drop occurred  -> MAJOR
+#   STOPPED      : connected, no drop, but PLC not running       -> MAJOR
+#   RUNNING      : connected, no unacked drop, PLC running        -> OK
+#
+# Inputs (all live):
+#   A = CONNECTED          (1=connected)
+#   B = PLC:Running_calc   (1=running: LED b6 & b4)
+#   C = COMM:DROP:LATCH    (1=unacked drop since last ACK)
+#--------------------------------------------------------------
+record(calc, "ODM:$(SECTOR):PLC:STATUS_calc") {
+    field(DESC, "Synthetic PLC status (live)")
+    field(INPA, "ODM:$(SECTOR):CONNECTED CP MS")
+    field(INPB, "ODM:$(SECTOR):PLC:Running_calc CP MS")
+    field(INPC, "ODM:$(SECTOR):COMM:DROP:LATCH CP MS")
+    # 0=Disconnected, 1=Comm Fault, 2=Stopped, 3=Running
+    field(CALC, "A==0 ? 0 : (C ? 1 : (B ? 3 : 2))")
+    field(FLNK, "ODM:$(SECTOR):PLC:STATUS")
+}
+
+record(mbbi, "ODM:$(SECTOR):PLC:STATUS") {
+    field(DESC, "PLC status (from live signals)")
+    field(INP,  "ODM:$(SECTOR):PLC:STATUS_calc")
+    field(ZRVL, "0") field(ZRST, "DISCONNECTED") field(ZRSV, "MAJOR")
+    field(ONVL, "1") field(ONST, "COMM FAULT")   field(ONSV, "MAJOR")
+    field(TWVL, "2") field(TWST, "STOPPED")      field(TWSV, "MAJOR")
+    field(THVL, "3") field(THST, "RUNNING")      field(THSV, "NO_ALARM")
+    field(UNSV, "MAJOR")
+}

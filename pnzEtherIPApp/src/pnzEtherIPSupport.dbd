@@ -1,0 +1,7 @@
+registrar(pnzEtherIPRegistrar)
+
+device(bi,      INST_IO, devPnzBi, "PNZ EtherIP")
+device(bo,      INST_IO, devPnzBo, "PNZ EtherIP")
+device(longin,  INST_IO, devPnzLi, "PNZ EtherIP")
+device(longout, INST_IO, devPnzLo, "PNZ EtherIP")
+device(waveform, INST_IO, devPnzWf, "PNZ EtherIP")
