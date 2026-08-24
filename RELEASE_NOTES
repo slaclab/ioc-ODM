@@ -11,6 +11,12 @@
 #  Mod
 #==============================================================
 
+R1.1.0       S. Condamoor (scondam)
+24-Aug-2026   Branch odm-eip
+		Initial release for Pilz PNOZ EtherNet/IP module testing with sioc-b34-od01.
+		Includes the EIPScanner library needed by the pnzEtherIPApp.
+		Build for Rocky9.
+
 R1.0.19       G. Brown (gwbrown)
 22-Sep-2025   Update to Rocky9
 
