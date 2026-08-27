@@ -357,11 +357,13 @@ record(bi, "ODM:$(SECTOR):I023") {
 }
 
 record(bi, "ODM:$(SECTOR):I024") {
-    field(DESC, "PNOZ virtual input I24")
+    field(DESC, "External ODH-OK green light")
     field(DTYP, "PNZ EtherIP")
-    field(INP, "@I24")
+    field(INP,  "@I24")
     field(ZNAM, "OFF")
-    field(ONAM, "ON")    
+    field(ONAM, "ON")
+    field(ZSV,  "MINOR")        # optional: green light OFF => MINOR alarm
+    field(OSV,  "NO_ALARM")
     field(SCAN, "I/O Intr")
 }
 
@@ -3197,4 +3199,33 @@ record(mbbi, "ODM:$(SECTOR):PLC:STATUS") {
     field(TWVL, "2") field(TWST, "STOPPED")      field(TWSV, "MAJOR")
     field(THVL, "3") field(THST, "RUNNING")      field(THSV, "NO_ALARM")
     field(UNSV, "MAJOR")
+}
+
+#--------------------------------------------------------------
+#--------------------------------------------------------------
+# Comm-loss diagnostics (scondam: drop-count + timestamp)
+# DTYP MUST be "PNZ EtherIP" (same as every other driver record);
+# "PnzLi"/"PnzWf" are NOT registered -> silently fall back to Soft
+# Channel and the @token link is dropped (record reads empty/0).
+#--------------------------------------------------------------
+
+record(longin, "ODM:$(SECTOR):COMM:DropCount") {
+    field(DESC, "EtherNet/IP disruption count")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@DROPCOUNT")
+    field(SCAN, "1 second")
+    field(HIGH, "1")
+    field(HSV,  "MINOR")
+}
+
+# Timestamp of the most recent disruption, as a native DBF_STRING.
+# EDM Text Monitor renders a stringin as text directly (no CHAR-array quirks).
+# Shows "no disruption since IOC start" until the first drop.
+
+record(stringin, "ODM:$(SECTOR):COMM:LastDropTime") {
+    field(DESC, "Time of last EtherNet/IP disruption")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@LASTDROPTIME")
+    field(SCAN, "I/O Intr")
+    field(PINI, "YES")
 }

@@ -69,6 +69,9 @@ epicsEnvSet("IOC","sioc-b34-od01")
 # RPI is 100 ms for this example. Keep all outputs zero during initial commissioning.
 pnzEtherIPConfigure("134.79.217.31", 100000)
 
+# scondam: 25-Aug-2026 - fake IP to simulate the Comm disruption scenario.
+# pnzEtherIPConfigure("134.79.217.251", 100000)
+
 # Load Additional databases:
 dbLoadRecords("db/pnz.db","SECTOR=B34")
 dbLoadRecords("db/pnz_obit_rb.db","SECTOR=B34")

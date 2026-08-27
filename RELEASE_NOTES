@@ -11,6 +11,10 @@
 #  Mod
 #==============================================================
 
+R1.1.1       S. Condamoor (scondam)
+26-Aug-2026   Branch odm-eip
+		Update database files, drivers for recovery from communication disconnects.
+		
 R1.1.0       S. Condamoor (scondam)
 24-Aug-2026   Branch odm-eip
 		Initial release for Pilz PNOZ EtherNet/IP module testing with sioc-b34-od01.

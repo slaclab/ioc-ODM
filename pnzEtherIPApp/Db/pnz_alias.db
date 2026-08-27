@@ -56,6 +56,8 @@ alias("ODM:$(SECTOR):I020", "ODM:$(SECTOR):100:Air:DC:FaultStatus")    # PLC o20
 alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts
 alias("ODM:$(SECTOR):I022", "ODM:$(SECTOR):100:AHU:FaultStatus")       # PLC o22 AHU_OK_Sts
 alias("ODM:$(SECTOR):I023", "ODM:$(SECTOR):PLC:HeartBeat")             # PLC o23 Heart_Beat
+# scondam: 25-Aug-2026: PLC input bit 24 -- external ODH-OK green light indicator (added by Ludovick) on 24-Aug-2026
+alias("ODM:$(SECTOR):I024", "ODM:$(SECTOR):100:ODHOKGreenLightON")     # PLC i24  ODHOKGreenLightON
 alias("ODM:$(SECTOR):I064", "ODM:$(SECTOR):100:ACRAlarmStatus")        # PLC o64 ODH_Sxx_OK
 alias("ODM:$(SECTOR):I065", "ODM:$(SECTOR):100:L1AlarmSum")            # PLC o65 L1_From_Supervisor_Sts
 alias("ODM:$(SECTOR):I066", "ODM:$(SECTOR):100:L2AlarmSum")            # PLC o66 L2_From_Supervisor_Sts

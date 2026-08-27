@@ -16,6 +16,7 @@
 #include <longinRecord.h>
 #include <longoutRecord.h>
 #include <waveformRecord.h>
+#include <stringinRecord.h>
 #include <dbScan.h>
 #include <errlog.h>
 
@@ -31,11 +32,13 @@ struct PnzDpvt {
     		LONG_IN,
     		LONG_OUT,
     		WAVE_IN,
-                WAVE_IN_HEX, 
-		WAVE_OUT_HEX,          // <-- add		
+                WAVE_IN_HEX,
+		WAVE_OUT_HEX,
     		WAVE_OUT,
     		WAVE_OUT_RB,
-                WAVE_IDNAME            // <-- add: CIP Identity product name (CHAR string)
+                WAVE_IDNAME,           // CIP Identity product name (CHAR string)
+                WAVE_LASTDROP,         // formatted last-disruption timestamp (CHAR waveform)
+                STRING_IN_DROPTIME     // last-disruption timestamp as DBF_STRING (EDM-friendly)
 	} kind;
     	int index;
 };
@@ -76,7 +79,6 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
             return S_db_badField;
         }
     } else if (kind == PnzDpvt::Kind::BIT_OUT) {
-        // ARM:CMD special token: routes to setArmed() in write_bo, not a bit.
         if (std::strcmp(s, "ARMCMD") == 0) {
             index = PNZ_ARMCMD_INDEX;
         } else if (!parseUnsigned(s, "O", index) || index > maxIndex) {
@@ -91,16 +93,16 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
         else if (std::strcmp(s, "CONNECTED") == 0) index = -4;
         else if (std::strcmp(s, "RUNNING") == 0) index = -5;
         else if (std::strcmp(s, "RPI_US") == 0) index = -6;
-	else if (std::strcmp(s, "ARMED") == 0) index = -7;      // arm-state readback
-	else if (std::strcmp(s, "DROPCOUNT") == 0) index = -8;  // comm-loss counter
-	else if (std::strcmp(s, "IDVENDOR") == 0)  index = -10; // CIP Identity attrs
+	else if (std::strcmp(s, "ARMED") == 0) index = -7;
+	else if (std::strcmp(s, "DROPCOUNT") == 0) index = -8;
+	else if (std::strcmp(s, "IDVENDOR") == 0)  index = -10;
 	else if (std::strcmp(s, "IDTYPE") == 0)    index = -11;
 	else if (std::strcmp(s, "IDCODE") == 0)    index = -12;
 	else if (std::strcmp(s, "IDREVMAJ") == 0)  index = -13;
 	else if (std::strcmp(s, "IDREVMIN") == 0)  index = -14;
 	else if (std::strcmp(s, "IDSTATUS") == 0)  index = -15;
 	else if (std::strcmp(s, "IDSERIAL") == 0)  index = -16;
-	else if (std::strcmp(s, "DEVSTATUS") == 0) index = -17; // Assembly 5 device status
+	else if (std::strcmp(s, "DEVSTATUS") == 0) index = -17;
 	else if (parseUnsigned(s, "IBYTE", index) && index <= 31) {
     		index = index + 1000;
 	} else if (parseUnsigned(s, "OBYTE", index) && index <= 31) {
@@ -132,7 +134,7 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
                 errlogPrintf("pnzEtherIP: %s invalid hex-waveform syntax '%s' (use @RAWOUTHEX)\n",
                              prec->name, s);
                 return S_db_badField;
-            }	    
+            }
     } else if (kind == PnzDpvt::Kind::WAVE_OUT) {
     		if (std::strcmp(s, "RAWOUT") != 0) {
         		errlogPrintf("pnzEtherIP: %s invalid waveform output syntax '%s' (use @RAWOUT)\n",
@@ -149,6 +151,18 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
     } else if (kind == PnzDpvt::Kind::WAVE_IDNAME) {
                 if (std::strcmp(s, "IDNAME") != 0) {
                     errlogPrintf("pnzEtherIP: %s invalid identity-name syntax '%s' (use @IDNAME)\n",
+                                 prec->name, s);
+                    return S_db_badField;
+                }
+    } else if (kind == PnzDpvt::Kind::WAVE_LASTDROP) {
+                if (std::strcmp(s, "LASTDROPTIME") != 0) {
+                    errlogPrintf("pnzEtherIP: %s invalid last-drop syntax '%s' (use @LASTDROPTIME)\n",
+                                 prec->name, s);
+                    return S_db_badField;
+                }
+    } else if (kind == PnzDpvt::Kind::STRING_IN_DROPTIME) {
+                if (std::strcmp(s, "LASTDROPTIME") != 0) {
+                    errlogPrintf("pnzEtherIP: %s invalid droptime syntax '%s' (use @LASTDROPTIME)\n",
                                  prec->name, s);
                     return S_db_badField;
                 }
@@ -169,6 +183,15 @@ static long get_ioint_info(int, dbCommon* prec, IOSCANPVT* ppvt)
 {
     PnzDriver* drv = PnzDriver::instance();
     *ppvt = drv ? drv->scanPvt() : nullptr;
+    return 0;
+}
+
+// I/O Intr scan list for the last-drop timestamp record: fires only when the
+// driver calls scanIoRequest(_dropScan) inside noteDisruption() (one per drop).
+static long get_ioint_info_drop(int, dbCommon* prec, IOSCANPVT* ppvt)
+{
+    PnzDriver* drv = PnzDriver::instance();
+    *ppvt = drv ? drv->dropScanPvt() : nullptr;
     return 0;
 }
 
@@ -199,8 +222,6 @@ static long write_bo(boRecord* prec)
     if (!d || !drv)
         return -1;
 
-    // ARM:CMD -- route to the driver arm gate instead of an output bit.
-    // Use rval for consistency with the normal bit path below.
     if (d->index == PNZ_ARMCMD_INDEX) {
         drv->setArmed(prec->rval != 0);
         errlogPrintf("pnzEtherIP: ARM:CMD -> O->T writes %s\n",
@@ -235,16 +256,16 @@ static long read_li(longinRecord* prec)
     case -4: prec->val = drv->connected() ? 1 : 0; break;
     case -5: prec->val = drv->running() ? 1 : 0; break;
     case -6: prec->val = drv->rpiUs(); break;
-    case -7: prec->val = drv->armed() ? 1 : 0; break;                       // arm-state
-    case -8: prec->val = static_cast<long>(drv->dropCount()); break;        // comm-loss count
-    case -10: prec->val = drv->identVendor(); break;                        // CIP identity
+    case -7: prec->val = drv->armed() ? 1 : 0; break;
+    case -8: prec->val = static_cast<long>(drv->dropCount()); break;
+    case -10: prec->val = drv->identVendor(); break;
     case -11: prec->val = drv->identType(); break;
     case -12: prec->val = drv->identCode(); break;
     case -13: prec->val = drv->identRevMajor(); break;
     case -14: prec->val = drv->identRevMinor(); break;
     case -15: prec->val = drv->identStatus(); break;
     case -16: prec->val = static_cast<long>(drv->identSerial()); break;
-    case -17: prec->val = drv->deviceStatus(); break;                       // Assembly 5
+    case -17: prec->val = drv->deviceStatus(); break;
     default:
         if (d->index >= 2000 && d->index <= 2031) {
             prec->val =
@@ -285,55 +306,67 @@ static long write_lo(longoutRecord* prec)
     return 0;
 }
 
+/* stringin: last-disruption timestamp as a native DBF_STRING (EDM-friendly).
+ * SCAN = I/O Intr via get_ioint_info_drop -> processes once per disruption. */
+static long init_si_record(stringinRecord* prec)
+{
+    return initCommon(reinterpret_cast<dbCommon*>(prec),
+                      prec->inp.value.instio.string,
+                      PnzDpvt::STRING_IN_DROPTIME, 0, "@LASTDROPTIME");
+}
+
+static long read_si(stringinRecord* prec)
+{
+    auto* d = static_cast<PnzDpvt*>(prec->dpvt);
+    auto* drv = PnzDriver::instance();
+    if (!d || !drv)
+        return -1;
+
+    // prec->val is char[MAX_STRING_SIZE] (40). Our timestamp/fallback fits.
+    drv->copyLastDropTime(prec->val, sizeof(prec->val));
+    prec->udf = false;
+    return 0;
+}
+
 static long init_wf_record(waveformRecord* prec)
 {
     const char* spec = prec->inp.value.instio.string;
 
     if (std::strcmp(spec, "RAWIN") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
-                          spec,
-                          PnzDpvt::WAVE_IN,
-                          0,
-                          "@RAWIN");
+                          spec, PnzDpvt::WAVE_IN, 0, "@RAWIN");
     }
 
     if (std::strcmp(spec, "RAWINHEX") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
-                          spec,
-                          PnzDpvt::WAVE_IN_HEX,
-                          0,
-                          "@RAWINHEX");
+                          spec, PnzDpvt::WAVE_IN_HEX, 0, "@RAWINHEX");
     }
-    
+
     if (std::strcmp(spec, "RAWOUTHEX") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
-                          spec,
-                          PnzDpvt::WAVE_OUT_HEX,
-                          0,
-                          "@RAWOUTHEX");
-    }	
-    
+                          spec, PnzDpvt::WAVE_OUT_HEX, 0, "@RAWOUTHEX");
+    }
+
     if (std::strcmp(spec, "OUTDIAG") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
-                          spec,
-                          PnzDpvt::WAVE_OUT_RB,
-                          0,
-                          "@OUTDIAG");
+                          spec, PnzDpvt::WAVE_OUT_RB, 0, "@OUTDIAG");
     }
 
     if (std::strcmp(spec, "IDNAME") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
-                          spec,
-                          PnzDpvt::WAVE_IDNAME,
-                          0,
-                          "@IDNAME");
+                          spec, PnzDpvt::WAVE_IDNAME, 0, "@IDNAME");
+    }
+
+    if (std::strcmp(spec, "LASTDROPTIME") == 0) {
+        return initCommon(reinterpret_cast<dbCommon*>(prec),
+                          spec, PnzDpvt::WAVE_LASTDROP, 0, "@LASTDROPTIME");
     }
 
     errlogPrintf(
         "pnzEtherIP: %s invalid waveform syntax '%s' "
-        "(use @RAWIN, @RAWINHEX, @RAWOUTHEX, @OUTDIAG, or @IDNAME)\n",
+        "(use @RAWIN, @RAWINHEX, @RAWOUTHEX, @OUTDIAG, @IDNAME, or @LASTDROPTIME)\n",
         prec->name, spec);
-	
+
     return S_db_badField;
 }
 
@@ -345,7 +378,6 @@ static long read_wf(waveformRecord* prec)
     if (!d || !drv)
         return -1;
 
-    // Hex-string input: CHAR waveform, handled before the UCHAR check.
     if (d->kind == PnzDpvt::WAVE_IN_HEX) {
         if (prec->ftvl != menuFtypeCHAR) {
             recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
@@ -362,7 +394,7 @@ static long read_wf(waveformRecord* prec)
                           COMM_ALARM, MINOR_ALARM);
         return 0;
     }
-    
+
     if (d->kind == PnzDpvt::WAVE_OUT_HEX) {
         if (prec->ftvl != menuFtypeCHAR) {
             recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
@@ -380,7 +412,6 @@ static long read_wf(waveformRecord* prec)
         return 0;
     }
 
-    // CIP Identity product name: CHAR string (no connected-alarm; static once read).
     if (d->kind == PnzDpvt::WAVE_IDNAME) {
         if (prec->ftvl != menuFtypeCHAR) {
             recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
@@ -394,7 +425,23 @@ static long read_wf(waveformRecord* prec)
         prec->udf = false;
         return 0;
     }
-    
+
+    // Last-disruption timestamp as CHAR waveform (kept for compatibility;
+    // EDM should use the stringin ODM:...:COMM:LastDropTime instead).
+    if (d->kind == PnzDpvt::WAVE_LASTDROP) {
+        if (prec->ftvl != menuFtypeCHAR) {
+            recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
+                          READ_ALARM, INVALID_ALARM);
+            return -1;
+        }
+        drv->copyLastDropTime(static_cast<char*>(prec->bptr),
+                              static_cast<std::size_t>(prec->nelm));
+        prec->nord = static_cast<long>(
+            std::strlen(static_cast<char*>(prec->bptr)) + 1);
+        prec->udf = false;
+        return 0;
+    }
+
     if (prec->ftvl != menuFtypeUCHAR) {
         recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
                       READ_ALARM, INVALID_ALARM);
@@ -460,6 +507,11 @@ typedef struct {
 
 typedef struct {
     dset common;
+    DEVSUPFUN read_si;
+} siDset;
+
+typedef struct {
+    dset common;
     DEVSUPFUN read_wf;
     DEVSUPFUN special_linconv;
     DEVSUPFUN write_wf;
@@ -509,6 +561,17 @@ loDset devPnzLo = {
     reinterpret_cast<DEVSUPFUN>(write_lo)
 };
 
+siDset devPnzSi = {
+    {
+        5,
+        nullptr,
+        nullptr,
+        reinterpret_cast<DEVSUPFUN>(init_si_record),
+        reinterpret_cast<DEVSUPFUN>(get_ioint_info_drop)   // drop scan list
+    },
+    reinterpret_cast<DEVSUPFUN>(read_si)
+};
+
 wfDset devPnzWf = {
     {
         8,
@@ -526,6 +589,7 @@ epicsExportAddress(dset, devPnzBi);
 epicsExportAddress(dset, devPnzBo);
 epicsExportAddress(dset, devPnzLi);
 epicsExportAddress(dset, devPnzLo);
+epicsExportAddress(dset, devPnzSi);
 epicsExportAddress(dset, devPnzWf);
 
 } // extern "C"
