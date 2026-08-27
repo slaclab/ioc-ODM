@@ -1,0 +1,37 @@
+file "pnzValidBit.template" {
+    pattern
+    { PV                                    RAW                       VNAME                     DESC                              ZNAM        ONAM     ZSV        OSV        }
+
+    # ---- Status inputs (T->O) ---------------------------------------------
+    { "ODM:$(SECTOR):100:ACRAlarmStatus"    "ODM:$(SECTOR):I064"      "ODM:$(SECTOR):I064"      "ODH $(SECTOR) Alarm"             "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:L1AlarmSum"        "ODM:$(SECTOR):I065"      "ODM:$(SECTOR):I065"      "L1 alarm summary"                "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:L1AlarmStatus"     "ODM:$(SECTOR):I067"      "ODM:$(SECTOR):I067"      "L1 local alarm"                  "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:L2AlarmSum"        "ODM:$(SECTOR):I066"      "ODM:$(SECTOR):I066"      "L2 alarm summary"                "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:L2AlarmStatus"     "ODM:$(SECTOR):I068"      "ODM:$(SECTOR):I068"      "L2 local alarm"                  "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:AlarmMuteStatus"   "ODM:$(SECTOR):I010"      "ODM:$(SECTOR):I010"      "Alarm mute status"               "OFF"       "ON"     "NO_ALARM" "NO_ALARM" }
+    { "ODM:$(SECTOR):100:StrobeStatus"      "ODM:$(SECTOR):I011"      "ODM:$(SECTOR):I011"      "Strobe output status"            "OFF"       "ON"     "NO_ALARM" "NO_ALARM" }
+    { "ODM:$(SECTOR):100:HornStatus"        "ODM:$(SECTOR):I012"      "ODM:$(SECTOR):I012"      "Horn output status"              "OFF"       "ON"     "NO_ALARM" "NO_ALARM" }
+    { "ODM:$(SECTOR):100:Air:KeyStatus"     "ODM:$(SECTOR):I013"      "ODM:$(SECTOR):I013"      "Oxigraf disable key status"      "OFF"       "ON"     "NO_ALARM" "NO_ALARM" }
+    { "ODM:$(SECTOR):101:Air:FaultStatus"   "ODM:$(SECTOR):I000"      "ODM:$(SECTOR):I000"      "Oxigraf Ch0 fault"               "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):101:Air:FaultLatched"  "ODM:$(SECTOR):I001"      "ODM:$(SECTOR):I001"      "Oxigraf Ch0 fault latched"       "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):102:Air:FaultStatus"   "ODM:$(SECTOR):I002"      "ODM:$(SECTOR):I002"      "Oxigraf Ch1 fault"               "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):102:Air:FaultLatched"  "ODM:$(SECTOR):I003"      "ODM:$(SECTOR):I003"      "Oxigraf Ch1 fault latched"       "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):103:Air:FaultStatus"   "ODM:$(SECTOR):I004"      "ODM:$(SECTOR):I004"      "Oxigraf Ch2 fault"               "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):103:Air:FaultLatched"  "ODM:$(SECTOR):I005"      "ODM:$(SECTOR):I005"      "Oxigraf Ch2 fault latched"       "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):104:Air:FaultStatus"   "ODM:$(SECTOR):I006"      "ODM:$(SECTOR):I006"      "Oxigraf Ch3 fault"               "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):104:Air:FaultLatched"  "ODM:$(SECTOR):I007"      "ODM:$(SECTOR):I007"      "Oxigraf Ch3 fault latched"       "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:SysReady"          "ODM:$(SECTOR):I008"      "ODM:$(SECTOR):I008"      "Oxigraf system OK"               "NOT READY" "READY"  "MINOR"    "NO_ALARM" }
+    { "ODM:$(SECTOR):100:SysReadyLatched"   "ODM:$(SECTOR):I009"      "ODM:$(SECTOR):I009"      "Oxigraf system OK latched"       "NOT READY" "READY"  "MINOR"    "NO_ALARM" }
+    { "ODM:$(SECTOR):100:AOR:FaultStatus"   "ODM:$(SECTOR):I021"      "ODM:$(SECTOR):I021"      "AOR OK status"                   "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:AOR:AlarmStatus"   "ODM:$(SECTOR):I069"      "ODM:$(SECTOR):I069"      "AOR alert status"                "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):101:DC:FaultStatus"    "ODM:$(SECTOR):I016"      "ODM:$(SECTOR):I016"      "PS1 DC OK status"                "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):102:DC:FaultStatus"    "ODM:$(SECTOR):I017"      "ODM:$(SECTOR):I017"      "PS2 DC OK status"                "NO_ALARM"  "ALARM"  "NO_ALARM" "MINOR"    }
+    { "ODM:$(SECTOR):100:PpsClear"          "ODM:$(SECTOR):I071"      "ODM:$(SECTOR):I071"      "PPS clear from supervisor"       "OFF"       "ON"     "NO_ALARM" "NO_ALARM" }
+    { "PLC:$(SECTOR):OD01:TestMode"         "ODM:$(SECTOR):I070"      "ODM:$(SECTOR):I070"      "TRI test mode status"            "NORMAL"    "TEST"   "NO_ALARM" "MINOR"    }
+    { "PLC:$(SECTOR):OD01:HeartBeat"        "ODM:$(SECTOR):I023"      "ODM:$(SECTOR):I023"      "PLC heartbeat"                   "0"         "1"      "NO_ALARM" "NO_ALARM" }
+
+    # ---- Command outputs (O->T); .SEVR still goes INVALID on comm loss ----
+    { "ODM:SYS0:100:AlarmReset"             "ODM:$(SECTOR):O000"      "ODM:$(SECTOR):O000"      "Alarm reset command"             "IDLE"      "RESET"  "NO_ALARM" "NO_ALARM" }
+    { "ODM:SYS0:100:AlarmMute"              "ODM:$(SECTOR):O004"      "ODM:$(SECTOR):O004"      "Alarm mute command"              "OFF"       "MUTE"   "NO_ALARM" "NO_ALARM" }
+    { "ODM:$(SECTOR):100:Air:AlarmByp"      "ODM:$(SECTOR):O001"      "ODM:$(SECTOR):O001"      "Oxigraf disable/bypass command"  "OFF"       "BYPASS" "NO_ALARM" "MINOR"    }
+}

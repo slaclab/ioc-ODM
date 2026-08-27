@@ -14,6 +14,13 @@
 #     dbLoadRecords("db/pnz_alias.db","SECTOR=B34")
 #
 #  Each alias DESC-comment cites its PLC source (o##/i##).
+#
+#  *** 2026 UPDATE: Many aliases below are now REPLACED by real
+#      validated records generated from pnzValidBit.substitutions
+#      (staleness-watchdog chains). Those alias lines are commented
+#      out here to avoid duplicate record/alias name collisions.
+#      The raw ODM:$(SECTOR):I###/O### records in pnz.db are
+#      UNCHANGED -- the validated chains read them via .SEVR/VAL.
 #==============================================================
 
 #--------------------------------------------------------------
@@ -23,10 +30,17 @@
 #  *** bit position UNVERIFIED - confirm in bench Test 1 ***
 #--------------------------------------------------------------
 
-alias("ODM:$(SECTOR):O000", "ODM:$(SECTOR):CMD:AlarmReset")       # PLC i0  Alarm_Reset_CMD
-alias("ODM:$(SECTOR):O001", "ODM:$(SECTOR):CMD:OxigrafDisable")   # PLC i1  Oxigraf_Disable_CMD
-alias("ODM:$(SECTOR):O004", "ODM:$(SECTOR):CMD:AlarmMute")        # PLC i4  Alarm_Mute_CMD
-alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):CMD:AHUDisable")       # PLC i5  AHU_Disable_CMD
+# REMOVED (now real validated records via pnzValidBit.substitutions):
+#   O000 -> ODM:SYS0:100:AlarmReset          (was CMD:AlarmReset)
+#   O001 -> ODM:$(SECTOR):100:Air:AlarmByp   (was CMD:OxigrafDisable)
+#   O004 -> ODM:SYS0:100:AlarmMute           (was CMD:AlarmMute)
+# NOTE: legacy CMD:* human names are dropped. If any panel/tooling
+#       still references CMD:AlarmReset / CMD:OxigrafDisable /
+#       CMD:AlarmMute, repoint it to the new validated PV names above.
+#alias("ODM:$(SECTOR):O000", "ODM:$(SECTOR):CMD:AlarmReset")       # PLC i0  Alarm_Reset_CMD
+#alias("ODM:$(SECTOR):O001", "ODM:$(SECTOR):CMD:OxigrafDisable")   # PLC i1  Oxigraf_Disable_CMD
+#alias("ODM:$(SECTOR):O004", "ODM:$(SECTOR):CMD:AlarmMute")        # PLC i4  Alarm_Mute_CMD
+alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):CMD:AHUDisable")        # PLC i5  AHU_Disable_CMD
 
 #--------------------------------------------------------------
 # STATUS INPUTS  (PLC outputs P-1.o## = IOC inputs I###, T->O)
@@ -34,38 +48,69 @@ alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):CMD:AHUDisable")       # PLC i5  AHU_
 #  *** bit position UNVERIFIED - confirm in bench Test 6 ***
 #--------------------------------------------------------------
 
-alias("ODM:$(SECTOR):I000", "ODM:$(SECTOR):101:Air:Ch0:FaultStatus")   # PLC o0  Oxigraf_Ch0_Real_Sts
-alias("ODM:$(SECTOR):I001", "ODM:$(SECTOR):101:Air:Ch0:FaultLatched")  # PLC o1  Oxigraf_Ch0_Latch_Sts
-alias("ODM:$(SECTOR):I002", "ODM:$(SECTOR):102:Air:Ch1:FaultStatus")   # PLC o2  Oxigraf_Ch1_Real_Sts
-alias("ODM:$(SECTOR):I003", "ODM:$(SECTOR):102:Air:Ch1:FaultLatched")  # PLC o3  Oxigraf_Ch1_Latch_Sts
-alias("ODM:$(SECTOR):I004", "ODM:$(SECTOR):103:Air:Ch2:FaultStatus")   # PLC o4  Oxigraf_Ch2_Real_Sts
-alias("ODM:$(SECTOR):I005", "ODM:$(SECTOR):103:Air:Ch2:FaultLatched")  # PLC o5  Oxigraf_Ch2_Latch_Sts
-alias("ODM:$(SECTOR):I006", "ODM:$(SECTOR):104:Air:Ch3:FaultStatus")   # PLC o6  Oxigraf_Ch3_Real_Sts
-alias("ODM:$(SECTOR):I007", "ODM:$(SECTOR):104:Air:Ch3:FaultLatched")  # PLC o7  Oxigraf_Ch3_Latch_Sts
-alias("ODM:$(SECTOR):I008", "ODM:$(SECTOR):100:SysReady")              # PLC o8  Oxigraf_SYS_OK_Real_Sts
-alias("ODM:$(SECTOR):I009", "ODM:$(SECTOR):100:SysReadyLatched")       # PLC o9  Oxigraf_SYS_OK_Latch_Sts
-alias("ODM:$(SECTOR):I010", "ODM:$(SECTOR):100:AlarmMuteStatus")       # PLC o10 Alarm_Mute_Sts
-alias("ODM:$(SECTOR):I011", "ODM:$(SECTOR):100:StrobeStatus")          # PLC o11 Strobe_Out_Sts
-alias("ODM:$(SECTOR):I012", "ODM:$(SECTOR):100:HornStatus")            # PLC o12 Horn_Out_Sts
-alias("ODM:$(SECTOR):I013", "ODM:$(SECTOR):100:Air:KeyStatus")         # PLC o13 Oxigraf_Disable_Sts
-alias("ODM:$(SECTOR):I016", "ODM:$(SECTOR):101:DC:FaultStatus")        # PLC o16 PS1_DC_OK_Sts
-alias("ODM:$(SECTOR):I017", "ODM:$(SECTOR):102:DC:FaultStatus")        # PLC o17 PS2_DC_OK_Sts
+# REMOVED (now real validated records via pnzValidBit.substitutions):
+#   I000 -> 101:Air:FaultStatus     (legacy alias was 101:Air:Ch0:FaultStatus)
+#   I001 -> 101:Air:FaultLatched    (legacy alias was 101:Air:Ch0:FaultLatched)
+#   I002 -> 102:Air:FaultStatus     (legacy alias was 102:Air:Ch1:FaultStatus)
+#   I003 -> 102:Air:FaultLatched    (legacy alias was 102:Air:Ch1:FaultLatched)
+#   I004 -> 103:Air:FaultStatus     (legacy alias was 103:Air:Ch2:FaultStatus)
+#   I005 -> 103:Air:FaultLatched    (legacy alias was 103:Air:Ch2:FaultLatched)
+#   I006 -> 104:Air:FaultStatus     (legacy alias was 104:Air:Ch3:FaultStatus)
+#   I007 -> 104:Air:FaultLatched    (legacy alias was 104:Air:Ch3:FaultLatched)
+#   I008 -> 100:SysReady
+#   I009 -> 100:SysReadyLatched
+#   I010 -> 100:AlarmMuteStatus
+#   I011 -> 100:StrobeStatus
+#   I012 -> 100:HornStatus
+#   I013 -> 100:Air:KeyStatus
+#   I016 -> 101:DC:FaultStatus
+#   I017 -> 102:DC:FaultStatus
+# WARNING: legacy Ch0..Ch3 names (.:Air:ChN:Fault*) are NOT recreated;
+#          validated records drop the ':ChN:' segment (per requested names).
+#          Repoint any panels that used the ChN form.
+#alias("ODM:$(SECTOR):I000", "ODM:$(SECTOR):101:Air:Ch0:FaultStatus")   # PLC o0  Oxigraf_Ch0_Real_Sts
+#alias("ODM:$(SECTOR):I001", "ODM:$(SECTOR):101:Air:Ch0:FaultLatched")  # PLC o1  Oxigraf_Ch0_Latch_Sts
+#alias("ODM:$(SECTOR):I002", "ODM:$(SECTOR):102:Air:Ch1:FaultStatus")   # PLC o2  Oxigraf_Ch1_Real_Sts
+#alias("ODM:$(SECTOR):I003", "ODM:$(SECTOR):102:Air:Ch1:FaultLatched")  # PLC o3  Oxigraf_Ch1_Latch_Sts
+#alias("ODM:$(SECTOR):I004", "ODM:$(SECTOR):103:Air:Ch2:FaultStatus")   # PLC o4  Oxigraf_Ch2_Real_Sts
+#alias("ODM:$(SECTOR):I005", "ODM:$(SECTOR):103:Air:Ch2:FaultLatched")  # PLC o5  Oxigraf_Ch2_Latch_Sts
+#alias("ODM:$(SECTOR):I006", "ODM:$(SECTOR):104:Air:Ch3:FaultStatus")   # PLC o6  Oxigraf_Ch3_Real_Sts
+#alias("ODM:$(SECTOR):I007", "ODM:$(SECTOR):104:Air:Ch3:FaultLatched")  # PLC o7  Oxigraf_Ch3_Latch_Sts
+#alias("ODM:$(SECTOR):I008", "ODM:$(SECTOR):100:SysReady")              # PLC o8  Oxigraf_SYS_OK_Real_Sts
+#alias("ODM:$(SECTOR):I009", "ODM:$(SECTOR):100:SysReadyLatched")       # PLC o9  Oxigraf_SYS_OK_Latch_Sts
+#alias("ODM:$(SECTOR):I010", "ODM:$(SECTOR):100:AlarmMuteStatus")       # PLC o10 Alarm_Mute_Sts
+#alias("ODM:$(SECTOR):I011", "ODM:$(SECTOR):100:StrobeStatus")          # PLC o11 Strobe_Out_Sts
+#alias("ODM:$(SECTOR):I012", "ODM:$(SECTOR):100:HornStatus")            # PLC o12 Horn_Out_Sts
+#alias("ODM:$(SECTOR):I013", "ODM:$(SECTOR):100:Air:KeyStatus")         # PLC o13 Oxigraf_Disable_Sts
+#alias("ODM:$(SECTOR):I016", "ODM:$(SECTOR):101:DC:FaultStatus")        # PLC o16 PS1_DC_OK_Sts
+#alias("ODM:$(SECTOR):I017", "ODM:$(SECTOR):102:DC:FaultStatus")        # PLC o17 PS2_DC_OK_Sts
 alias("ODM:$(SECTOR):I018", "ODM:$(SECTOR):100:DC:UpsFaultStatus")     # PLC o18 UPS_DC_OK_Sts
 alias("ODM:$(SECTOR):I019", "ODM:$(SECTOR):100:AHU:DPS:DisableStatus") # PLC o19 S10_AHU_DPS_Disable_Sts
 alias("ODM:$(SECTOR):I020", "ODM:$(SECTOR):100:Air:DC:FaultStatus")    # PLC o20 Oxigraf_DC_OK_Sts
-alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts
+# REMOVED (validated): I021 -> 100:AOR:FaultStatus
+#alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts
 alias("ODM:$(SECTOR):I022", "ODM:$(SECTOR):100:AHU:FaultStatus")       # PLC o22 AHU_OK_Sts
-alias("ODM:$(SECTOR):I023", "ODM:$(SECTOR):PLC:HeartBeat")             # PLC o23 Heart_Beat
-# scondam: 25-Aug-2026: PLC input bit 24 -- external ODH-OK green light indicator (added by Ludovick) on 24-Aug-2026
-alias("ODM:$(SECTOR):I024", "ODM:$(SECTOR):100:ODHOKGreenLightON")     # PLC i24  ODHOKGreenLightON
-alias("ODM:$(SECTOR):I064", "ODM:$(SECTOR):100:ACRAlarmStatus")        # PLC o64 ODH_Sxx_OK
-alias("ODM:$(SECTOR):I065", "ODM:$(SECTOR):100:L1AlarmSum")            # PLC o65 L1_From_Supervisor_Sts
-alias("ODM:$(SECTOR):I066", "ODM:$(SECTOR):100:L2AlarmSum")            # PLC o66 L2_From_Supervisor_Sts
-alias("ODM:$(SECTOR):I067", "ODM:$(SECTOR):100:L1AlarmStatus")         # PLC o67 L1_Local_Sts
-alias("ODM:$(SECTOR):I068", "ODM:$(SECTOR):100:L2AlarmStatus")         # PLC o68 L2_Local_Sts
-alias("ODM:$(SECTOR):I069", "ODM:$(SECTOR):100:AOR:AlarmStatus")       # PLC o69 AOR_Alert_Sts
-alias("ODM:$(SECTOR):I070", "ODM:$(SECTOR):PLC:TestMode")              # PLC o70 TRI_Test_Mode_Sts
-alias("ODM:$(SECTOR):I071", "ODM:$(SECTOR):100:PpsClear")              # PLC o71 PPS_Clear_from_Supervisor
+# REMOVED (now real validated records via pnzValidBit.substitutions):
+#   I023 -> PLC:$(SECTOR):OD01:HeartBeat   (legacy alias was ODM:$(S):PLC:HeartBeat)
+#   I064 -> 100:ACRAlarmStatus
+#   I065 -> 100:L1AlarmSum
+#   I066 -> 100:L2AlarmSum
+#   I067 -> 100:L1AlarmStatus
+#   I068 -> 100:L2AlarmStatus
+#   I069 -> 100:AOR:AlarmStatus
+#   I070 -> PLC:$(SECTOR):OD01:TestMode    (legacy alias was ODM:$(S):PLC:TestMode)
+#   I071 -> 100:PpsClear
+# NOTE: HeartBeat/TestMode human names changed from ODM:$(S):PLC:* to the
+#       legacy PLC:$(S):OD01:* form. Repoint panels/archiver accordingly.
+#alias("ODM:$(SECTOR):I023", "ODM:$(SECTOR):PLC:HeartBeat")             # PLC o23 Heart_Beat
+#alias("ODM:$(SECTOR):I064", "ODM:$(SECTOR):100:ACRAlarmStatus")        # PLC o64 ODH_Sxx_OK
+#alias("ODM:$(SECTOR):I065", "ODM:$(SECTOR):100:L1AlarmSum")            # PLC o65 L1_From_Supervisor_Sts
+#alias("ODM:$(SECTOR):I066", "ODM:$(SECTOR):100:L2AlarmSum")            # PLC o66 L2_From_Supervisor_Sts
+#alias("ODM:$(SECTOR):I067", "ODM:$(SECTOR):100:L1AlarmStatus")         # PLC o67 L1_Local_Sts
+#alias("ODM:$(SECTOR):I068", "ODM:$(SECTOR):100:L2AlarmStatus")         # PLC o68 L2_Local_Sts
+#alias("ODM:$(SECTOR):I069", "ODM:$(SECTOR):100:AOR:AlarmStatus")       # PLC o69 AOR_Alert_Sts
+#alias("ODM:$(SECTOR):I070", "ODM:$(SECTOR):PLC:TestMode")              # PLC o70 TRI_Test_Mode_Sts
+#alias("ODM:$(SECTOR):I071", "ODM:$(SECTOR):100:PpsClear")              # PLC o71 PPS_Clear_from_Supervisor
 alias("ODM:$(SECTOR):I072", "ODM:$(SECTOR):100:Pwr:FaultStatus")       # PLC o72 ODh_Power_Fault
 alias("ODM:$(SECTOR):I098", "ODM:$(SECTOR):101:DC:FaultStatusReal")    # PLC o98 PS1_DC_OK_Real_Sts
 alias("ODM:$(SECTOR):I099", "ODM:$(SECTOR):102:DC:FaultStatusReal")    # PLC o99 PS2_DC_OK_Real_Sts
