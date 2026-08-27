@@ -5,7 +5,7 @@
 	Arm gate: default DISARMED (_armed{false}); disarmed -> outputs forced 0.
 	iocsh: pnzEtherIPArm 1/0. PV: ODM:$(SECTOR):ARM:CMD.
 
-	Comm-loss annunciation: _dropCount increments on connected->lost edge.
+	Comm-loss annunciation: _dropCount increments once per disruption episode.
 
 	PLC diagnostics (design A): explicit messaging on the WORKER THREAD, after
 	handleConnections(), using a SEPARATE short-timeout SessionInfo.
@@ -14,6 +14,38 @@
 	(verified on bench: instance 1 returns 0x16 OBJECT_DOES_NOT_EXIST), so there
 	is NO Device-Status read. Identity is read ONCE at connect; run/stop state
 	comes from the cyclic LED byte (see devPnz.cpp @LED and pnz.db PLC:Running).
+
+	------------------------------------------------------------------------
+	Mod: Shantha Condamoor (scondam)  --  COMM-LOSS CRASH FIX
+	Bench cable-unplug caused core-dump/restart loop:
+	    terminate called after throwing 'std::system_error'
+	      what():  Connection timed out
+	Root cause: throwing ~SessionInfo() (UnRegisterSession) on a dead link
+	during exception unwinding -> std::terminate().
+	Fixes: safeResetExplicit() noexcept for all explicit teardown; entire
+	worker() body wrapped in try/catch(...) so no comm throw can kill the IOC.
+	------------------------------------------------------------------------
+	Mod: Shantha Condamoor (scondam)  --  DROP-COUNT + TIMESTAMP
+	  - noteDisruption() counts + timestamps ONE episode per outage using the
+	    _commFail latch (cleared on successful receive/connect).
+	  - All retry/heartbeat log lines are timestamped.
+	  - Last-disruption time exposed via copyLastDropTime()/@LASTDROPTIME.
+	  - noteDisruption() triggers _dropScan (I/O Intr) so the last-drop
+	    stringin posts a CA monitor exactly once per disruption (no periodic
+	    monitor traffic; EDM updates the instant a drop occurs).
+	------------------------------------------------------------------------
+	Mod: Shantha Condamoor (scondam)  --  STARTUP-GRACE DISRUPTION ACCOUNTING
+	Requirement: a comm disruption present BEFORE, DURING, or AFTER an IOC
+	reboot must all be counted. But a normal HEALTHY boot performs a brief
+	first-connect handshake that can fail once for ~1-2 s before succeeding;
+	that transient must NOT be counted.
+	Solution: a startup grace window (kStartupGraceSec). Rules:
+	  * After first successful connect (_everConnected): count EVERY failure
+	    immediately (a real drop of an established link).
+	  * Never connected yet, still within grace: do NOT count (handshake).
+	  * Never connected yet, PAST grace: count ONCE (_startupCounted) -- the
+	    IOC booted into a genuine outage (PLC offline / network down).
+	------------------------------------------------------------------------
 */
 #include "pnzDriver.h"
 
@@ -22,9 +54,11 @@
 #include <cstdlib>
 #include <cstring>
 #include <memory>
+#include <string>
 
 #include <epicsExport.h>
 #include <epicsThread.h>
+#include <epicsTime.h>
 #include <errlog.h>
 #include <iocsh.h>
 #include <dbScan.h>
@@ -57,6 +91,10 @@ using eipScanner::cip::ServiceCodes;
 using eipScanner::utils::LogLevel;
 using eipScanner::utils::Logger;
 
+// Startup grace window: ignore a transient first-connect handshake failure on
+// a healthy boot, but count a genuine boot-into-outage once this elapses.
+static const double kStartupGraceSec = 5.0;
+
 PnzDriver* PnzDriver::_instance = nullptr;
 
 PnzDriver* PnzDriver::configure(const std::string& ip, std::uint32_t rpiUs)
@@ -81,8 +119,10 @@ PnzDriver::PnzDriver(const std::string& ip, std::uint32_t rpiUs)
       _connectionManager(new ConnectionManager())
 {
     scanIoInit(&_scanPvt);
+    scanIoInit(&_dropScan);          // last-drop timestamp record scan list
     _output.fill(0);
     _input.fill(0);
+    epicsTimeGetCurrent(&_startTime);   // for the startup grace window
     _thread = std::thread(&PnzDriver::worker, this);
 }
 
@@ -92,6 +132,7 @@ PnzDriver::~PnzDriver()
     if (_thread.joinable())
         _thread.join();
     closeConnection();
+    safeResetExplicit();
 }
 
 bool PnzDriver::getBit(bool input, unsigned bit) const
@@ -214,6 +255,99 @@ void PnzDriver::copyIdentName(char* dst, std::size_t cap) const
     dst[n] = '\0';
 }
 
+/* Formatted last-disruption timestamp (see noteDisruption()). */
+void PnzDriver::copyLastDropTime(char* dst, std::size_t cap) const
+{
+    if (!dst || cap == 0) return;
+    epicsTimeStamp ts;
+    bool valid;
+    {
+        std::lock_guard<std::mutex> lk(_dropTimeMutex);
+        ts = _lastDropTime;
+        valid = _lastDropValid;
+    }
+    if (!valid) {
+        std::snprintf(dst, cap, "no disruption since IOC start");
+        return;
+    }
+    char buf[40] = {0};
+    epicsTimeToStrftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S.%03f", &ts);
+    std::snprintf(dst, cap, "%s", buf);
+}
+
+/* ------------------------------------------------------------------------
+ * safeResetExplicit()  (comm-loss crash fix)
+ * Release the explicit diagnostics SessionInfo/MessageRouter without letting
+ * a throwing destructor (~SessionInfo -> UnRegisterSession on a dead link)
+ * escape. This was the core-dump root cause.
+ * --------------------------------------------------------------------- */
+void PnzDriver::safeResetExplicit() noexcept
+{
+    try {
+        _explicitSession.reset();
+    } catch (const std::exception& e) {
+        errlogPrintf("pnzEtherIP: explicit session teardown threw: %s "
+                     "(ignored)\n", e.what());
+    } catch (...) {
+        errlogPrintf("pnzEtherIP: explicit session teardown threw unknown "
+                     "exception (ignored)\n");
+    }
+
+    try {
+        _messageRouter.reset();
+    } catch (const std::exception& e) {
+        errlogPrintf("pnzEtherIP: message router teardown threw: %s "
+                     "(ignored)\n", e.what());
+    } catch (...) {
+        errlogPrintf("pnzEtherIP: message router teardown threw unknown "
+                     "exception (ignored)\n");
+    }
+}
+
+/* ------------------------------------------------------------------------
+ * noteDisruption()  (drop-count + timestamp)
+ * Record ONE disruption episode. The _commFail latch guarantees exactly one
+ * count + timestamp per outage regardless of retry-cycle count. _commFail is
+ * cleared by received()/openConnection() success so the NEXT outage counts.
+ * Triggers _dropScan so the last-drop stringin re-processes and posts a CA
+ * monitor exactly once per disruption (post-only-on-change).
+ * --------------------------------------------------------------------- */
+void PnzDriver::noteDisruption(const char* reason)
+{
+    bool was = _commFail.exchange(true);
+    if (!was) {
+        std::uint32_t n = _dropCount.fetch_add(1) + 1;
+
+        epicsTimeStamp now;
+        epicsTimeGetCurrent(&now);
+        {
+            std::lock_guard<std::mutex> lk(_dropTimeMutex);
+            _lastDropTime = now;
+            _lastDropValid = true;
+        }
+
+        char ts[40] = {0};
+        epicsTimeToStrftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S.%03f", &now);
+        errlogPrintf("pnzEtherIP: DISRUPTION #%u at %s (%s); IOC staying up, "
+                     "outputs/arm retained, retrying\n",
+                     static_cast<unsigned>(n), ts,
+                     reason ? reason : "unknown");
+        _disconnLogCycle = 0;
+
+        // Post exactly one monitor update for the last-drop timestamp record.
+        if (_dropScan) scanIoRequest(_dropScan);
+    }
+}
+
+/* True once we are past the startup grace window. */
+bool PnzDriver::pastStartupGrace() const
+{
+    epicsTimeStamp now;
+    epicsTimeGetCurrent(&now);
+    double dt = epicsTimeDiffInSeconds(&now, &_startTime);
+    return dt >= kStartupGraceSec;
+}
+
 bool PnzDriver::openConnection()
 {
     auto si = std::make_shared<SessionInfo>(_ip, 0xAF12);
@@ -239,6 +373,17 @@ bool PnzDriver::openConnection()
     if (!ptr) {
         errlogPrintf("pnzEtherIP: Forward Open failed for %s\n", _ip.c_str());
         _connected.store(false);
+
+        if (_everConnected.load()) {
+            // Had a good connection before -> any failure now is a real drop.
+            noteDisruption("Forward Open failed");
+        } else if (pastStartupGrace() && !_startupCounted) {
+            // Never connected AND past grace -> booted into a genuine outage
+            // (PLC offline / network down before/during reboot). Count once.
+            _startupCounted = true;
+            noteDisruption("PLC unreachable at startup");
+        }
+        // else: within grace, never connected yet -> transient handshake; skip.
         return false;
     }
     _io = ptr;
@@ -251,6 +396,9 @@ bool PnzDriver::openConnection()
 
     _connected.store(true);
     _running.store(false);
+    _commFail.store(false);       // fresh connection: ready to detect next disruption
+    _everConnected.store(true);   // had at least one good connection
+    _disconnLogCycle = 0;
     errlogPrintf("pnzEtherIP: Class-1 connection established to %s, RPI=%u us\n",
                  _ip.c_str(), static_cast<unsigned>(_rpiUs));
     return true;
@@ -258,9 +406,18 @@ bool PnzDriver::openConnection()
 
 void PnzDriver::closeConnection()
 {
-    auto ptr = _io.lock();
-    if (ptr && _session)
-        _connectionManager->forwardClose(_session, _io);
+    /* Guard forwardClose(): it sends a ForwardClose over the (possibly dead)
+     * session and can throw. Also called from ~PnzDriver. */
+    try {
+        auto ptr = _io.lock();
+        if (ptr && _session)
+            _connectionManager->forwardClose(_session, _io);
+    } catch (const std::exception& e) {
+        errlogPrintf("pnzEtherIP: forwardClose threw: %s (ignored)\n", e.what());
+    } catch (...) {
+        errlogPrintf("pnzEtherIP: forwardClose threw unknown exception "
+                     "(ignored)\n");
+    }
     _io.reset();
     _connected.store(false);
     _running.store(false);
@@ -276,34 +433,27 @@ void PnzDriver::received(std::uint32_t, std::uint16_t,
     { std::lock_guard<std::mutex> lock(_mutex); std::copy_n(data.begin(), 32, _input.begin()); }
     _connected.store(true);
     _running.store(true);
+    _commFail.store(false);       // healthy traffic -> episode over; next drop counts
+    _everConnected.store(true);   // confirmed a good connection
     if (_scanPvt) scanIoRequest(_scanPvt);
 }
 
 void PnzDriver::connectionClosed()
 {
-    if (_connected.load()) {
-        _dropCount.fetch_add(1);
-        errlogPrintf("pnzEtherIP: connection CLOSED (drop #%u)\n",
-                     static_cast<unsigned>(_dropCount.load()));
-    }
+    // Route through noteDisruption() so counting/timestamp is centralized.
+    if (_connected.load())
+        noteDisruption("connection closed listener");
     _connected.store(false);
     _running.store(false);
 }
 
 /*
-    Identity-only diagnostics. Read ONCE per connect (static data), then the
-    explicit session is dropped and this function no-ops (guarded by
-    _identDone). worker() also stops CALLING this after Identity succeeds, so
-    there is ZERO recurring explicit traffic and NO repeating log messages.
-
-    The Assembly Object (0x04) does NOT support Get_Attribute_Single on this
-    device (bench-verified: instance 1 -> 0x16), so there is deliberately no
-    Device-Status read here. Device run/stop is derived from the cyclic LED
-    byte instead (devPnz.cpp @LED, pnz.db PLC:Running).
+    Identity-only diagnostics. Read ONCE per connect, then explicit session is
+    dropped and this no-ops (guarded by _identDone). See file header notes.
+    All teardown goes through safeResetExplicit() (crash-fix).
 */
 void PnzDriver::pollDiagnostics()
 {
-    // Explicit session (short timeout), separate from the cyclic path.
     try {
         if (!_explicitSession) {
             _explicitSession = std::make_shared<SessionInfo>(
@@ -312,9 +462,13 @@ void PnzDriver::pollDiagnostics()
         }
     } catch (const std::exception& e) {
         errlogPrintf("pnzEtherIP: diag session open failed: %s\n", e.what());
-        _explicitSession.reset();
-        _messageRouter.reset();
-        _diagBackoff = 300;   // ~30s at 100ms cycles before retry
+        safeResetExplicit();
+        _diagBackoff = 300;
+        return;
+    } catch (...) {
+        errlogPrintf("pnzEtherIP: diag session open failed (unknown exception)\n");
+        safeResetExplicit();
+        _diagBackoff = 300;
         return;
     }
 
@@ -343,13 +497,12 @@ void PnzDriver::pollDiagnostics()
                          static_cast<unsigned>(_idStatus));
         } catch (const std::exception& e) {
             errlogPrintf("pnzEtherIP: Identity read failed: %s\n", e.what());
-            _diagBackoff = 300;   // back off ~30s, then worker() retries
+            _diagBackoff = 300;
+        } catch (...) {
+            errlogPrintf("pnzEtherIP: Identity read failed (unknown exception)\n");
+            _diagBackoff = 300;
         }
-        // Identity is static: drop the explicit session either way. If it
-        // failed, worker() will call again after the back-off; if it
-        // succeeded, worker() stops calling (guarded by _identDone).
-        _explicitSession.reset();
-        _messageRouter.reset();
+        safeResetExplicit();
     }
     // NO Device-Status read: unsupported on this device (Assembly Get -> 0x16).
 }
@@ -358,56 +511,113 @@ void PnzDriver::worker()
 {
     Logger::setLogLevel(LogLevel::INFO);
 
+    // ~30 retry cycles (~1 s each in the catch) between "still disconnected".
+    static const unsigned kDisconnLogEvery = 30;
+
     while (!_stop.load()) {
-        if (!_connected.load()) {
-            if (!openConnection()) {
-                std::this_thread::sleep_for(std::chrono::seconds(2));
+        try {
+            if (!_connected.load()) {
+                if (!openConnection()) {
+                    // openConnection() handles disruption accounting (startup
+                    // grace vs. real drop). Rate-limited heartbeat while down.
+                    if (++_disconnLogCycle >= kDisconnLogEvery) {
+                        _disconnLogCycle = 0;
+                        char ts[40] = {0};
+                        epicsTimeStamp now; epicsTimeGetCurrent(&now);
+                        epicsTimeToStrftime(ts, sizeof(ts),
+                                            "%Y-%m-%d %H:%M:%S.%03f", &now);
+                        errlogPrintf("pnzEtherIP: [%s] still disconnected "
+                                     "(no connection), retrying...\n", ts);
+                    }
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+                    continue;
+                }
+            }
+
+            auto ptr = _io.lock();
+            if (!ptr) { _connected.store(false); continue; }
+
+            // Arm gate: disarmed -> all zeros regardless of _output.
+            std::vector<std::uint8_t> out(32, 0);
+            if (_armed.load()) {
+                std::lock_guard<std::mutex> lock(_mutex);
+                std::copy(_output.begin(), _output.end(), out.begin());
+            }
+            ptr->setDataToSend(out);
+
+            _connectionManager->handleConnections(std::chrono::milliseconds(100));
+
+            // Graceful drop (handleConnections closed the connection).
+            if (!_connectionManager->hasOpenConnections()) {
+                noteDisruption("connection closed by handleConnections");
+                _connected.store(false);
+                _running.store(false);
+                _identDone.store(false);
+                _diagValid.store(false);
+                safeResetExplicit();
+                _diagCycle = 0;
+                _diagBackoff = 0;
                 continue;
             }
+
+            // Identity read: poll only until it succeeds, then stop entirely.
+            if (_connected.load() && _running.load() && !_identDone.load()) {
+                if (_diagBackoff > 0) {
+                    --_diagBackoff;
+                } else if (++_diagCycle >= 50) {   // 50 * 100ms = 5s
+                    _diagCycle = 0;
+                    pollDiagnostics();
+                }
+            }
         }
-
-        auto ptr = _io.lock();
-        if (!ptr) { _connected.store(false); continue; }
-
-        // Arm gate: disarmed -> all zeros regardless of _output.
-        std::vector<std::uint8_t> out(32, 0);
-        if (_armed.load()) {
-            std::lock_guard<std::mutex> lock(_mutex);
-            std::copy(_output.begin(), _output.end(), out.begin());
-        }
-        ptr->setDataToSend(out);
-
-        _connectionManager->handleConnections(std::chrono::milliseconds(100));
-
-        // Drop detection (connected -> lost edge).
-        if (!_connectionManager->hasOpenConnections()) {
-            if (_connected.load()) {
-                _dropCount.fetch_add(1);
-                errlogPrintf("pnzEtherIP: connection LOST (drop #%u); "
-                             "outputs resume at 0 on reconnect\n",
-                             static_cast<unsigned>(_dropCount.load()));
+        catch (const std::exception& e) {
+            // Count per startup-grace rules (mirrors openConnection()).
+            if (_everConnected.load()) {
+                noteDisruption(e.what());
+            } else if (pastStartupGrace() && !_startupCounted) {
+                _startupCounted = true;
+                noteDisruption(std::string("startup: ").append(e.what()).c_str());
+            }
+            if (++_disconnLogCycle >= kDisconnLogEvery) {
+                _disconnLogCycle = 0;
+                char ts[40] = {0};
+                epicsTimeStamp now; epicsTimeGetCurrent(&now);
+                epicsTimeToStrftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S.%03f", &now);
+                errlogPrintf("pnzEtherIP: [%s] still disconnected (%s), retrying...\n",
+                             ts, e.what());
             }
             _connected.store(false);
-            // Reset diagnostics so Identity re-reads after reconnect.
+            _running.store(false);
             _identDone.store(false);
             _diagValid.store(false);
-            _explicitSession.reset();
-            _messageRouter.reset();
+            safeResetExplicit();
             _diagCycle = 0;
             _diagBackoff = 0;
-            continue;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         }
-
-        // Identity read: poll ONLY until it succeeds, then stop entirely.
-        // Once _identDone is true, we never call pollDiagnostics() again ->
-        // no recurring explicit traffic, no repeating log messages.
-        if (_connected.load() && _running.load() && !_identDone.load()) {
-            if (_diagBackoff > 0) {
-                --_diagBackoff;
-            } else if (++_diagCycle >= 50) {   // 50 * 100ms = 5s
-                _diagCycle = 0;
-                pollDiagnostics();
+        catch (...) {
+            if (_everConnected.load()) {
+                noteDisruption("unknown exception");
+            } else if (pastStartupGrace() && !_startupCounted) {
+                _startupCounted = true;
+                noteDisruption("startup: unknown exception");
             }
+            if (++_disconnLogCycle >= kDisconnLogEvery) {
+                _disconnLogCycle = 0;
+                char ts[40] = {0};
+                epicsTimeStamp now; epicsTimeGetCurrent(&now);
+                epicsTimeToStrftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S.%03f", &now);
+                errlogPrintf("pnzEtherIP: [%s] still disconnected (unknown "
+                             "exception), retrying...\n", ts);
+            }
+            _connected.store(false);
+            _running.store(false);
+            _identDone.store(false);
+            _diagValid.store(false);
+            safeResetExplicit();
+            _diagCycle = 0;
+            _diagBackoff = 0;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
 }
