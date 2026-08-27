@@ -1,4 +1,4 @@
-file "pnzValidBit.template" {
+file "db/pnzValidBit.template" {
     pattern
     { PV                                    RAW                       VNAME                     DESC                              ZNAM        ONAM     ZSV        OSV        }
 

@@ -2,14 +2,21 @@
 # pnzValidBit.template
 #
 # One validated-bit chain (staleness watchdog) for the PNZ EtherIP
-# PNOZ IOC. Mirrors the reviewed ACRAlarmStatus idiom:
+# PNOZ IOC. Mirrors the reviewed ACRAlarmStatus idiom, with a
+# CONNECTED-based fallback so the chain trips on comm loss even if
+# the driver freezes inputs (rather than invalidating them):
 #
-#   <RAW>.SEVR --> $(PV):Valid (calcout, 1 s wd, HIHI=$(WDCOUNT))
-#             --> $(PV)_calc  (calcout, CALC="A", carries MSI)
-#             --> $(PV)       (bi, presentation)
+#   RAW.SEVR --+
+#              +--> PV:Valid (calcout, 1 s wd, HIHI=WDCOUNT)
+#   CONNECTED -+         --> PV_calc (calcout, CALC="A", carries MSI)
+#                        --> PV      (bi, presentation)
 #
-# Goes INVALID if the raw record's severity stays INVALID for
-# ~$(WDCOUNT) consecutive 1 s scans (comm loss).
+# The watchdog counter ramps when EITHER:
+#   - the raw record's severity is INVALID (A=3), OR
+#   - the Class-1 connection is down (CONNECTED=0, i.e. B=0)
+# It latches INVALID at HIHI=WDCOUNT (seconds) and pushes that
+# severity downstream via MSI. On reconnect + valid input it resets
+# to 0 and the chain self-recovers.
 #
 # Macros:
 #   PV       full presentation PV name (e.g. ODM:B34:100:ACRAlarmStatus)
@@ -24,12 +31,15 @@
 #   OSV      one-state severity       (default NO_ALARM)
 #   WDCOUNT  watchdog trip count in seconds (default 3)
 #   ASG      access security group    (default Internal)
+#   CONN     connection PV for fallback trip
+#            (default ODM:SECTOR:CONNECTED)
 #==============================================================
 
 record(calcout, "$(VNAME):Valid") {
     field(DESC, "$(PV) validity wd")
     field(INPA, "$(RAW).SEVR NPP NMS")
-    field(CALC, "A=3?VAL+1:0")
+    field(INPB, "$(CONN=ODM:$(SECTOR):CONNECTED) CP NMS")
+    field(CALC, "(A=3 || B=0) ? VAL+1 : 0")
     field(HIHI, "$(WDCOUNT=3)")
     field(HHSV, "INVALID")
     field(OUT,  "$(PV)_calc.C PP MSI")
