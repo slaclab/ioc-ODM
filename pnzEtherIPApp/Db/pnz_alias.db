@@ -19,7 +19,7 @@
 #      validated records generated from pnzValidBit.substitutions
 #      (staleness-watchdog chains). Those alias lines are commented
 #      out here to avoid duplicate record/alias name collisions.
-#      The raw ODM:$(SECTOR):I###/O### records in pnz.db are
+#      The raw ODM:SECTOR:I###/O### records in pnz.db are
 #      UNCHANGED -- the validated chains read them via .SEVR/VAL.
 #==============================================================
 
@@ -32,7 +32,7 @@
 
 # REMOVED (now real validated records via pnzValidBit.substitutions):
 #   O000 -> ODM:SYS0:100:AlarmReset          (was CMD:AlarmReset)
-#   O001 -> ODM:$(SECTOR):100:Air:AlarmByp   (was CMD:OxigrafDisable)
+#   O001 -> ODM:SECTOR:100:Air:AlarmByp      (was CMD:OxigrafDisable)
 #   O004 -> ODM:SYS0:100:AlarmMute           (was CMD:AlarmMute)
 # NOTE: legacy CMD:* human names are dropped. If any panel/tooling
 #       still references CMD:AlarmReset / CMD:OxigrafDisable /
@@ -65,7 +65,7 @@ alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):CMD:AHUDisable")        # PLC i5  AHU
 #   I013 -> 100:Air:KeyStatus
 #   I016 -> 101:DC:FaultStatus
 #   I017 -> 102:DC:FaultStatus
-# WARNING: legacy Ch0..Ch3 names (.:Air:ChN:Fault*) are NOT recreated;
+# WARNING: legacy Ch0..Ch3 names (...:Air:ChN:Fault*) are NOT recreated;
 #          validated records drop the ':ChN:' segment (per requested names).
 #          Repoint any panels that used the ChN form.
 #alias("ODM:$(SECTOR):I000", "ODM:$(SECTOR):101:Air:Ch0:FaultStatus")   # PLC o0  Oxigraf_Ch0_Real_Sts
@@ -91,17 +91,17 @@ alias("ODM:$(SECTOR):I020", "ODM:$(SECTOR):100:Air:DC:FaultStatus")    # PLC o20
 #alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts
 alias("ODM:$(SECTOR):I022", "ODM:$(SECTOR):100:AHU:FaultStatus")       # PLC o22 AHU_OK_Sts
 # REMOVED (now real validated records via pnzValidBit.substitutions):
-#   I023 -> PLC:$(SECTOR):OD01:HeartBeat   (legacy alias was ODM:$(S):PLC:HeartBeat)
+#   I023 -> PLC:SECTOR:OD01:HeartBeat   (legacy alias was ODM:SECTOR:PLC:HeartBeat)
 #   I064 -> 100:ACRAlarmStatus
 #   I065 -> 100:L1AlarmSum
 #   I066 -> 100:L2AlarmSum
 #   I067 -> 100:L1AlarmStatus
 #   I068 -> 100:L2AlarmStatus
 #   I069 -> 100:AOR:AlarmStatus
-#   I070 -> PLC:$(SECTOR):OD01:TestMode    (legacy alias was ODM:$(S):PLC:TestMode)
+#   I070 -> PLC:SECTOR:OD01:TestMode    (legacy alias was ODM:SECTOR:PLC:TestMode)
 #   I071 -> 100:PpsClear
-# NOTE: HeartBeat/TestMode human names changed from ODM:$(S):PLC:* to the
-#       legacy PLC:$(S):OD01:* form. Repoint panels/archiver accordingly.
+# NOTE: HeartBeat/TestMode human names changed from ODM:SECTOR:PLC:* to the
+#       legacy PLC:SECTOR:OD01:* form. Repoint panels/archiver accordingly.
 #alias("ODM:$(SECTOR):I023", "ODM:$(SECTOR):PLC:HeartBeat")             # PLC o23 Heart_Beat
 #alias("ODM:$(SECTOR):I064", "ODM:$(SECTOR):100:ACRAlarmStatus")        # PLC o64 ODH_Sxx_OK
 #alias("ODM:$(SECTOR):I065", "ODM:$(SECTOR):100:L1AlarmSum")            # PLC o65 L1_From_Supervisor_Sts
