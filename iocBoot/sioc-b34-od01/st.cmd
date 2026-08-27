@@ -76,7 +76,7 @@ pnzEtherIPConfigure("134.79.217.31", 100000)
 dbLoadRecords("db/pnz.db","SECTOR=B34")
 dbLoadRecords("db/pnz_obit_rb.db","SECTOR=B34")
 dbLoadRecords("db/pnz_alias.db","SECTOR=B34") 
-
+dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=B34")
 # Setup autosave/restore
 < iocBoot/common/init_restore.soft.cmd
 # Also save-restore alarm reset high

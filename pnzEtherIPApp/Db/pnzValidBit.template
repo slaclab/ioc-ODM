@@ -1,0 +1,56 @@
+#==============================================================
+# pnzValidBit.template
+#
+# One validated-bit chain (staleness watchdog) for the PNZ EtherIP
+# PNOZ IOC. Mirrors the reviewed ACRAlarmStatus idiom:
+#
+#   <RAW>.SEVR --> $(PV):Valid (calcout, 1 s wd, HIHI=$(WDCOUNT))
+#             --> $(PV)_calc  (calcout, CALC="A", carries MSI)
+#             --> $(PV)       (bi, presentation)
+#
+# Goes INVALID if the raw record's severity stays INVALID for
+# ~$(WDCOUNT) consecutive 1 s scans (comm loss).
+#
+# Macros:
+#   PV       full presentation PV name (e.g. ODM:B34:100:ACRAlarmStatus)
+#   RAW      raw source record (bi/bo) whose .SEVR is monitored
+#            and whose VAL is passed through (e.g. ODM:B34:I064)
+#   VNAME    unique base for the :Valid watchdog record
+#            (typically = RAW, e.g. ODM:B34:I064 -> ODM:B34:I064:Valid)
+#   DESC     description string for the presentation record
+#   ZNAM     zero-state string        (default OFF)
+#   ONAM     one-state string         (default ON)
+#   ZSV      zero-state severity      (default NO_ALARM)
+#   OSV      one-state severity       (default NO_ALARM)
+#   WDCOUNT  watchdog trip count in seconds (default 3)
+#   ASG      access security group    (default Internal)
+#==============================================================
+
+record(calcout, "$(VNAME):Valid") {
+    field(DESC, "$(PV) validity wd")
+    field(INPA, "$(RAW).SEVR NPP NMS")
+    field(CALC, "A=3?VAL+1:0")
+    field(HIHI, "$(WDCOUNT=3)")
+    field(HHSV, "INVALID")
+    field(OUT,  "$(PV)_calc.C PP MSI")
+    field(SCAN, "1 second")
+    field(ASG,  "$(ASG=Internal)")
+}
+
+record(calcout, "$(PV)_calc") {
+    field(DESC, "Validated $(PV)")
+    field(INPA, "$(RAW) CP NMS")
+    field(INPC, "$(VNAME):Valid NPP MSI")
+    field(CALC, "A")
+    field(OUT,  "$(PV) PP MS")
+    field(ASG,  "$(ASG=Internal)")
+}
+
+record(bi, "$(PV)") {
+    field(DESC, "$(DESC)")
+    field(ZNAM, "$(ZNAM=OFF)")
+    field(ONAM, "$(ONAM=ON)")
+    field(ZSV,  "$(ZSV=NO_ALARM)")
+    field(OSV,  "$(OSV=NO_ALARM)")
+    info(autosaveFields_pass0, "SEVR")
+}
