@@ -11,6 +11,11 @@
 #  Mod
 #==============================================================
 
+R1.1.2       S. Condamoor (scondam)
+28-Aug-2026   Branch odm-eip
+		Add support for checksum and other project data.
+		Add alarm severities similar to LI07. 
+		
 R1.1.1       S. Condamoor (scondam)
 26-Aug-2026   Branch odm-eip
 		Update database files, drivers for recovery from communication disconnects.

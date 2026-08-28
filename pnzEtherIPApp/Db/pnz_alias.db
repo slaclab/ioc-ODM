@@ -22,6 +22,38 @@
 #      The raw ODM:SECTOR:I###/O### records in pnz.db are
 #      UNCHANGED -- the validated chains read them via .SEVR/VAL.
 #==============================================================
+# scondam: 27-Aug-2026
+#==============================================================
+# Legacy modbus <-> current EtherIP bits cross-reference
+# The two systems use entirely different bit numbering - this table is the bridge:
+#============================================================================================================================
+# Signal			Legacy 	Modbus 			Current 			Current validated PV (served)
+#				(odm-sys0-pilz.db, coil N)	EtherNet/IP raw (pnz.db)
+#============================================================================================================================
+# Oxigraf Ch0 Real		Bi7				I000				ODM:B34:101:Air:FaultStatus
+# Oxigraf Ch0 Latch		Bi6				I001				ODM:B34:101:Air:FaultLatched
+# Oxigraf Ch1 Real/Latch	Bi5/Bi4				I002/I003			ODM:B34:102:Air:Fault{Status,Latched}
+# Oxigraf Ch2 Real/Latch	Bi3/Bi2				I004/I005			ODM:B34:103:Air:Fault{Status,Latched}
+# Oxigraf Ch3 Real/Latch	Bi1/Bi0				I006/I007			ODM:B34:104:Air:Fault{Status,Latched}
+# SYS OK Real/Latch		Bi15/Bi14			I008/I009			ODM:B34:100:SysReady{,Latched}
+# Alarm Mute			Bi13				I010				ODM:B34:100:AlarmMuteStatus
+# Strobe			Bi12				I011				ODM:B34:100:StrobeStatus
+# Horn				Bi11				I012				ODM:B34:100:HornStatus
+# Oxigraf Key			Bi10				I013				ODM:B34:100:Air:KeyStatus
+# PS1/PS2 DC OK			Bi125/Bi124			I016/I017			ODM:B34:10{1,2}:DC:FaultStatus
+# UPS DC OK			Bi123				I018				ODM:B34:100:DC:UpsFaultStatus
+# AHU DPS Disable		-				I019				ODM:B34:100:AHU:DPS:DisableStatus
+# Oxigraf DC OK			Bi121				I020				ODM:B34:100:Air:DC:FaultStatus
+# AOR OK			Bi18				I021				ODM:B34:100:AOR:FaultStatus
+# AHU OK			Bi17				I022				ODM:B34:100:AHU:FaultStatus
+# HeartBeat			Bi16				I023				PLC:B34:OD01:HeartBeat
+# ODH Sector OK			Bi95				I064				ODM:B34:100:ACRAlarmStatus
+# L1/L2 Supervisor		Bi94/Bi93			I065/I066			ODM:B34:100:L{1,2}AlarmSum
+# L1/L2 Local			Bi92/Bi91			I067/I068			ODM:B34:100:L{1,2}AlarmStatus
+# AOR Alert			Bi90				I069				ODM:B34:100:AOR:AlarmStatus
+# Test Mode			Bi89				I070				PLC:B34:OD01:TestMode
+# PPS Clear			Bi88				I071				ODM:B34:100:PpsClear
+# ODH Power Fault		Bi103				I072				ODM:B34:100:Pwr:FaultStatus
 
 #--------------------------------------------------------------
 # COMMAND OUTPUTS  (PLC inputs P-1.i
@@ -31,9 +63,9 @@
 #--------------------------------------------------------------
 
 # REMOVED (now real validated records via pnzValidBit.substitutions):
-#   O000 -> ODM:SYS0:100:AlarmReset          (was CMD:AlarmReset)
-#   O001 -> ODM:SECTOR:100:Air:AlarmByp      (was CMD:OxigrafDisable)
-#   O004 -> ODM:SYS0:100:AlarmMute           (was CMD:AlarmMute)
+#   O000 -> ODM:$(SECTOR):100:AlarmReset     (was CMD:AlarmReset)   [per-sector]
+#   O001 -> ODM:$(SECTOR):100:Air:AlarmByp   (was CMD:OxigrafDisable) [per-sector]
+#   O004 -> ODM:$(SECTOR):100:AlarmMute      (was CMD:AlarmMute)    [per-sector]
 # NOTE: legacy CMD:* human names are dropped. If any panel/tooling
 #       still references CMD:AlarmReset / CMD:OxigrafDisable /
 #       CMD:AlarmMute, repoint it to the new validated PV names above.

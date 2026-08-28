@@ -38,7 +38,10 @@ struct PnzDpvt {
     		WAVE_OUT_RB,
                 WAVE_IDNAME,           // CIP Identity product name (CHAR string)
                 WAVE_LASTDROP,         // formatted last-disruption timestamp (CHAR waveform)
-                STRING_IN_DROPTIME     // last-disruption timestamp as DBF_STRING (EDM-friendly)
+                STRING_IN_DROPTIME,    // last-disruption timestamp as DBF_STRING (EDM-friendly)
+                STRING_PROJSUM_HEX,    // project/overall check sum as "A1B2 / 0000"
+                STRING_PROJDATE,       // project date/time "DD.MM.YYYY HH:MM"
+                WAVE_PROJNAME          // PNOZmulti project name (CHAR string)
 	} kind;
     	int index;
 };
@@ -103,6 +106,8 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
 	else if (std::strcmp(s, "IDSTATUS") == 0)  index = -15;
 	else if (std::strcmp(s, "IDSERIAL") == 0)  index = -16;
 	else if (std::strcmp(s, "DEVSTATUS") == 0) index = -17;
+	else if (std::strcmp(s, "PROJSUM") == 0)    index = -20;
+	else if (std::strcmp(s, "PROJSUMALL") == 0) index = -21;
 	else if (parseUnsigned(s, "IBYTE", index) && index <= 31) {
     		index = index + 1000;
 	} else if (parseUnsigned(s, "OBYTE", index) && index <= 31) {
@@ -160,9 +165,27 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
                                  prec->name, s);
                     return S_db_badField;
                 }
+    } else if (kind == PnzDpvt::Kind::WAVE_PROJNAME) {
+                if (std::strcmp(s, "PROJNAME") != 0) {
+                    errlogPrintf("pnzEtherIP: %s invalid project-name syntax '%s' (use @PROJNAME)\n",
+                                 prec->name, s);
+                    return S_db_badField;
+                }
     } else if (kind == PnzDpvt::Kind::STRING_IN_DROPTIME) {
                 if (std::strcmp(s, "LASTDROPTIME") != 0) {
                     errlogPrintf("pnzEtherIP: %s invalid droptime syntax '%s' (use @LASTDROPTIME)\n",
+                                 prec->name, s);
+                    return S_db_badField;
+                }
+    } else if (kind == PnzDpvt::Kind::STRING_PROJSUM_HEX) {
+                if (std::strcmp(s, "PROJSUMHEX") != 0) {
+                    errlogPrintf("pnzEtherIP: %s invalid projsum syntax '%s' (use @PROJSUMHEX)\n",
+                                 prec->name, s);
+                    return S_db_badField;
+                }
+    } else if (kind == PnzDpvt::Kind::STRING_PROJDATE) {
+                if (std::strcmp(s, "PROJDATE") != 0) {
+                    errlogPrintf("pnzEtherIP: %s invalid projdate syntax '%s' (use @PROJDATE)\n",
                                  prec->name, s);
                     return S_db_badField;
                 }
@@ -239,7 +262,7 @@ static long init_li_record(longinRecord* prec)
                       PnzDpvt::LONG_IN, 31,
                       "@LED/@TABLE/@SEGMENT/@CONNECTED/@RUNNING/@RPI_US/@ARMED/@DROPCOUNT/"
                       "@IDVENDOR/@IDTYPE/@IDCODE/@IDREVMAJ/@IDREVMIN/@IDSTATUS/@IDSERIAL/"
-                      "@DEVSTATUS/@IBYTE<n>");
+                      "@DEVSTATUS/@PROJSUM/@PROJSUMALL/@IBYTE<n>");
 }
 
 static long read_li(longinRecord* prec)
@@ -266,6 +289,8 @@ static long read_li(longinRecord* prec)
     case -15: prec->val = drv->identStatus(); break;
     case -16: prec->val = static_cast<long>(drv->identSerial()); break;
     case -17: prec->val = drv->deviceStatus(); break;
+    case -20: prec->val = drv->projChecksum(); break;
+    case -21: prec->val = drv->projChecksumAll(); break;
     default:
         if (d->index >= 2000 && d->index <= 2031) {
             prec->val =
@@ -306,13 +331,25 @@ static long write_lo(longoutRecord* prec)
     return 0;
 }
 
-/* stringin: last-disruption timestamp as a native DBF_STRING (EDM-friendly).
- * SCAN = I/O Intr via get_ioint_info_drop -> processes once per disruption. */
+/* stringin: last-disruption timestamp + PNOZmulti project checksum/date.
+ * LASTDROPTIME uses SCAN = I/O Intr via get_ioint_info_drop (once per drop);
+ * PROJSUMHEX/PROJDATE use a periodic SCAN set in the DB (5 second). */
 static long init_si_record(stringinRecord* prec)
 {
-    return initCommon(reinterpret_cast<dbCommon*>(prec),
-                      prec->inp.value.instio.string,
-                      PnzDpvt::STRING_IN_DROPTIME, 0, "@LASTDROPTIME");
+    const char* s = prec->inp.value.instio.string;
+    if (std::strcmp(s, "LASTDROPTIME") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+                          PnzDpvt::STRING_IN_DROPTIME, 0, "@LASTDROPTIME");
+    if (std::strcmp(s, "PROJSUMHEX") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+                          PnzDpvt::STRING_PROJSUM_HEX, 0, "@PROJSUMHEX");
+    if (std::strcmp(s, "PROJDATE") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+                          PnzDpvt::STRING_PROJDATE, 0, "@PROJDATE");
+    errlogPrintf("pnzEtherIP: %s invalid stringin syntax '%s' "
+                 "(use @LASTDROPTIME, @PROJSUMHEX, or @PROJDATE)\n",
+                 prec->name, s);
+    return S_db_badField;
 }
 
 static long read_si(stringinRecord* prec)
@@ -322,8 +359,20 @@ static long read_si(stringinRecord* prec)
     if (!d || !drv)
         return -1;
 
-    // prec->val is char[MAX_STRING_SIZE] (40). Our timestamp/fallback fits.
-    drv->copyLastDropTime(prec->val, sizeof(prec->val));
+    // prec->val is char[MAX_STRING_SIZE] (40). All our strings fit.
+    switch (d->kind) {
+    case PnzDpvt::STRING_IN_DROPTIME:
+        drv->copyLastDropTime(prec->val, sizeof(prec->val));
+        break;
+    case PnzDpvt::STRING_PROJSUM_HEX:
+        drv->copyProjChecksumHex(prec->val, sizeof(prec->val));
+        break;
+    case PnzDpvt::STRING_PROJDATE:
+        drv->copyProjDate(prec->val, sizeof(prec->val));
+        break;
+    default:
+        return -1;
+    }
     prec->udf = false;
     return 0;
 }
@@ -362,9 +411,15 @@ static long init_wf_record(waveformRecord* prec)
                           spec, PnzDpvt::WAVE_LASTDROP, 0, "@LASTDROPTIME");
     }
 
+    if (std::strcmp(spec, "PROJNAME") == 0) {
+        return initCommon(reinterpret_cast<dbCommon*>(prec),
+                          spec, PnzDpvt::WAVE_PROJNAME, 0, "@PROJNAME");
+    }
+
     errlogPrintf(
         "pnzEtherIP: %s invalid waveform syntax '%s' "
-        "(use @RAWIN, @RAWINHEX, @RAWOUTHEX, @OUTDIAG, @IDNAME, or @LASTDROPTIME)\n",
+        "(use @RAWIN, @RAWINHEX, @RAWOUTHEX, @OUTDIAG, @IDNAME, @LASTDROPTIME, "
+        "or @PROJNAME)\n",
         prec->name, spec);
 
     return S_db_badField;
@@ -420,6 +475,20 @@ static long read_wf(waveformRecord* prec)
         }
         drv->copyIdentName(static_cast<char*>(prec->bptr),
                            static_cast<std::size_t>(prec->nelm));
+        prec->nord = static_cast<long>(
+            std::strlen(static_cast<char*>(prec->bptr)) + 1);
+        prec->udf = false;
+        return 0;
+    }
+
+    if (d->kind == PnzDpvt::WAVE_PROJNAME) {
+        if (prec->ftvl != menuFtypeCHAR) {
+            recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
+                          READ_ALARM, INVALID_ALARM);
+            return -1;
+        }
+        drv->copyProjName(static_cast<char*>(prec->bptr),
+                          static_cast<std::size_t>(prec->nelm));
         prec->nord = static_cast<long>(
             std::strlen(static_cast<char*>(prec->bptr)) + 1);
         prec->udf = false;

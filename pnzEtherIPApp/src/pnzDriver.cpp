@@ -9,11 +9,14 @@
 
 	PLC diagnostics (design A): explicit messaging on the WORKER THREAD, after
 	handleConnections(), using a SEPARATE short-timeout SessionInfo.
-	NOTE: This device serves ONLY the Identity Object (0x01) via explicit
-	messaging. The Assembly Object (0x04) does NOT support Get_Attribute_Single
-	(verified on bench: instance 1 returns 0x16 OBJECT_DOES_NOT_EXIST), so there
-	is NO Device-Status read. Identity is read ONCE at connect; run/stop state
-	comes from the cyclic LED byte (see devPnz.cpp @LED and pnz.db PLC:Running).
+	NOTE: This device serves the Identity Object (0x01) via explicit messaging,
+	and the PNOZmulti "Project data" (60-byte block) via Assembly class 0x04,
+	Instance 6, Attributes 1 (check sums + date) and 2 (project name) -- see
+	Operating Manual sec. 8.7. The Assembly Object (0x04) instance 1 does NOT
+	support Get_Attribute_Single (verified on bench: returns 0x16
+	OBJECT_DOES_NOT_EXIST), so there is NO Device-Status read. Identity and
+	project data are read ONCE at connect; run/stop state comes from the cyclic
+	LED byte (see devPnz.cpp @LED and pnz.db PLC:Running).
 
 	------------------------------------------------------------------------
 	Mod: Shantha Condamoor (scondam)  --  COMM-LOSS CRASH FIX
@@ -45,6 +48,15 @@
 	  * Never connected yet, still within grace: do NOT count (handshake).
 	  * Never connected yet, PAST grace: count ONCE (_startupCounted) -- the
 	    IOC booted into a genuine outage (PLC offline / network down).
+	------------------------------------------------------------------------
+	Mod: Shantha Condamoor (scondam)  --  PNOZmulti PROJECT DATA (8.7)
+	  - pollProjectData() reads Assembly 0x04 / Instance 6 / Attr 1 (check
+	    sums + date) and Attr 2 (project name), ONCE per connect, reusing the
+	    same explicit session created by pollDiagnostics().
+	  - safeResetExplicit() moved OUT of pollDiagnostics() into worker() so the
+	    session survives long enough for both Identity and project-data reads.
+	  - Byte order: checksum big-endian (manual example A1B2); project name
+	    little-endian per UNICODE char. *** VERIFY ON BENCH ***
 	------------------------------------------------------------------------
 */
 #include "pnzDriver.h"
@@ -275,6 +287,55 @@ void PnzDriver::copyLastDropTime(char* dst, std::size_t cap) const
     std::snprintf(dst, cap, "%s", buf);
 }
 
+/* PNOZmulti project-data getters (guarded) */
+std::uint16_t PnzDriver::projChecksum()    const { std::lock_guard<std::mutex> l(_mutex); return _projSum; }
+std::uint16_t PnzDriver::projChecksumAll() const { std::lock_guard<std::mutex> l(_mutex); return _projSumAll; }
+
+void PnzDriver::copyProjChecksumHex(char* dst, std::size_t cap) const
+{
+    if (!dst || cap == 0) return;
+    std::uint16_t proj, all;
+    { std::lock_guard<std::mutex> l(_mutex); proj = _projSum; all = _projSumAll; }
+    // e.g. "A1B2 / 0000"  (project sum / overall sum)
+    std::snprintf(dst, cap, "%04X / %04X",
+                  static_cast<unsigned>(proj), static_cast<unsigned>(all));
+}
+
+void PnzDriver::copyProjDate(char* dst, std::size_t cap) const
+{
+    if (!dst || cap == 0) return;
+    bool valid;
+    std::uint8_t  d, mo, h, mi;
+    std::uint16_t y;
+    {
+        std::lock_guard<std::mutex> l(_mutex);
+        valid = _projValid.load();
+        d = _projDay; mo = _projMonth; y = _projYear; h = _projHour; mi = _projMin;
+    }
+    if (!valid) { std::snprintf(dst, cap, "project data not read"); return; }
+
+    // Some projects have no creation date set (day/month/year all zero) but a
+    // valid time. Show date and time honestly rather than "00.00.0000".
+    if (d == 0 && mo == 0 && y == 0) {
+        std::snprintf(dst, cap, "date not set  %02u:%02u",
+                      static_cast<unsigned>(h), static_cast<unsigned>(mi));
+    } else {
+        std::snprintf(dst, cap, "%02u.%02u.%04u %02u:%02u",
+                      static_cast<unsigned>(d), static_cast<unsigned>(mo),
+                      static_cast<unsigned>(y), static_cast<unsigned>(h),
+                      static_cast<unsigned>(mi));
+    }
+}
+
+void PnzDriver::copyProjName(char* dst, std::size_t cap) const
+{
+    if (!dst || cap == 0) return;
+    std::lock_guard<std::mutex> l(_mutex);
+    std::size_t n = std::min(cap - 1, _projName.size());
+    std::memcpy(dst, _projName.data(), n);
+    dst[n] = '\0';
+}
+
 /* ------------------------------------------------------------------------
  * safeResetExplicit()  (comm-loss crash fix)
  * Release the explicit diagnostics SessionInfo/MessageRouter without letting
@@ -448,9 +509,10 @@ void PnzDriver::connectionClosed()
 }
 
 /*
-    Identity-only diagnostics. Read ONCE per connect, then explicit session is
-    dropped and this no-ops (guarded by _identDone). See file header notes.
-    All teardown goes through safeResetExplicit() (crash-fix).
+    Identity-only diagnostics. Read ONCE per connect (guarded by _identDone).
+    Creates the explicit session/router if needed; DOES NOT tear it down --
+    the worker does that (via safeResetExplicit()) after pollProjectData(), so
+    both reads can share one session. See file header notes.
 */
 void PnzDriver::pollDiagnostics()
 {
@@ -502,9 +564,142 @@ void PnzDriver::pollDiagnostics()
             errlogPrintf("pnzEtherIP: Identity read failed (unknown exception)\n");
             _diagBackoff = 300;
         }
-        safeResetExplicit();
     }
     // NO Device-Status read: unsupported on this device (Assembly Get -> 0x16).
+    // NOTE: explicit session teardown is done by worker() after
+    // pollProjectData(), so both reads can share this session.
+}
+
+/*
+    PNOZmulti "Project data" (Operating Manual sec. 8.7).
+    EtherNet/IP access: the service data is instanced from CIP class 0xB0
+    (manual sec. 4.8.3), NOT the Assembly class 0x04. Within class 0xB0:
+        Check sums + Date : Instance 6, Attribute 1 (bytes 0..23)
+        Project name      : Instance 6, Attribute 2 (UNICODE, 2 bytes/char)
+
+    Read ONCE per connect (guarded by _projDone), reusing the explicit session
+    created by pollDiagnostics(). All teardown is via safeResetExplicit() in
+    worker(), so both Identity and project reads share one session.
+
+    Byte order (verified on bench against a known project, checksum 7E20):
+      - Check sums  : big-endian (byte0=high, byte1=low; manual example A1B2)
+      - Date/time   : day(b12), month(b13), year(b14..15 BE), hour(b20), min(b21)
+      - Project name: big-endian per UNICODE char, 0xFFFF end marker. This
+                      firmware returns up to 36 bytes (18 chars); longer names
+                      are truncated BY THE DEVICE (not by this code).
+
+    Fail-safe: on any error/rejection this logs and no-ops without throwing, so
+    the IOC is unaffected. A 0x16 (OBJECT_DOES_NOT_EXIST) marks _projDone to
+    stop retrying (unsupported path on this firmware/config).
+*/
+void PnzDriver::pollProjectData()
+{
+    if (_projDone.load())
+        return;
+
+    // Requires a live explicit session (pollDiagnostics() creates it first).
+    if (!_explicitSession || !_messageRouter)
+        return;
+
+    try {
+        // ---- Attribute 1: check sums (0..3) + date (12..23) => >= 24 bytes ----
+        auto r1 = _messageRouter->sendRequest(
+            _explicitSession,
+            static_cast<eipScanner::cip::CipUsint>(ServiceCodes::GET_ATTRIBUTE_SINGLE),
+            EPath(0xB0, 6, 1),
+            {});
+
+        if (r1.getGeneralStatusCode() != GeneralStatusCodes::SUCCESS) {
+            errlogPrintf("pnzEtherIP: project-data (0xB0/6/1) read status=0x%02X; "
+                         "skipping project data\n",
+                         static_cast<unsigned>(r1.getGeneralStatusCode()));
+            // 0x16 = OBJECT_DOES_NOT_EXIST: this firmware/config does not serve
+            // project data via this path. Stop retrying every cycle.
+            if (r1.getGeneralStatusCode() == 0x16) {
+                _projDone.store(true);
+            } else {
+                _diagBackoff = 300;      // transient: back off and retry later
+            }
+            return;
+        }
+
+        const auto& d1 = r1.getData();
+        if (d1.size() < 24) {
+            errlogPrintf("pnzEtherIP: project-data attr1 too short (%zu bytes)\n",
+                         d1.size());
+            _diagBackoff = 300;
+            return;
+        }
+
+        // Check sums: byte0=high, byte1=low (manual example A1B2).
+        std::uint16_t projSum    = static_cast<std::uint16_t>((d1[0] << 8) | d1[1]);
+        std::uint16_t projSumAll = static_cast<std::uint16_t>((d1[2] << 8) | d1[3]);
+
+        // Date (8.7.2): b12=day, b13=month, b14..15=year(BE),
+        //               b20=hour, b21=minute.
+        std::uint8_t  day    = d1[12];
+        std::uint8_t  month  = d1[13];
+        std::uint16_t year   = static_cast<std::uint16_t>((d1[14] << 8) | d1[15]);
+        std::uint8_t  hour   = d1[20];
+        std::uint8_t  minute = d1[21];
+
+        // ---- Attribute 2: project name (UNICODE, 2 bytes/char, FFFF-terminated) ----
+        std::string name;
+        auto r2 = _messageRouter->sendRequest(
+            _explicitSession,
+            static_cast<eipScanner::cip::CipUsint>(ServiceCodes::GET_ATTRIBUTE_SINGLE),
+            EPath(0xB0, 6, 2),
+            {});
+
+        if (r2.getGeneralStatusCode() == GeneralStatusCodes::SUCCESS) {
+            const auto& d2 = r2.getData();
+            // Read all characters the device returns (this firmware returns up
+            // to 36 bytes = 18 chars). 2 bytes/char, big-endian, 0xFFFF end.
+            for (std::size_t i = 0; i + 1 < d2.size() && i < 64; i += 2) {
+                std::uint16_t ch = static_cast<std::uint16_t>((d2[i] << 8) | d2[i + 1]);
+                if (ch == 0xFFFF || ch == 0x0000) break;
+                if (ch >= 0x20 && ch <= 0x7E)
+                    name.push_back(static_cast<char>(ch & 0x7F));
+                else
+                    name.push_back('?');
+            }
+        } else {
+            errlogPrintf("pnzEtherIP: project-name (0xB0/6/2) read status=0x%02X "
+                         "(name left blank)\n",
+                         static_cast<unsigned>(r2.getGeneralStatusCode()));
+        }
+
+        {
+            std::lock_guard<std::mutex> lock(_mutex);
+            _projSum    = projSum;
+            _projSumAll = projSumAll;
+            _projDay    = day;
+            _projMonth  = month;
+            _projYear   = year;
+            _projHour   = hour;
+            _projMin    = minute;
+            _projName   = name;
+        }
+        _projValid.store(true);
+        _projDone.store(true);
+
+        errlogPrintf("pnzEtherIP: Project data OK: safety=%04X total=%04X "
+                     "date=%02u.%02u.%04u %02u:%02u name='%s'\n",
+                     static_cast<unsigned>(projSum),
+                     static_cast<unsigned>(projSumAll),
+                     static_cast<unsigned>(day), static_cast<unsigned>(month),
+                     static_cast<unsigned>(year), static_cast<unsigned>(hour),
+                     static_cast<unsigned>(minute),
+                     name.c_str());
+    }
+    catch (const std::exception& e) {
+        errlogPrintf("pnzEtherIP: project-data read failed: %s\n", e.what());
+        _diagBackoff = 300;
+    }
+    catch (...) {
+        errlogPrintf("pnzEtherIP: project-data read failed (unknown exception)\n");
+        _diagBackoff = 300;
+    }
 }
 
 void PnzDriver::worker()
@@ -554,19 +749,26 @@ void PnzDriver::worker()
                 _running.store(false);
                 _identDone.store(false);
                 _diagValid.store(false);
+                _projDone.store(false);
+                _projValid.store(false);
                 safeResetExplicit();
                 _diagCycle = 0;
                 _diagBackoff = 0;
                 continue;
             }
 
-            // Identity read: poll only until it succeeds, then stop entirely.
-            if (_connected.load() && _running.load() && !_identDone.load()) {
+            // Identity + project-data read: poll only until BOTH succeed, then
+            // stop entirely. Both share one explicit session; the worker tears
+            // it down after each attempt via safeResetExplicit().
+            if (_connected.load() && _running.load() &&
+                (!_identDone.load() || !_projDone.load())) {
                 if (_diagBackoff > 0) {
                     --_diagBackoff;
                 } else if (++_diagCycle >= 50) {   // 50 * 100ms = 5s
                     _diagCycle = 0;
-                    pollDiagnostics();
+                    pollDiagnostics();     // creates the explicit session + reads Identity
+                    pollProjectData();     // reuses that session for the 60-byte block
+                    safeResetExplicit();   // done with the explicit session this cycle
                 }
             }
         }
@@ -590,6 +792,8 @@ void PnzDriver::worker()
             _running.store(false);
             _identDone.store(false);
             _diagValid.store(false);
+            _projDone.store(false);
+            _projValid.store(false);
             safeResetExplicit();
             _diagCycle = 0;
             _diagBackoff = 0;
@@ -614,6 +818,8 @@ void PnzDriver::worker()
             _running.store(false);
             _identDone.store(false);
             _diagValid.store(false);
+            _projDone.store(false);
+            _projValid.store(false);
             safeResetExplicit();
             _diagCycle = 0;
             _diagBackoff = 0;
