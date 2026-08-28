@@ -1,0 +1,76 @@
+#==============================================================
+# scondam: PNOZmulti PROJECT DATA (Operating Manual sec. 8.7)
+#--------------------------------------------------------------
+# Source: Assembly class 0x04, Instance 6 (explicit messaging,
+#         read ONCE at connect via pollProjectData()):
+#    Attr 1 -> check sums (bytes 0..3) + date/time (bytes 12..23)
+#    Attr 2 -> project name (UNICODE, 2 bytes/char, FFFF-terminated)
+#
+# DTYP MUST be "PNZ EtherIP" (same as every other driver record);
+# a wrong/unregistered DTYP silently falls back to Soft Channel and
+# the @token link is dropped (record reads empty/0).
+#
+# *** BENCH-VERIFY on first connect against a known Configurator
+#     project (known name + checksum):
+#       1) Does Instance 6 / Attr 1 & 2 respond, or return 0x16
+#          (OBJECT_DOES_NOT_EXIST) like Assembly instance 1 did?
+#          If 0x16, switch to the Tables (Table 80) or SDO (0x200D)
+#          access path from manual sec. 8.7.4.
+#       2) Byte order: checksum decoded big-endian (manual A1B2),
+#          project name little-endian per char. Flip if swapped.
+#==============================================================
+
+# Project check sum (16-bit, e.g. 0xA1B2 = 41394). Manual 8.7.1 bytes 0..1.
+record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM") {
+    field(DESC, "PNOZmulti project check sum")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@PROJSUM")
+    field(SCAN, "5 second")
+}
+
+# Overall check sum (16-bit). Manual 8.7.1 bytes 2..3.
+record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM:ALL") {
+    field(DESC, "PNOZmulti overall check sum")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@PROJSUMALL")
+    field(SCAN, "5 second")
+}
+
+# Both check sums as a display string: "A1B2 / 0000" (project / overall).
+# EDM Text Monitor renders a stringin directly (no CHAR-array quirks).
+record(stringin, "ODM:$(SECTOR):PROJ:CHECKSUM:HEX") {
+    field(DESC, "Project/overall check sum (hex)")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@PROJSUMHEX")
+    field(SCAN, "5 second")
+    field(PINI, "YES")
+}
+
+# Project creation date/time as a display string: "DD.MM.YYYY HH:MM".
+# Manual 8.7.2: day(b12).month(b13).year(b14..15) hour(b20):min(b21).
+record(stringin, "ODM:$(SECTOR):PROJ:DATE") {
+    field(DESC, "Project creation date/time")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@PROJDATE")
+    field(SCAN, "5 second")
+    field(PINI, "YES")
+}
+
+# Project name (UNICODE decoded to ASCII). Manual 8.7.3, bytes 24..57.
+record(waveform, "ODM:$(SECTOR):PROJ:NAME") {
+    field(DESC, "PNOZmulti project name")
+    field(DTYP, "PNZ EtherIP")
+    field(INP,  "@PROJNAME")
+    field(FTVL, "CHAR")
+    field(NELM, "32")
+    field(SCAN, "5 second")
+}
+
+# Valid flag: 1 once the project read has populated a non-zero checksum.
+# (Mirrors the DIAG:VALID pattern used for the Identity read.)
+record(calc, "ODM:$(SECTOR):PROJ:VALID") {
+    field(DESC, "Project data read OK")
+    field(INPA, "ODM:$(SECTOR):PROJ:CHECKSUM CP")
+    field(INPB, "ODM:$(SECTOR):PROJ:CHECKSUM:ALL CP")
+    field(CALC, "(A!=0)||(B!=0)")
+}

@@ -1,3 +1,112 @@
+#==============================================================
+# scondam: 27-Aug-2026
+#==============================================================
+# Every legacy Pilz READ bit (from odm-sys0-pilz.db)
+# Extracting each @asynMask(ODM_$(SECTOR)_RD, N, 1, 1) with its signal:
+#=======================================================
+# Legacy 	Legacy signal	Legacy PV target
+# bit N		 (DESC)
+#=======================================================
+#0	Air Ch3 Latch		104:Air:FaultLatched
+#1	Air Ch3 Real		104:Air:FaultStatus
+#2	Air Ch2 Latch		103:Air:FaultLatched
+#3	Air Ch2 Real		103:Air:FaultStatus
+#4	Air Ch1 Latch		102:Air:FaultLatched
+#5	Air Ch1 Real		102:Air:FaultStatus
+#6	Air Ch0 Latch		101:Air:FaultLatched
+#7	Air Ch0 Real		101:Air:FaultStatus
+#8	Cell2 Key		102:Cell:KeyStatus
+#9	Cell1 Key		101:Cell:KeyStatus
+#10	Air Key			100:Air:KeyStatus
+#11	Horn			100:HornStatus
+#12	Strobe			100:StrobeStatus
+#13	Alarm Mute		100:AlarmMuteStatus
+#14	SYS OK Latch		100:SysReadyLatched
+#15	SYS OK Real		100:SysReady
+#16	HeartBeat		HeartBeat
+#17	AHU OK			100:AHU:FaultStatus
+#18	AOR OK			100:AOR:FaultStatus
+#19	AC OK Latch		100:AC:FaultLatched
+#20	UPS2 DC Latch		102:DC:UpsFaultLatched
+#21	UPS1 DC Latch		101:DC:UpsFaultLatched
+#22	PS2 DC Latch		102:DC:FaultLatched
+#23	PS1 DC Latch		101:DC:FaultLatched
+#88	PPS Clear		100:PpsClear
+#89	Test Mode		TestMode
+#90	AOR Alert		100:AOR:AlarmStatus
+#91	L2 Local		100:L2AlarmStatus
+#92	L1 Local		100:L1AlarmStatus
+#93	L2 Supervisor		100:L2AlarmSum
+#94	L1 Supervisor		100:L1AlarmSum
+#95	ODH Sector OK		100:ACRAlarmStatus
+#103	Power Fault Latch	100:Pwr:FaultLatched
+#120	AHU Latch		100:AHU:FaultLatched
+#121	AC OK Real		100:AC:FaultStatus
+#123	UPS1 DC Real		101:DC:UpsFaultStatus
+#124	PS2 DC Real		102:DC:FaultStatus
+#125	PS1 DC Real		101:DC:FaultStatus
+#129	Cell1 OK Real		101:Cell:FaultStatus
+#130	Cell2 L2 Latch		102:Cell:L2AlarmLatched
+#131	Cell2 L1 Latch		102:Cell:L1AlarmLatched
+#132	Cell2 OK Latch		102:Cell:FaultLatched
+#133	Cell1 L2 Latch		101:Cell:L2AlarmLatched
+#134	Cell1 L1 Latch		101:Cell:L1AlarmLatched
+#135	Cell1 OK Latch		101:Cell:FaultLatched
+#140	Cell2 L2 Real		102:Cell:L2AlarmStatus
+#141	Cell2 L1 Real		102:Cell:L1AlarmStatus
+#142	Cell2 OK Real		102:Cell:FaultStatus
+#143	Cell1 L2 Real		101:Cell:L2AlarmStatus
+#=======================================================
+#
+# Current bits that DO map to legacy (by matching PV name)
+# Current	PV			Legacy bit	Match
+# I###
+#=======================================================
+#I000 		101:Air:FaultStatus	7	OK
+#I001 		101:Air:FaultLatched	6	OK
+#I002 		102:Air:FaultStatus	5	OK
+#I003 		102:Air:FaultLatched	4	OK
+#I004 		103:Air:FaultStatus	3	OK
+#I005 		103:Air:FaultLatched	2	OK
+#I006 		104:Air:FaultStatus	1	OK
+#I007 		104:Air:FaultLatched	0	OK
+#I008 		100:SysReady		15	OK
+#I009 		100:SysReadyLatched	14	OK
+#I010 		100:AlarmMuteStatus	13	OK
+#I011 		100:StrobeStatus	12	OK
+#I012 		100:HornStatus		11	OK
+#I013 		100:Air:KeyStatus	10	OK
+#I016 		101:DC:FaultStatus	125	OK
+#I017 		102:DC:FaultStatus	124	OK
+#I018 		100:DC:UpsFaultStatus	123	OK (legacy = UPS1)
+#I020 		100:Air:DC:FaultStatus	121	OK? legacy name = 100:AC:FaultStatus (AC, not Air:DC)
+#I021 		100:AOR:FaultStatus	18	OK
+#I022 		100:AHU:FaultStatus	17	OK
+#I023 		HeartBeat		16	OK
+#I064 		100:ACRAlarmStatus	95	OK
+#I065 		100:L1AlarmSum		94	OK
+#I066 		100:L2AlarmSum		93	OK
+#I067 		100:L1AlarmStatus	92	OK
+#I068 		100:L2AlarmStatus	91	OK
+#I069 		100:AOR:AlarmStatus	90	OK
+#I070 		TestMode		89	OK
+#I071 		100:PpsClear		88	OK
+#I072 		100:Pwr:FaultStatus	103	OK? legacy name = Pwr:FaultLatched (Latched, not Status)
+#I103 		100:AHU:FaultLatched	120	OK
+#=======================================================
+#
+#Current bits that do NOT have a legacy equivalent (current-only)
+#=======================================================
+# Current  PV				Why no legacy match
+# I###
+#=======================================================
+#I019 	100:AHU:DPS:DisableStatus	No legacy bit - new signal
+#I024 	ODH Green Light			Legacy Bi24 exists but is LED_X1 (PPS-X1 LED), not a green-light input - different meaning
+#I098 	101:DC:FaultStatusReal		No legacy bit - the "Real" variant is new
+#I099 	102:DC:FaultStatusReal		No legacy bit - new
+#I100 	100:DC:UpsFaultStatusReal	No legacy bit - new
+#=======================================================
+#
 record(longin, "ODM:$(SECTOR):CONNECTED") {
     field(DESC, "Class-1 connection established")
     field(DTYP, "PNZ EtherIP")

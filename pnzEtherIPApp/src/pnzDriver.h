@@ -52,6 +52,14 @@ public:
     void          copyIdentName(char* dst, std::size_t cap) const;
     std::uint8_t  deviceStatus() const;
 
+    /* PNOZmulti project data (service-data class 0xB0, Instance 6 - explicit msg) */
+    bool          projValid()       const { return _projValid.load(); }
+    std::uint16_t projChecksum()    const;   // "project" sum (bytes 0..1)
+    std::uint16_t projChecksumAll() const;   // "overall"  sum (bytes 2..3)
+    void          copyProjChecksumHex(char* dst, std::size_t cap) const;
+    void          copyProjDate(char* dst, std::size_t cap) const;   // "DD.MM.YYYY HH:MM"
+    void          copyProjName(char* dst, std::size_t cap) const;   // UTF-8
+
     std::uint8_t getInputByte(unsigned byte) const;
     std::uint8_t getOutputByte(unsigned byte) const;
     void setOutputByte(unsigned byte, std::uint8_t value);
@@ -69,8 +77,28 @@ public:
     bool connected() const;
     bool running() const;
 
-    /* scondam: 16-Aug-2026 */
-    std::atomic<bool> _armed{false};   // O->T writes disabled by default (fail-safe)
+    /* scondam: 16-Aug-2026; PRODUCTION default changed to ARMED (Option A).
+     * Boot ARMED so panel write-commands work immediately after IOC reboot.
+     * Reconnect also comes up ARMED (the last operator-set _output image
+     * resumes being driven once the link re-establishes; it is forced to 0
+     * only while disconnected).
+     *
+     * SAFETY PRECONDITIONS (all must hold, verify before production):
+     *   1) Output image is 0 at boot: ctor does _output.fill(0); all bo
+     *      records default 0 with PINI NO; outputs are NOT autosaved.
+     *   2) ODM:$(SECTOR):ARM:CMD stays PINI NO and is NOT autosaved, so the
+     *      driver's armed default is authoritative at boot.
+     *   3) O000 (AlarmReset) is edge/one-shot (HIGH 0.5) and boots 0 -> no
+     *      spurious reset pulse on connect.
+     *
+     * Operator CANNOT disarm from the panel (arm state shown read-only via
+     * ODM:$(SECTOR):ARMED:STS). Disarm is a MAINTENANCE-ONLY action via
+     * iocsh: pnzEtherIPArm 0.
+     *
+     * *** Fail-safe default changed from DISARMED to ARMED.
+     *     Approved by (Safety Engineer): ____________  Date: __________ ***
+     */
+    std::atomic<bool> _armed{true};    // O->T writes ENABLED by default (production)
 
     std::uint32_t rpiUs() const;
 
@@ -93,6 +121,7 @@ private:
 
     /* diagnostics (design A: called from worker() after handleConnections) */
     void pollDiagnostics();
+    void pollProjectData();   // PNOZmulti 60-byte project block (checksum/date/name)
 
     /* scondam: comm-loss crash fix ---------------------------------------
      * Tear down the explicit (diagnostics) session/router without letting a
@@ -151,8 +180,20 @@ private:
     std::string   _idName;
     std::uint8_t  _devStatus{0};
 
+    /* PNOZmulti project data (guarded by _mutex) */
+    std::uint16_t _projSum{0};       // project check sum   (bytes 0..1, big-endian)
+    std::uint16_t _projSumAll{0};    // overall  check sum  (bytes 2..3, big-endian)
+    std::uint8_t  _projDay{0}, _projMonth{0};
+    std::uint16_t _projYear{0};
+    std::uint8_t  _projHour{0}, _projMin{0};
+    std::string   _projName;         // decoded to UTF-8/ASCII (big-endian per char)
+
     std::atomic<bool> _diagValid{false};   // true once Identity read OK
     std::atomic<bool> _identDone{false};   // read Identity only once per connect
+
+    std::atomic<bool> _projValid{false};   // true once project read OK
+    std::atomic<bool> _projDone{false};    // read project only once per connect
+
     unsigned _diagCycle{0};                 // worker-cycle counter for cadence
     unsigned _diagBackoff{0};               // cycles to wait after a failure
     unsigned _disconnLogCycle{0};           // rate-limit "still disconnected" heartbeat log
