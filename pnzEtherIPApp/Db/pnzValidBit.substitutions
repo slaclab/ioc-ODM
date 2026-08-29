@@ -71,7 +71,7 @@ file "db/pnzValidBit.template" {
     # ---- Command outputs (O->T) ------------------------------------------
     { "ODM:$(SECTOR):100:AlarmReset"        "ODM:$(SECTOR):O000"      "ODM:$(SECTOR):O000"      "Alarm reset command"                 "IDLE"        "RESET"   "NO_ALARM" "NO_ALARM" }
     { "ODM:$(SECTOR):100:AlarmMute"         "ODM:$(SECTOR):O004"      "ODM:$(SECTOR):O004"      "Alarm mute command"                  "Normal"      "Mute"    "NO_ALARM" "NO_ALARM" }
-
+    { "ODM:$(SECTOR):100:ODHOKGreenLightON" "ODM:$(SECTOR):I024"      "ODM:$(SECTOR):I024"      "ODH OK to Enter (Green Light)"       "Off"         "On"      "MAJOR"    "NO_ALARM" }
     # ================================================================
     #  DEFERRED - uncomment & assign raw bits once LI09 hardware known:
     #
