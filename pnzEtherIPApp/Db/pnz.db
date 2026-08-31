@@ -111,13 +111,13 @@ record(longin, "ODM:$(SECTOR):CONNECTED") {
     field(DESC, "Class-1 connection established")
     field(DTYP, "PNZ EtherIP")
     field(INP,  "@CONNECTED")
-    field(SCAN, "I/O Intr")
+    field(SCAN, "1 second")
 }
 record(longin, "ODM:$(SECTOR):RUNNING") {
     field(DESC, "Cyclic input traffic received")
     field(DTYP, "PNZ EtherIP")
     field(INP,  "@RUNNING")
-    field(SCAN, "I/O Intr")
+    field(SCAN, "1 second")
 }
 record(longin, "ODM:$(SECTOR):RPI_US") {
     field(DESC, "Configured RPI microseconds")

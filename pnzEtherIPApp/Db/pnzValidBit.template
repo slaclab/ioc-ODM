@@ -36,7 +36,7 @@
 #==============================================================
 
 record(calcout, "$(VNAME):Valid") {
-    field(DESC, "$(PV) validity wd")
+    field(DESC, "$(PV) valid")
     field(INPA, "$(RAW).SEVR NPP NMS")
     field(INPB, "$(CONN=ODM:$(SECTOR):CONNECTED) CP NMS")
     field(CALC, "(A=3 || B=0) ? VAL+1 : 0")
