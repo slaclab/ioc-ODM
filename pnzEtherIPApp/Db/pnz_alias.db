@@ -117,7 +117,7 @@ alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):100:Ahu:AlarmByp")      # PLC i5  AHU
 #alias("ODM:$(SECTOR):I016", "ODM:$(SECTOR):101:DC:FaultStatus")        # PLC o16 PS1_DC_OK_Sts
 #alias("ODM:$(SECTOR):I017", "ODM:$(SECTOR):102:DC:FaultStatus")        # PLC o17 PS2_DC_OK_Sts
 alias("ODM:$(SECTOR):I018", "ODM:$(SECTOR):100:DC:UpsFaultStatus")     # PLC o18 UPS_DC_OK_Sts
-alias("ODM:$(SECTOR):I019", "ODM:$(SECTOR):100:AHU:DPS:DisableStatus") # PLC o19 S10_AHU_DPS_Disable_Sts
+#alias("ODM:$(SECTOR):I019", "ODM:$(SECTOR):100:AHU:DPS:DisableStatus") # PLC o19 S10_AHU_DPS_Disable_Sts
 alias("ODM:$(SECTOR):I020", "ODM:$(SECTOR):100:Air:DC:FaultStatus")    # PLC o20 Oxigraf_DC_OK_Sts
 # REMOVED (validated): I021 -> 100:AOR:FaultStatus
 #alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts
