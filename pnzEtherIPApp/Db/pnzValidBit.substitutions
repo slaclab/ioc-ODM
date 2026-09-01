@@ -48,7 +48,8 @@ file "db/pnzValidBit.template" {
     # ---- Air Handling Unit (LI07: Fault/Ok, ZSV=MAJOR) --------------------
     { "ODM:$(SECTOR):100:AHU:FaultStatus"   "ODM:$(SECTOR):I022"      "ODM:$(SECTOR):I022"      "Air Handling Unit Sw OK"             "Fault"       "Ok"      "MAJOR"    "NO_ALARM" }
     { "ODM:$(SECTOR):100:AHU:FaultLatched"  "ODM:$(SECTOR):I103"      "ODM:$(SECTOR):I103"      "Air Handling Unit Latch"             "Not_Latched" "Latched" "NO_ALARM" "MAJOR" }
-
+    { "ODM:$(SECTOR):100:AHU:DPS:DisableStatus"  "ODM:$(SECTOR):I019" "ODM:$(SECTOR):I019"      "AHU DPS Disable Sts"                 "Enabled"     "Disabled" "NO_ALARM"  "MINOR" }
+    
     # ---- Power supplies DC.  LI07: FaultStatus=Real(live), FaultLatched=latch
     #  *** TODO: VERIFY which raw bit is live vs latch on B34.  LI07 DESC
     #      shows FaultStatus="...DC OK Real"(live) / FaultLatched="...DC OK".
