@@ -11,6 +11,10 @@
 #  Mod
 #==============================================================
 
+R1.1.6       S. Condamoor (scondam)
+1-Sept-2026   Branch odm-eip
+	      Reverted driver changes back to R1.1.2 as the comm issues were understood and resolved.
+	      
 R1.1.5       S. Condamoor (scondam)
 1-Sept-2026   Branch odm-eip
               Add timeout multiplier to see if the comm timeouts can be mitigated.
