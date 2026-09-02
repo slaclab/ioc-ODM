@@ -419,6 +419,7 @@ bool PnzDriver::openConnection()
     p.o2tRealTimeFormat = true;
     p.originatorVendorId = 342;
     p.originatorSerialNumber = 0x12345;
+    p.connectionTimeoutMultiplier = 4;   // TEST: x64 of RPI (6.4s@100ms) - ride through intermittent UDP 2222 loss
     p.t2oNetworkConnectionParams |= NetworkConnectionParams::P2P;
     p.t2oNetworkConnectionParams |= NetworkConnectionParams::SCHEDULED_PRIORITY;
     p.t2oNetworkConnectionParams |= 32;
