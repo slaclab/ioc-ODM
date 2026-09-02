@@ -756,7 +756,12 @@ void PnzDriver::worker()
                 _diagBackoff = 0;
                 continue;
             }
-
+// ---- TEST 2026-09-01: diagnostics DISABLED to isolate PLC single-
+            // session limit. No 2nd (explicit) session is opened; only the
+            // Class-1 cyclic connection runs. If the connection stays up with
+            // this disabled, the PNOZ cannot tolerate the concurrent explicit
+            // session and we must redesign diagnostics.
+#if 0
             // Identity + project-data read: poll only until BOTH succeed, then
             // stop entirely. Both share one explicit session; the worker tears
             // it down after each attempt via safeResetExplicit().
@@ -771,6 +776,8 @@ void PnzDriver::worker()
                     safeResetExplicit();   // done with the explicit session this cycle
                 }
             }
+#endif
+
         }
         catch (const std::exception& e) {
             // Count per startup-grace rules (mirrors openConnection()).
