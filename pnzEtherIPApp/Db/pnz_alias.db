@@ -1,31 +1,14 @@
 #==============================================================
 # pnz_alias.db  --  Human-readable aliases for PNOZ signals
 #
-#  PROVENANCE: names/positions taken from PLC Project Manager
-#  I/O List screenshots (P-1.i## inputs, P-1.o## outputs).
-#
-#  *** UNVERIFIED MAPPING -- verify on bench 2026-xx-xx ***
-#  ASSUMPTION: PLC index N maps to IOC record index N
-#              (i.e. NO within-byte bit reversal).
-#  If tomorrow's toggle test shows reversal, remap per the
-#  note at the bottom of this file.
-#
-#  Load AFTER pnz.db and pnz_obit_rb.db:
-#     dbLoadRecords("db/pnz_alias.db","SECTOR=B34")
-#
-#  Each alias DESC-comment cites its PLC source (o##/i##).
-#
-#  *** 2026 UPDATE: Many aliases below are now REPLACED by real
-#      validated records generated from pnzValidBit.substitutions
-#      (staleness-watchdog chains). Those alias lines are commented
-#      out here to avoid duplicate record/alias name collisions.
-#      The raw ODM:SECTOR:I###/O### records in pnz.db are
-#      UNCHANGED -- the validated chains read them via .SEVR/VAL.
+#==============================================================
+# scondam: 1-Sept-2026
+# 		Commented out alias for AHU:DPS:DisableStatus (I019); record now built
+#     		via validated-bit chain (mirrors AHU:FaultStatus migration).
 #==============================================================
 # scondam: 27-Aug-2026
-#==============================================================
-# Legacy modbus <-> current EtherIP bits cross-reference
-# The two systems use entirely different bit numbering - this table is the bridge:
+# 		Legacy modbus <-> current EtherIP bits cross-reference
+# 		The two systems use entirely different bit numbering - this table is the bridge:
 #============================================================================================================================
 # Signal			Legacy 	Modbus 			Current 			Current validated PV (served)
 #				(odm-sys0-pilz.db, coil N)	EtherNet/IP raw (pnz.db)
@@ -54,7 +37,27 @@
 # Test Mode			Bi89				I070				PLC:B34:OD01:TestMode
 # PPS Clear			Bi88				I071				ODM:B34:100:PpsClear
 # ODH Power Fault		Bi103				I072				ODM:B34:100:Pwr:FaultStatus
-
+#============================================================================================================================
+#  PROVENANCE: names/positions taken from PLC Project Manager
+#  I/O List screenshots (P-1.i## inputs, P-1.o## outputs).
+#
+#  *** UNVERIFIED MAPPING -- verify on bench 2026-xx-xx ***
+#  ASSUMPTION: PLC index N maps to IOC record index N
+#              (i.e. NO within-byte bit reversal).
+#  If tomorrow's toggle test shows reversal, remap per the
+#  note at the bottom of this file.
+#
+#  Load AFTER pnz.db and pnz_obit_rb.db:
+#     dbLoadRecords("db/pnz_alias.db","SECTOR=B34")
+#
+#  Each alias DESC-comment cites its PLC source (o##/i##).
+#
+#  *** 2026 UPDATE: Many aliases below are now REPLACED by real
+#      validated records generated from pnzValidBit.substitutions
+#      (staleness-watchdog chains). Those alias lines are commented
+#      out here to avoid duplicate record/alias name collisions.
+#      The raw ODM:SECTOR:I###/O### records in pnz.db are
+#      UNCHANGED -- the validated chains read them via .SEVR/VAL.
 #--------------------------------------------------------------
 # COMMAND OUTPUTS  (PLC inputs P-1.i
 #                 = IOC outputs O###, O->T)
@@ -117,7 +120,19 @@ alias("ODM:$(SECTOR):O005", "ODM:$(SECTOR):100:Ahu:AlarmByp")      # PLC i5  AHU
 #alias("ODM:$(SECTOR):I016", "ODM:$(SECTOR):101:DC:FaultStatus")        # PLC o16 PS1_DC_OK_Sts
 #alias("ODM:$(SECTOR):I017", "ODM:$(SECTOR):102:DC:FaultStatus")        # PLC o17 PS2_DC_OK_Sts
 alias("ODM:$(SECTOR):I018", "ODM:$(SECTOR):100:DC:UpsFaultStatus")     # PLC o18 UPS_DC_OK_Sts
+
+# -----------------------------------------------------------------------------
+# 2026-09-01 (scondam): AHU:DPS:DisableStatus migrated from raw alias to the
+# validated-bit chain (see pnzValidBit.substitutions). Reason: the raw I019
+# alias inherited generic OFF/ON enum strings, so panels showed "ON/OFF"
+# instead of "Enabled/Disabled". The validated-bit template sets
+# ZNAM=Enabled/ONAM=Disabled with OSV=MINOR, matching Oxigraf Air:KeyStatus.
+# This mirrors the earlier AHU:FaultStatus migration (see note ~line 141).
+# Do NOT re-enable this alias while the substitutions line exists (duplicate).
 #alias("ODM:$(SECTOR):I019", "ODM:$(SECTOR):100:AHU:DPS:DisableStatus") # PLC o19 S10_AHU_DPS_Disable_Sts
+# -----------------------------------------------------------------------------
+#alias("ODM:$(SECTOR):I019", "ODM:$(SECTOR):100:AHU:DPS:DisableStatus") # PLC o19 S10_AHU_DPS_Disable_Sts
+
 alias("ODM:$(SECTOR):I020", "ODM:$(SECTOR):100:Air:DC:FaultStatus")    # PLC o20 Oxigraf_DC_OK_Sts
 # REMOVED (validated): I021 -> 100:AOR:FaultStatus
 #alias("ODM:$(SECTOR):I021", "ODM:$(SECTOR):100:AOR:FaultStatus")       # PLC o21 AOR_OK_Sts

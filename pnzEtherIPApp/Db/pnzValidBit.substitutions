@@ -1,3 +1,10 @@
+#==============================================================
+# pnzValidBit.substitutions
+# scondam: 1-Sept-2026
+#    	- Added validated-bit line for AHU:DPS:DisableStatus (RAW=I019),
+#      	  ZNAM=Enabled / ONAM=Disabled, OSV=MINOR (matches Oxigraf Air:KeyStatus).
+#==============================================================    
+# 
 file "db/pnzValidBit.template" {
     pattern
     { PV                                    RAW                       VNAME                     DESC                                  ZNAM          ONAM      ZSV        OSV        }
@@ -22,6 +29,14 @@ file "db/pnzValidBit.template" {
     { "ODM:$(SECTOR):100:L2AlarmStatus"     "ODM:$(SECTOR):I068"      "ODM:$(SECTOR):I068"      "L2 Alarm from Pilz, <18% O2"         "NO_ALARM"    "ALARM"   "NO_ALARM" "MAJOR"    }
 
     # ---- Mute / Strobe / Horn / Key ---------------------------------------
+    
+    #   AlarmMuteStatus SEMANTICS (NOT A BUG) - 2026-09-01 (scondam):
+    #   This status (from PLC I010, S10 Alarm_Mute_Sts) reflects whether the PLC
+    #   has ACTUALLY engaged a mute on an ACTIVE horn/alarm. It is NOT an echo of
+    #   the AlarmMute command (O004). With no active alarm it stays "Normal" even
+    #   when Mute is pressed - correct by design. Command path verified separately
+    #   (O004 -> ORB:B004, bit4/0x10 on wire). Do not "fix" to follow the command.
+
     { "ODM:$(SECTOR):100:AlarmMuteStatus"   "ODM:$(SECTOR):I010"      "ODM:$(SECTOR):I010"      "Alarm Mute Sts"                      "Normal"      "Mute"    "NO_ALARM" "MINOR"    }
     { "ODM:$(SECTOR):100:StrobeStatus"      "ODM:$(SECTOR):I011"      "ODM:$(SECTOR):I011"      "Strobe Sts"                          "Off"         "On"      "NO_ALARM" "MAJOR" }
     { "ODM:$(SECTOR):100:HornStatus"        "ODM:$(SECTOR):I012"      "ODM:$(SECTOR):I012"      "Horn Sts"                            "Off"         "On"      "NO_ALARM" "MAJOR" }
@@ -48,6 +63,13 @@ file "db/pnzValidBit.template" {
     # ---- Air Handling Unit (LI07: Fault/Ok, ZSV=MAJOR) --------------------
     { "ODM:$(SECTOR):100:AHU:FaultStatus"   "ODM:$(SECTOR):I022"      "ODM:$(SECTOR):I022"      "Air Handling Unit Sw OK"             "Fault"       "Ok"      "MAJOR"    "NO_ALARM" }
     { "ODM:$(SECTOR):100:AHU:FaultLatched"  "ODM:$(SECTOR):I103"      "ODM:$(SECTOR):I103"      "Air Handling Unit Latch"             "Not_Latched" "Latched" "NO_ALARM" "MAJOR" }
+    
+    #   2026-09-01 (scondam): AHU DPS Disable status. Migrated from raw I019 alias
+    #   in pnz_alias.db so the record gets proper enum strings (Enabled/Disabled)
+    #   and MINOR severity when Disabled, consistent with Oxigraf Air:KeyStatus.
+    #   Verified round-trip: Ahu:AlarmByp(O005) -> wire ORB:B005 -> PLC -> I019 ->
+    #   this record flips Enabled<->Disabled. Columns: PV RAW1 RAW2 DESC ZNAM ONAM ZSV OSV
+
     { "ODM:$(SECTOR):100:AHU:DPS:DisableStatus"  "ODM:$(SECTOR):I019" "ODM:$(SECTOR):I019"      "AHU DPS Disable Sts"                 "Enabled"     "Disabled" "NO_ALARM"  "MINOR" }
     
     # ---- Power supplies DC.  LI07: FaultStatus=Real(live), FaultLatched=latch
