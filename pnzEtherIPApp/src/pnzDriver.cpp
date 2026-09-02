@@ -411,7 +411,7 @@ bool PnzDriver::pastStartupGrace() const
 
 bool PnzDriver::openConnection()
 {
-    auto si = std::make_shared<SessionInfo>(_ip, 0xAF12);
+    auto si = std::make_shared<SessionInfo>(_ip, 0xAF12, std::chrono::milliseconds(3000));
     _session = si;
 
     ConnectionParameters p;
