@@ -411,7 +411,7 @@ bool PnzDriver::pastStartupGrace() const
 
 bool PnzDriver::openConnection()
 {
-    auto si = std::make_shared<SessionInfo>(_ip, 0xAF12, std::chrono::milliseconds(3000));
+    auto si = std::make_shared<SessionInfo>(_ip, 0xAF12);
     _session = si;
 
     ConnectionParameters p;
@@ -419,7 +419,6 @@ bool PnzDriver::openConnection()
     p.o2tRealTimeFormat = true;
     p.originatorVendorId = 342;
     p.originatorSerialNumber = 0x12345;
-    p.connectionTimeoutMultiplier = 4;   // TEST: x64 of RPI (6.4s@100ms) - ride through intermittent UDP 2222 loss
     p.t2oNetworkConnectionParams |= NetworkConnectionParams::P2P;
     p.t2oNetworkConnectionParams |= NetworkConnectionParams::SCHEDULED_PRIORITY;
     p.t2oNetworkConnectionParams |= 32;
@@ -757,12 +756,7 @@ void PnzDriver::worker()
                 _diagBackoff = 0;
                 continue;
             }
-// ---- TEST 2026-09-01: diagnostics DISABLED to isolate PLC single-
-            // session limit. No 2nd (explicit) session is opened; only the
-            // Class-1 cyclic connection runs. If the connection stays up with
-            // this disabled, the PNOZ cannot tolerate the concurrent explicit
-            // session and we must redesign diagnostics.
-#if 0
+
             // Identity + project-data read: poll only until BOTH succeed, then
             // stop entirely. Both share one explicit session; the worker tears
             // it down after each attempt via safeResetExplicit().
@@ -777,8 +771,6 @@ void PnzDriver::worker()
                     safeResetExplicit();   // done with the explicit session this cycle
                 }
             }
-#endif
-
         }
         catch (const std::exception& e) {
             // Count per startup-grace rules (mirrors openConnection()).
