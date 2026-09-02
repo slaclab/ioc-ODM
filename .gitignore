@@ -1,15 +1,29 @@
+# ===== EPICS build outputs (repo-root only; anchored so they don't match
+#       same-named dirs inside vendored deps like EIPScanner) =====
+/O.*
+/autosave/
+/bin/
+/db/
+/dbd/
+/include/
+/lib/
+/envPaths
+/RELEASE_SITE
+
+# Per-app generated build dirs (any depth) - keep UNanchored
 O.*
-autosave
-bin
-db
-dbd
-include
-lib
-envPaths
+
+# ===== EIPScanner (vendored) =====
+# Commit the static lib + headers under EIPScanner/install/.
+# Ignore only the CMake build tree and the dynamic .so (we static-link).
+/EIPScanner/build/
+/EIPScanner/install/lib/*.so
+/EIPScanner/install/lib/*.so.*
+
+# ===== misc =====
 *.bak
 *~
 *.swp
-RELEASE_SITE
 archive/
 info*.req
 

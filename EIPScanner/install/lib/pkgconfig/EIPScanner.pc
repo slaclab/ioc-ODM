@@ -1,0 +1,11 @@
+prefix="/sdf/home/s/scondam/LCLSHE/EIPScanner/install"
+exec_prefix="${prefix}"
+libdir="${prefix}/lib"
+includedir="${prefix}/include"
+
+Name: EIPScanner
+Description: Free implementation of EtherNet/IP in C++
+URL: https://github.com/nimbuscontrols/EIPScanner
+Version: 1.1.0
+Cflags: -I"${includedir}" -I"${includedir}/EIPScanner"
+Libs: -L"${libdir}" -lEIPScanner
