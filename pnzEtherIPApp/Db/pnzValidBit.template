@@ -33,10 +33,15 @@
 #   ASG      access security group    (default Internal)
 #   CONN     connection PV for fallback trip
 #            (default ODM:SECTOR:CONNECTED)
+# scondam: 1-Sept-2026
+#   NOTE: _calc DESC fields are STATIC strings, not
+#   "$(PV)"/"Vald $(DESC)". Embedding $(PV) or long $(DESC) overflows the
+#   40-char DESC field on 4-char sectors (e.g. LI09) -> iocInit Error(512,512).
+#   Presentation record (line 60) may use $(DESC) as long as it stays <=35 chars.
 #==============================================================
 
 record(calcout, "$(VNAME):Valid") {
-    field(DESC, "$(PV) valid")
+    field(DESC, "Validity watchdog")
     field(INPA, "$(RAW).SEVR NPP NMS")
     field(INPB, "$(CONN=ODM:$(SECTOR):CONNECTED) CP NMS")
     field(CALC, "(A=3 || B=0) ? VAL+1 : 0")
@@ -48,7 +53,7 @@ record(calcout, "$(VNAME):Valid") {
 }
 
 record(calcout, "$(PV)_calc") {
-    field(DESC, "Validated $(PV)")
+    field(DESC, "Validated value")
     field(INPA, "$(RAW) CP NMS")
     field(INPC, "$(VNAME):Valid NPP MSI")
     field(CALC, "A")
