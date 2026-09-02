@@ -57,14 +57,17 @@ USR_CXXFLAGS += -I$(EIPSCANNER_HOME)/include/EIPScanner
 
 USR_LDFLAGS += -L$(EIPSCANNER_HOME)/lib
 # USR_LDFLAGS += -Wl,-rpath,$(EIPSCANNER_HOME)/lib
-USR_LDFLAGS += -Wl,-rpath,$(abspath $(EIPSCANNER_HOME)/lib)
+# delete the rpath line (dynamic-only, not needed for static):
+#USR_LDFLAGS += -Wl,-rpath,$(abspath $(EIPSCANNER_HOME)/lib)
 
 ifdef EPICS_QSRV_MAJOR_VERSION
 $(PROD_NAME)_LIBS += qsrv
 $(PROD_NAME)_LIBS += $(EPICS_BASE_PVA_CORE_LIBS)
 endif
 
-$(PROD_NAME)_SYS_LIBS += EIPScanner
+# link the static archive (change EIPScanner -> EIPScannerS):
+$(PROD_NAME)_SYS_LIBS += EIPScannerS
+#$(PROD_NAME)_SYS_LIBS += EIPScanner
 $(PROD_NAME)_LIBS += $(EPICS_BASE_IOC_LIBS)
 
 include $(TOP)/configure/RULES
