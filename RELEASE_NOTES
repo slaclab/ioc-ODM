@@ -11,11 +11,11 @@
 #  Mod
 #==============================================================
 
-R1.1.3       S. Condamoor (scondam)
+R1.1.2       S. Condamoor (scondam)
 1-Sept-2026   Branch odm-eip
 		Add iocBoot/sioc-sys0-od03 for S09 PLC
 		
-R1.1.2       S. Condamoor (scondam)
+             S. Condamoor (scondam)
 28-Aug-2026   Branch odm-eip
 		Add support for checksum and other project data.
 		Add alarm severities similar to LI07. 
