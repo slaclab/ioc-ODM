@@ -67,7 +67,9 @@ epicsEnvSet("IOC","sioc-sys0-od03")
 
 # PNOZ m ES EtherNet/IP 772137 for S09 (plc-li09-od01)
 # RPI is 100 ms for this example. Keep all outputs zero during initial commissioning.
-pnzEtherIPConfigure("172.27.143.202", 100000)
+# scondam: 3-Sept-2026: Increase the RPI to 500 mS. The default multiplier is 4. So 4x500 ms = 2 seconds
+# 2 seconds of tolerated silence before COMM fault is raised. 
+pnzEtherIPConfigure("172.27.143.202", 500000)
 
 # Load Additional databases:
 dbLoadRecords("db/pnz.db","SECTOR=LI09")

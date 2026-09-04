@@ -186,12 +186,15 @@ record(longin, "ODM:$(SECTOR):DROPCOUNT") {
 }
 
 # Live comm state; DISCONNECTED => MAJOR (momentary, self-clears on reconnect)
+# scondam: 3-Sept-2026: COMM:STS - downgrade COMM FAULT to MINOR (routine UDP drops on known-
+# overloaded segment, monitoring-only IOC). Keep DISCONNECTED/STOPPED MAJOR.
+#
 record(bi, "ODM:$(SECTOR):COMM:STS") {
     field(DESC, "Live comm state")
     field(INP,  "ODM:$(SECTOR):CONNECTED CP")
     field(ZNAM, "DISCONNECTED")
     field(ONAM, "CONNECTED")
-    field(ZSV,  "MAJOR")
+    field(ZSV,  "MINOR")
     field(OSV,  "NO_ALARM")
 }
 
@@ -205,13 +208,16 @@ record(longout, "ODM:$(SECTOR):COMM:DROP:ACK") {
 
 # Latched unacked-drop alarm: 1 (MAJOR) while DROPCOUNT > ACK.
 # Stays latched through reconnect (DROPCOUNT monotonic) until acked.
+# scondam: 3-Sept-2026: COMM:DROP:LATCH - downgrade COMM FAULT to MINOR (routine UDP drops on known-
+# overloaded segment, monitoring-only IOC). Keep DISCONNECTED/STOPPED MAJOR.
+#
 record(calc, "ODM:$(SECTOR):COMM:DROP:LATCH") {
     field(DESC, "Unacked comm drop (1=drop since ack)")
     field(INPA, "ODM:$(SECTOR):DROPCOUNT CP")
     field(INPB, "ODM:$(SECTOR):COMM:DROP:ACK CP")
     field(CALC, "A>B")
     field(HIGH, "0.5")
-    field(HSV,  "MAJOR")
+    field(HSV,  "MINOR")
 }
 
 # One-click ACK helper: process this to copy DROPCOUNT -> ACK (clears latch).
@@ -3300,6 +3306,9 @@ record(calc, "ODM:$(SECTOR):PLC:STATUS_calc") {
     field(FLNK, "ODM:$(SECTOR):PLC:STATUS")
 }
 
+# scondam: 3-Sept-2026 PLC:STATUS - downgrade COMM FAULT to MINOR (routine UDP drops on known-
+# overloaded segment, monitoring-only IOC). Keep DISCONNECTED/STOPPED MAJOR.
+
 record(mbbi, "ODM:$(SECTOR):PLC:STATUS") {
     field(DESC, "PLC status (from live signals)")
     field(INP,  "ODM:$(SECTOR):PLC:STATUS_calc")
@@ -3307,7 +3316,7 @@ record(mbbi, "ODM:$(SECTOR):PLC:STATUS") {
     field(ONVL, "1") field(ONST, "COMM FAULT")   field(ONSV, "MAJOR")
     field(TWVL, "2") field(TWST, "STOPPED")      field(TWSV, "MAJOR")
     field(THVL, "3") field(THST, "RUNNING")      field(THSV, "NO_ALARM")
-    field(UNSV, "MAJOR")
+    field(UNSV, "MINOR")
 }
 
 #--------------------------------------------------------------

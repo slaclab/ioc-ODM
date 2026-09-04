@@ -11,6 +11,11 @@
 #  Mod
 #==============================================================
 
+R1.1.7       S. Condamoor (scondam)
+3-Sept-2026   Branch odm-eip
+	      After discussions with Safety Team, increase RIP from 100 ms to 500 ms.
+	      Downgrade the alarm severity for COMM disruptions from MAJOR to MINOR.
+
 R1.1.6       S. Condamoor (scondam)
 1-Sept-2026   Branch odm-eip
 	      Reverted driver changes back to R1.1.2 as the comm issues were understood and resolved.
