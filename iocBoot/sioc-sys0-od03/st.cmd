@@ -89,6 +89,6 @@ iocInit
 # Initialize caPutLog
 caPutLogInit("${EPICS_CA_PUT_LOG_ADDR}",0)
 # Start autosave routines to save our data
-< iocBoot/common/restore.soft.cmd
+< ../common/restore.soft.cmd
 
 # End of file st.cmd
