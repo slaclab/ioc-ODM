@@ -63,7 +63,7 @@ dbLoadRecords("db/iocRelease.db"  ,"IOC=${IOC_NAME}")
 
 # End of script st.soft.cmd
 
-epicsEnvSet("IOC","sioc-sys0-od03")
+epicsEnvSet("IOC","sioc-sys0-od05")
 
 # PNOZ m ES EtherNet/IP 772137 for S09 (plc-li10-od01)
 # RPI is 100 ms for this example. Keep all outputs zero during initial commissioning.
