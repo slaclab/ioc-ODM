@@ -13,12 +13,12 @@
 # Per-app generated build dirs (any depth) - keep UNanchored
 O.*
 
-# ===== EIPScanner (vendored) =====
-# Commit the static lib + headers under EIPScanner/install/.
-# Ignore only the CMake build tree and the dynamic .so (we static-link).
+# ===== EIPScanner (vendored source; BUILD FROM SOURCE, artifacts NOT committed) =====
+# Build via ./build.sh (Philosophy 2). build/ and install/ are GENERATED
+# (abs paths, machine caches, and a .a that can drift from source). Committing
+# them caused a stale Path-A-less library to nearly ship to production (2026-09).
 /EIPScanner/build/
-/EIPScanner/install/lib/*.so
-/EIPScanner/install/lib/*.so.*
+/EIPScanner/install/
 
 # ===== misc =====
 *.bak
