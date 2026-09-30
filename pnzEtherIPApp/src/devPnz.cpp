@@ -25,6 +25,10 @@
 // Sentinel index for the ARM:CMD bo (not a real output bit 0..127)
 static const int PNZ_ARMCMD_INDEX = -200;
 
+// STEP 4 (Option F): PnzDpvt now carries the resolved PnzPlc* (routed by sector
+// at init). All read/write use d->plc -- NO onlyPlc(). Unknown sector -> record
+// fails init (INVALID), so a mis-typed/absent sector fails LOUD at boot and can
+// NEVER mis-route a safety PV to the wrong PLC.
 struct PnzDpvt {
 	enum Kind {
     		BIT_IN,
@@ -44,6 +48,7 @@ struct PnzDpvt {
                 WAVE_PROJNAME          // PNOZmulti project name (CHAR string)
 	} kind;
     	int index;
+        PnzPlc* plc;                   // STEP 4: resolved at init from the sector prefix
 };
 
 static bool parseUnsigned(const char* s, const char* prefix, int& value)
@@ -61,18 +66,54 @@ static bool parseUnsigned(const char* s, const char* prefix, int& value)
     return true;
 }
 
+// STEP 4: split "SECTOR:TOKEN", resolve PnzPlc* by sector.
+// On success: tokenOut = the part after the first ':', plcOut = resolved PLC.
+// On failure (no ':' or unknown sector): logs, returns false -> caller fails
+// record init (fail-loud). This is the ONLY place routing is resolved; the
+// resolved plc is stored in PnzDpvt so reads/writes never re-parse or re-lookup.
+static bool splitSectorAndResolve(dbCommon* prec, const char* spec,
+                                  std::string& tokenOut, PnzPlc*& plcOut)
+{
+    plcOut = nullptr;
+    tokenOut.clear();
+    if (!spec || !*spec) {
+        errlogPrintf("pnzEtherIP: %s empty link (expected @SECTOR:TOKEN)\n",
+                     prec->name);
+        return false;
+    }
+    const char* colon = std::strchr(spec, ':');
+    if (!colon) {
+        errlogPrintf("pnzEtherIP: %s link '%s' missing sector "
+                     "(expected @SECTOR:TOKEN, e.g. @B34:I0)\n",
+                     prec->name, spec);
+        return false;
+    }
+    std::string sector(spec, static_cast<std::size_t>(colon - spec));
+    tokenOut = colon + 1;
+    plcOut = PnzManager::instance()->plc(sector);
+    if (!plcOut) {
+        errlogPrintf("pnzEtherIP: %s unknown sector '%s' in link '%s' "
+                     "(no matching pnzEtherIPConfigure); record set INVALID\n",
+                     prec->name, sector.c_str(), spec);
+        return false;
+    }
+    return true;
+}
+
+// STEP 4: initCommon now receives the FULL spec ("SECTOR:TOKEN"), splits the
+// sector, resolves the plc, then runs the (unchanged) token-parse logic on the
+// remaining token. The resolved plc is stored in PnzDpvt.
 static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
                        int maxIndex, const char* usage)
 {
-    PnzDriver* drv = PnzDriver::instance();
-    if (!drv) {
+    std::string token;
+    PnzPlc* drv = nullptr;
+    if (!splitSectorAndResolve(prec, spec, token, drv)) {
         recGblSetSevr(prec, COMM_ALARM, INVALID_ALARM);
-        errlogPrintf("pnzEtherIP: %s has no configured driver; call pnzEtherIPConfigure first\n",
-                     prec->name);
         return S_db_badField;
     }
 
-    const char* s = spec ? spec : "";
+    const char* s = token.c_str();   // token WITHOUT the sector prefix
     int index = 0;
 
     if (kind == PnzDpvt::Kind::BIT_IN) {
@@ -191,7 +232,7 @@ static long initCommon(dbCommon* prec, const char* spec, PnzDpvt::Kind kind,
                 }
     }
 
-    PnzDpvt* dpvt = new PnzDpvt{kind, index};
+    PnzDpvt* dpvt = new PnzDpvt{kind, index, drv};   // STEP 4: store resolved plc
     prec->dpvt = dpvt;
     return 0;
 }
@@ -202,28 +243,29 @@ static long init_bi_record(biRecord* prec)
                       PnzDpvt::BIT_IN, 127, "@I0..@I127");
 }
 
+// STEP 4: get_ioint_info uses the record's ALREADY-RESOLVED plc (from dpvt, set
+// by init_record which runs BEFORE get_ioint_info). NOT onlyPlc().
 static long get_ioint_info(int, dbCommon* prec, IOSCANPVT* ppvt)
 {
-    PnzDriver* drv = PnzDriver::instance();
-    *ppvt = drv ? drv->scanPvt() : nullptr;
+    auto* d = static_cast<PnzDpvt*>(prec->dpvt);
+    *ppvt = (d && d->plc) ? d->plc->scanPvt() : nullptr;
     return 0;
 }
 
-// I/O Intr scan list for the last-drop timestamp record: fires only when the
-// driver calls scanIoRequest(_dropScan) inside noteDisruption() (one per drop).
+// I/O Intr scan list for the last-drop timestamp record (per-PLC drop scan).
 static long get_ioint_info_drop(int, dbCommon* prec, IOSCANPVT* ppvt)
 {
-    PnzDriver* drv = PnzDriver::instance();
-    *ppvt = drv ? drv->dropScanPvt() : nullptr;
+    auto* d = static_cast<PnzDpvt*>(prec->dpvt);
+    *ppvt = (d && d->plc) ? d->plc->dropScanPvt() : nullptr;
     return 0;
 }
 
 static long read_bi(biRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
     prec->rval = drv->getBit(true, static_cast<unsigned>(d->index)) ? 1 : 0;
     prec->udf = false;
@@ -241,13 +283,14 @@ static long init_bo_record(boRecord* prec)
 static long write_bo(boRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
     if (d->index == PNZ_ARMCMD_INDEX) {
         drv->setArmed(prec->rval != 0);
-        errlogPrintf("pnzEtherIP: ARM:CMD -> O->T writes %s\n",
+        errlogPrintf("pnzEtherIP: [%s] ARM:CMD -> O->T writes %s\n",
+                     drv->sector().c_str(),
                      prec->rval ? "ARMED" : "DISARMED (outputs forced to 0)");
         return 0;
     }
@@ -268,9 +311,9 @@ static long init_li_record(longinRecord* prec)
 static long read_li(longinRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
     switch (d->index) {
     case -1: prec->val = drv->led(); break;
@@ -317,9 +360,9 @@ static long init_lo_record(longoutRecord* prec)
 static long write_lo(longoutRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
     if (prec->val < 0 || prec->val > 255) {
         recGblSetSevr(reinterpret_cast<dbCommon*>(prec), WRITE_ALARM, INVALID_ALARM);
@@ -332,34 +375,40 @@ static long write_lo(longoutRecord* prec)
 }
 
 /* stringin: last-disruption timestamp + PNOZmulti project checksum/date.
- * LASTDROPTIME uses SCAN = I/O Intr via get_ioint_info_drop (once per drop);
- * PROJSUMHEX/PROJDATE use a periodic SCAN set in the DB (5 second). */
+ * STEP 4: the spec is now "SECTOR:TOKEN"; we split the sector first, then
+ * dispatch on the TOKEN. */
 static long init_si_record(stringinRecord* prec)
 {
-    const char* s = prec->inp.value.instio.string;
-    if (std::strcmp(s, "LASTDROPTIME") == 0)
-        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+    const char* spec = prec->inp.value.instio.string;
+
+    // Peek the token (after the sector) to choose the Kind, but let initCommon
+    // do the authoritative split+resolve+store. We only need the token here to
+    // pick the enum.
+    const char* colon = spec ? std::strchr(spec, ':') : nullptr;
+    const char* tok = colon ? colon + 1 : (spec ? spec : "");
+
+    if (std::strcmp(tok, "LASTDROPTIME") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), spec,
                           PnzDpvt::STRING_IN_DROPTIME, 0, "@LASTDROPTIME");
-    if (std::strcmp(s, "PROJSUMHEX") == 0)
-        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+    if (std::strcmp(tok, "PROJSUMHEX") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), spec,
                           PnzDpvt::STRING_PROJSUM_HEX, 0, "@PROJSUMHEX");
-    if (std::strcmp(s, "PROJDATE") == 0)
-        return initCommon(reinterpret_cast<dbCommon*>(prec), s,
+    if (std::strcmp(tok, "PROJDATE") == 0)
+        return initCommon(reinterpret_cast<dbCommon*>(prec), spec,
                           PnzDpvt::STRING_PROJDATE, 0, "@PROJDATE");
     errlogPrintf("pnzEtherIP: %s invalid stringin syntax '%s' "
-                 "(use @LASTDROPTIME, @PROJSUMHEX, or @PROJDATE)\n",
-                 prec->name, s);
+                 "(use @SECTOR:LASTDROPTIME, @SECTOR:PROJSUMHEX, or @SECTOR:PROJDATE)\n",
+                 prec->name, spec ? spec : "");
     return S_db_badField;
 }
 
 static long read_si(stringinRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
-    // prec->val is char[MAX_STRING_SIZE] (40). All our strings fit.
     switch (d->kind) {
     case PnzDpvt::STRING_IN_DROPTIME:
         drv->copyLastDropTime(prec->val, sizeof(prec->val));
@@ -377,50 +426,46 @@ static long read_si(stringinRecord* prec)
     return 0;
 }
 
+/* waveform: STEP 4 -- split sector first, dispatch on the TOKEN. */
 static long init_wf_record(waveformRecord* prec)
 {
     const char* spec = prec->inp.value.instio.string;
+    const char* colon = spec ? std::strchr(spec, ':') : nullptr;
+    const char* tok = colon ? colon + 1 : (spec ? spec : "");
 
-    if (std::strcmp(spec, "RAWIN") == 0) {
+    if (std::strcmp(tok, "RAWIN") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_IN, 0, "@RAWIN");
     }
-
-    if (std::strcmp(spec, "RAWINHEX") == 0) {
+    if (std::strcmp(tok, "RAWINHEX") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_IN_HEX, 0, "@RAWINHEX");
     }
-
-    if (std::strcmp(spec, "RAWOUTHEX") == 0) {
+    if (std::strcmp(tok, "RAWOUTHEX") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_OUT_HEX, 0, "@RAWOUTHEX");
     }
-
-    if (std::strcmp(spec, "OUTDIAG") == 0) {
+    if (std::strcmp(tok, "OUTDIAG") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_OUT_RB, 0, "@OUTDIAG");
     }
-
-    if (std::strcmp(spec, "IDNAME") == 0) {
+    if (std::strcmp(tok, "IDNAME") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_IDNAME, 0, "@IDNAME");
     }
-
-    if (std::strcmp(spec, "LASTDROPTIME") == 0) {
+    if (std::strcmp(tok, "LASTDROPTIME") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_LASTDROP, 0, "@LASTDROPTIME");
     }
-
-    if (std::strcmp(spec, "PROJNAME") == 0) {
+    if (std::strcmp(tok, "PROJNAME") == 0) {
         return initCommon(reinterpret_cast<dbCommon*>(prec),
                           spec, PnzDpvt::WAVE_PROJNAME, 0, "@PROJNAME");
     }
 
     errlogPrintf(
         "pnzEtherIP: %s invalid waveform syntax '%s' "
-        "(use @RAWIN, @RAWINHEX, @RAWOUTHEX, @OUTDIAG, @IDNAME, @LASTDROPTIME, "
-        "or @PROJNAME)\n",
-        prec->name, spec);
+        "(use @SECTOR:{RAWIN,RAWINHEX,RAWOUTHEX,OUTDIAG,IDNAME,LASTDROPTIME,PROJNAME})\n",
+        prec->name, spec ? spec : "");
 
     return S_db_badField;
 }
@@ -428,10 +473,9 @@ static long init_wf_record(waveformRecord* prec)
 static long read_wf(waveformRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-
-    if (!d || !drv)
+    if (!d || !d->plc)
         return -1;
+    auto* drv = d->plc;
 
     if (d->kind == PnzDpvt::WAVE_IN_HEX) {
         if (prec->ftvl != menuFtypeCHAR) {
@@ -495,8 +539,6 @@ static long read_wf(waveformRecord* prec)
         return 0;
     }
 
-    // Last-disruption timestamp as CHAR waveform (kept for compatibility;
-    // EDM should use the stringin ODM:...:COMM:LastDropTime instead).
     if (d->kind == PnzDpvt::WAVE_LASTDROP) {
         if (prec->ftvl != menuFtypeCHAR) {
             recGblSetSevr(reinterpret_cast<dbCommon*>(prec),
@@ -538,9 +580,9 @@ static long read_wf(waveformRecord* prec)
 static long write_wf(waveformRecord* prec)
 {
     auto* d = static_cast<PnzDpvt*>(prec->dpvt);
-    auto* drv = PnzDriver::instance();
-    if (!d || !drv || d->kind != PnzDpvt::WAVE_OUT)
+    if (!d || !d->plc || d->kind != PnzDpvt::WAVE_OUT)
         return -1;
+    auto* drv = d->plc;
 
     if (prec->ftvl != menuFtypeUCHAR || prec->nord > 32) {
         recGblSetSevr(reinterpret_cast<dbCommon*>(prec), WRITE_ALARM, INVALID_ALARM);
@@ -636,7 +678,7 @@ siDset devPnzSi = {
         nullptr,
         nullptr,
         reinterpret_cast<DEVSUPFUN>(init_si_record),
-        reinterpret_cast<DEVSUPFUN>(get_ioint_info_drop)   // drop scan list
+        reinterpret_cast<DEVSUPFUN>(get_ioint_info_drop)
     },
     reinterpret_cast<DEVSUPFUN>(read_si)
 };

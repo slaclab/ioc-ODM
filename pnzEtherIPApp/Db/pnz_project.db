@@ -24,7 +24,7 @@
 record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM") {
     field(DESC, "PNOZmulti project check sum")
     field(DTYP, "PNZ EtherIP")
-    field(INP,  "@PROJSUM")
+    field(INP,  "@$(SECTOR):PROJSUM")
     field(SCAN, "5 second")
 }
 
@@ -32,7 +32,7 @@ record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM") {
 record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM:ALL") {
     field(DESC, "PNOZmulti overall check sum")
     field(DTYP, "PNZ EtherIP")
-    field(INP,  "@PROJSUMALL")
+    field(INP,  "@$(SECTOR):PROJSUMALL")
     field(SCAN, "5 second")
 }
 
@@ -41,7 +41,7 @@ record(longin, "ODM:$(SECTOR):PROJ:CHECKSUM:ALL") {
 record(stringin, "ODM:$(SECTOR):PROJ:CHECKSUM:HEX") {
     field(DESC, "Project/overall check sum (hex)")
     field(DTYP, "PNZ EtherIP")
-    field(INP,  "@PROJSUMHEX")
+    field(INP,  "@$(SECTOR):PROJSUMHEX")
     field(SCAN, "5 second")
     field(PINI, "YES")
 }
@@ -51,7 +51,7 @@ record(stringin, "ODM:$(SECTOR):PROJ:CHECKSUM:HEX") {
 record(stringin, "ODM:$(SECTOR):PROJ:DATE") {
     field(DESC, "Project creation date/time")
     field(DTYP, "PNZ EtherIP")
-    field(INP,  "@PROJDATE")
+    field(INP,  "@$(SECTOR):PROJDATE")
     field(SCAN, "5 second")
     field(PINI, "YES")
 }
@@ -60,7 +60,7 @@ record(stringin, "ODM:$(SECTOR):PROJ:DATE") {
 record(waveform, "ODM:$(SECTOR):PROJ:NAME") {
     field(DESC, "PNOZmulti project name")
     field(DTYP, "PNZ EtherIP")
-    field(INP,  "@PROJNAME")
+    field(INP,  "@$(SECTOR):PROJNAME")
     field(FTVL, "CHAR")
     field(NELM, "32")
     field(SCAN, "5 second")
