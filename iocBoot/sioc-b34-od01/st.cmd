@@ -5,25 +5,28 @@
 #
 #  Name: st.cmd
 #
-#  Desc:  EPICS startup script for the ODM soft IOC.
-#         R1.1.10: sioc-sys0-od03 consolidates LI08, LI09, LI10
-#         onto ONE IOC (od04/od05 decommissioned).
-#         Boots DISARMED (read-only) for phase-1 comm bring-up.
+#  Desc:  This is the EPICS startup script for a soft IOC
+#         for the ODM PLC that uses the EtherNet/IP comm module
 #
 #  Facility:  LCLS Personnel Protection System (PPS)
 #
 #  Auth: 14-Aug-2026, Shantha Condamoor  (SCONDAM)
-#  Rev:  29-Sep-2026, Shantha Condamoor  (SCONDAM) - multi-PLC R1.1.10
+#  Rev:  dd-mmm-yyyy, Reviewer's Name  (USERNAME)
 #--------------------------------------------------------------
-#  Mod:
+#  Mod: 29-Sep-2026, scondam - Disarm at boot (pnzEtherIPArm 0) for Option F
+#       read-only muxing bring-up. Driver source default remains ARMED
+#       (_armed{true}); this st.cmd forces DISARMED at startup so outputs are
+#       held 0 while read paths are verified. Re-arm is a deliberate step.
 #==============================================================
 #
 
 # Set environment variables
-epicsEnvSet("IOC_NAME"  ,"SIOC:SYS0:OD03")
-epicsEnvSet("LOCATION"  ,"lcls-daemon0")
+epicsEnvSet("IOC_NAME"  ,"SIOC:B34:OD01")
+epicsEnvSet("LOCATION"  ,"lcls-daemon1")
 
 # Load generic environment variables and database
+#
+# Set environment variables
 < envPaths
 
 # iocAdmin environment variables
@@ -39,15 +42,20 @@ cd ${TOP}
 #==============================================================
 # Load IOC Application object
 #==============================================================
+#
+# Load EPICS Database
+
+# Load EPICS Database
 dbLoadDatabase("dbd/pnzEtherIP.dbd")
 pnzEtherIP_registerRecordDeviceDriver(pdbbase)
+
 
 # Load record instances
 dbLoadRecords("db/iocAdminSoft.db","IOC=${IOC_NAME}")
 dbLoadRecords("db/iocRelease.db"  ,"IOC=${IOC_NAME}")
 
 #==============================================================
-#  Load Channel Access Security if configuration file exists
+#  Load Channe Access Security if configuration file exists
 #==============================================================
 < ${ACF_INIT}
 
@@ -56,62 +64,49 @@ dbLoadRecords("db/iocRelease.db"  ,"IOC=${IOC_NAME}")
 #==============================================================
 < ${LOG_INIT}
 
-epicsEnvSet("IOC","sioc-sys0-od03")
+# End of script st.soft.cmd
 
-#==============================================================
-# PNOZ m ES EtherNet/IP PLC connections  (R1.1.10 multi-PLC)
-#
-#   pnzEtherIPConfigure(IP, RPI_us, SECTOR, armAtBoot)
-#     RPI = 500000 us (500 ms). Default multiplier 4 => 2 s comm-fault timeout.
-#     armAtBoot: 0 = DISARMED (read-only) for phase-1 bring-up
-#                1 = ARMED (writes enabled) for phase-2 write testing
-#
-#   *** PHASE 1 (this file): all three sectors DISARMED (read-only). ***
-#   Verify RO PVs read correctly from all three PLCs with NO cross-talk
-#   (e.g. LI08 values must NOT appear on LI09/LI10 PVs) before arming.
-#
-#   PHASE 2: change armAtBoot 0 -> 1 per sector (or use pnzEtherIPArm
-#   "LIxx",1 at runtime) and reboot to test write PVs.
-#==============================================================
-# LI08  plc-li08-od01
-pnzEtherIPConfigure("172.27.143.38",  500000, "LI08", 0)
-# LI09  plc-li09-od01
-pnzEtherIPConfigure("172.27.143.202", 500000, "LI09", 0)
-# LI10  plc-li10-od01
-pnzEtherIPConfigure("172.27.143.104", 500000, "LI10", 0)
+epicsEnvSet("IOC","sioc-b34-od01")
 
-#==============================================================
-# Load per-sector databases
-#==============================================================
-# --- LI08 ---
-dbLoadRecords("db/pnz.db","SECTOR=LI08")
-dbLoadRecords("db/pnz_obit_rb.db","SECTOR=LI08")
-dbLoadRecords("db/pnz_alias.db","SECTOR=LI08")
-dbLoadRecords("db/pnz_project.db","SECTOR=LI08")
-dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=LI08")
+# PNOZ m ES EtherNet/IP 772137
+# RPI is 100 ms for this example. Keep all outputs zero during initial commissioning.
+# pnzEtherIPConfigure("134.79.217.31", 100000)
+# NEW:
+pnzEtherIPConfigure("134.79.217.31", 100000, "B34", 0)
 
-# --- LI09 ---
-dbLoadRecords("db/pnz.db","SECTOR=LI09")
-dbLoadRecords("db/pnz_obit_rb.db","SECTOR=LI09")
-dbLoadRecords("db/pnz_alias.db","SECTOR=LI09")
-dbLoadRecords("db/pnz_project.db","SECTOR=LI09")
-dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=LI09")
+# scondam: 25-Aug-2026 - fake IP to simulate the Comm disruption scenario.
+# pnzEtherIPConfigure("134.79.217.251", 100000)
+# NEW:
+# pnzEtherIPConfigure("134.79.217.251", 100000, "B34", 0)
 
-# --- LI10 ---
-dbLoadRecords("db/pnz.db","SECTOR=LI10")
-dbLoadRecords("db/pnz_obit_rb.db","SECTOR=LI10")
-dbLoadRecords("db/pnz_alias.db","SECTOR=LI10")
-dbLoadRecords("db/pnz_project.db","SECTOR=LI10")
-dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=LI10")
+#--------------------------------------------------------------
+# DISARM AT BOOT (Option F read-only bring-up)
+# Force O->T writes DISARMED immediately after configure and BEFORE iocInit.
+# While disarmed the driver sends an all-zero output image regardless of the
+# _output bits, so read paths can be verified with no risk of driving outputs.
+# NOTE: source default is still ARMED (_armed{true}); this line overrides it
+# at startup. Remove/change this line (or use armAtBoot in a later release) to
+# boot ARMED for write testing.
+#--------------------------------------------------------------
+# pnzEtherIPArm 0
+# NEW:
+pnzEtherIPArm("B34", 0)
 
-#==============================================================
+# Load Additional databases:
+dbLoadRecords("db/pnz.db","SECTOR=B34")
+dbLoadRecords("db/pnz_obit_rb.db","SECTOR=B34")
+dbLoadRecords("db/pnz_alias.db","SECTOR=B34") 
+dbLoadRecords("db/pnz_project.db","SECTOR=B34") 
+dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=B34")
+
 # Setup autosave/restore
-#   NOTE: autosave is IOC-scoped and generic (info_positions/info_settings).
-#   makeAutosaveFiles() auto-includes ALL loaded records, so LI08/LI09/LI10
-#   autosave PVs (incl. alarm-reset-HIGH) are captured automatically under
-#   ${IOC_DATA}/sioc-sys0-od03/autosave.  No per-sector .sav files needed.
-#==============================================================
+# NOTE (scondam 29-Sep-2026): the only autosaved PV is SIOC:SYS0:OD01:ACCESS.VAL
+# (see autosave-req/info_settings.req). No outputs, ARM:CMD, or AlarmReset are
+# autosaved/restored, so the driver's arm/output defaults are authoritative at
+# boot. (Previous "save-restore alarm reset high" comment was inaccurate and
+# has been removed.)
 < iocBoot/common/init_restore.soft.cmd
+set_pass0_restoreFile("SIOC-B34-OD01.sav")
 
 cd "${TOP}/iocBoot/${IOC}"
 iocInit
