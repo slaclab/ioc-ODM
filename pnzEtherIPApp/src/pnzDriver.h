@@ -1,9 +1,26 @@
+// pnzDriver.h - STEP 3+4 (multi-PLC + sector routing + per-sector arm)
+//
+// STATUS: MULTI-PLC. Single-sector behavior must remain bench-parity with
+//         Step 1/2. Multi-PLC demux/routing is validatable ONLY in production
+//         (bench has one PLC). MUST compile + single-sector bench regression +
+//         routing-isolation test before od03.
+//
+// PnzPlc     - per-PLC state + logic (unchanged from Step 1/2).
+// PnzManager - process-wide: ONE shared ConnectionManager, ONE worker thread,
+//              map<sector, PnzPlc>. configure(ip,rpi,sector,armAtBoot) registers
+//              one PnzPlc per sector. plc(sector) resolves for device support.
+//              worker() iterates ALL PnzPlc contexts, sharing one CM.
+//
+// _armed default is per-PLC via armAtBoot arg (default DISARMED for staged
+// bring-up). Source _armed{true} retained but ctor overrides from armAtBoot.
+
 #ifndef PNZ_DRIVER_H
 #define PNZ_DRIVER_H
 
 #include <array>
 #include <atomic>
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -22,25 +39,33 @@ class SessionInfo;
 class MessageRouter;
 }
 
-class PnzDriver {
+class PnzManager;   // fwd
+
+// =============================================================================
+// PnzPlc - one instance per PLC (per sector). Per-PLC state + logic.
+//          (Bodies unchanged from Step 1/2; PnzManager is friend.)
+// =============================================================================
+class PnzPlc {
 public:
-    static PnzDriver* configure(const std::string& ip, std::uint32_t rpiUs);
-    static PnzDriver* instance();
+    // armAtBoot: initial arm state (false = DISARMED, the safe staged-bring-up
+    // default; true = ARMED). Overrides the source _armed initializer.
+    PnzPlc(const std::string& sector, const std::string& ip,
+           std::uint32_t rpiUs, bool armAtBoot);
+    ~PnzPlc();
 
-    ~PnzDriver();
+    PnzPlc(const PnzPlc&) = delete;
+    PnzPlc& operator=(const PnzPlc&) = delete;
 
+    // ---- Device-support accessors (signatures IDENTICAL to R1.1.8) ----
     bool getBit(bool input, unsigned bit) const;
     void setBit(unsigned bit, bool value);
 
-    /* scondam: 16-Aug-2026 */
     void setArmed(bool a) { _armed.store(a); }
     bool armed() const { return _armed.load(); }
 
-    /* comm-loss annunciation */
     std::uint32_t dropCount() const { return _dropCount.load(); }
-    void copyLastDropTime(char* dst, std::size_t cap) const;   // formatted timestamp
+    void copyLastDropTime(char* dst, std::size_t cap) const;
 
-    /* PLC diagnostics (explicit messaging) */
     bool          diagValid()    const { return _diagValid.load(); }
     std::uint16_t identVendor()  const;
     std::uint16_t identType()    const;
@@ -52,13 +77,12 @@ public:
     void          copyIdentName(char* dst, std::size_t cap) const;
     std::uint8_t  deviceStatus() const;
 
-    /* PNOZmulti project data (service-data class 0xB0, Instance 6 - explicit msg) */
     bool          projValid()       const { return _projValid.load(); }
-    std::uint16_t projChecksum()    const;   // "project" sum (bytes 0..1)
-    std::uint16_t projChecksumAll() const;   // "overall"  sum (bytes 2..3)
+    std::uint16_t projChecksum()    const;
+    std::uint16_t projChecksumAll() const;
     void          copyProjChecksumHex(char* dst, std::size_t cap) const;
-    void          copyProjDate(char* dst, std::size_t cap) const;   // "DD.MM.YYYY HH:MM"
-    void          copyProjName(char* dst, std::size_t cap) const;   // UTF-8
+    void          copyProjDate(char* dst, std::size_t cap) const;
+    void          copyProjName(char* dst, std::size_t cap) const;
 
     std::uint8_t getInputByte(unsigned byte) const;
     std::uint8_t getOutputByte(unsigned byte) const;
@@ -77,79 +101,40 @@ public:
     bool connected() const;
     bool running() const;
 
-    /* scondam: 16-Aug-2026; PRODUCTION default changed to ARMED (Option A).
-     * Boot ARMED so panel write-commands work immediately after IOC reboot.
-     * Reconnect also comes up ARMED (the last operator-set _output image
-     * resumes being driven once the link re-establishes; it is forced to 0
-     * only while disconnected).
-     *
-     * SAFETY PRECONDITIONS (all must hold, verify before production):
-     *   1) Output image is 0 at boot: ctor does _output.fill(0); all bo
-     *      records default 0 with PINI NO; outputs are NOT autosaved.
-     *   2) ODM:$(SECTOR):ARM:CMD stays PINI NO and is NOT autosaved, so the
-     *      driver's armed default is authoritative at boot.
-     *   3) O000 (AlarmReset) is edge/one-shot (HIGH 0.5) and boots 0 -> no
-     *      spurious reset pulse on connect.
-     *
-     * Operator CANNOT disarm from the panel (arm state shown read-only via
-     * ODM:$(SECTOR):ARMED:STS). Disarm is a MAINTENANCE-ONLY action via
-     * iocsh: pnzEtherIPArm 0.
-     *
-     * *** Fail-safe default changed from DISARMED to ARMED.
-     *     Approved by (Safety Engineer): ____________  Date: __________ ***
-     */
-    std::atomic<bool> _armed{true};    // O->T writes ENABLED by default (production)
-
     std::uint32_t rpiUs() const;
+    const std::string& ip() const { return _ip; }
+    const std::string& sector() const { return _sector; }
 
     IOSCANPVT scanPvt() const { return _scanPvt; }
-    IOSCANPVT dropScanPvt() const { return _dropScan; }   // fires only on a new disruption
+    IOSCANPVT dropScanPvt() const { return _dropScan; }
+
+    /* scondam: 16-Aug-2026; source default ARMED (_armed{true}). In STEP 5
+     * (Option F) the ctor overrides this from the armAtBoot arg so each sector
+     * boots to a configured, per-sector arm state (staged bring-up boots
+     * DISARMED). See PnzManager::configure / pnzEtherIPConfigure.
+     *
+     * SAFETY: with armAtBoot=false, outputs are forced 0 at boot regardless of
+     * the _output image. Per-sector arm via pnzEtherIPArm(sector,1) or the
+     * panel @SECTOR:ARMCMD bo.
+     *
+     * *** Per-sector fail-safe default (armAtBoot) approved by (Safety
+     *     Engineer): ____________  Date: __________ ***
+     */
+    std::atomic<bool> _armed{true};
 
 private:
-    PnzDriver(const std::string& ip, std::uint32_t rpiUs);
-    PnzDriver(const PnzDriver&) = delete;
-    PnzDriver& operator=(const PnzDriver&) = delete;
-
-    void worker();
-    bool openConnection();
-    void closeConnection();
-
     void received(std::uint32_t realTimeHeader,
                   std::uint16_t sequence,
                   const std::vector<std::uint8_t>& data);
     void connectionClosed();
 
-    /* diagnostics (design A: called from worker() after handleConnections) */
     void pollDiagnostics();
-    void pollProjectData();   // PNOZmulti 60-byte project block (checksum/date/name)
-
-    /* scondam: comm-loss crash fix ---------------------------------------
-     * Tear down the explicit (diagnostics) session/router without letting a
-     * throwing destructor escape. ~SessionInfo() sends UnRegisterSession;
-     * on a dead link that socket write throws std::system_error. If that
-     * happens while we are already handling an exception (e.g. after an
-     * Identity timeout), the throw during unwinding calls std::terminate()
-     * and the IOC core-dumps. This helper makes teardown noexcept.
-     * ------------------------------------------------------------------- */
+    void pollProjectData();
     void safeResetExplicit() noexcept;
-
-    /* scondam: drop-count + timestamp ------------------------------------
-     * Record ONE disruption episode (count + timestamp) on the failed-edge,
-     * guarded by the _commFail latch so retry cycles don't inflate the count.
-     * Also triggers _dropScan so the last-drop stringin re-processes and posts
-     * a CA monitor exactly once per disruption (post-only-on-change).
-     * ------------------------------------------------------------------- */
     void noteDisruption(const char* reason);
-
-    /* scondam: startup grace ---------------------------------------------
-     * True once we are past the startup grace window. A single sub-second
-     * first-connect handshake retry on a HEALTHY boot must NOT be counted as
-     * a disruption; but a genuine "booted into a dead network / PLC offline"
-     * condition (still failing past the grace window, never connected) MUST
-     * be counted. See openConnection() and worker() catch blocks.
-     * ------------------------------------------------------------------- */
     bool pastStartupGrace() const;
 
+    std::string _sector;
     std::string _ip;
     std::uint32_t _rpiUs;
 
@@ -157,61 +142,108 @@ private:
     std::array<std::uint8_t, 32> _input{};
     std::array<std::uint8_t, 32> _output{};
 
-    std::atomic<bool> _stop{false};
     std::atomic<bool> _connected{false};
     std::atomic<bool> _running{false};
 
-    /* comm-loss annunciation */
     std::atomic<std::uint32_t> _dropCount{0};
-    std::atomic<bool> _commFail{false};        // true while in a failed/disconnected episode
-    mutable std::mutex _dropTimeMutex;         // guards _lastDropTime/_lastDropValid
-    epicsTimeStamp _lastDropTime{};            // time of most recent disruption edge
-    bool _lastDropValid{false};                // false until first disruption
+    std::atomic<bool> _commFail{false};
+    mutable std::mutex _dropTimeMutex;
+    epicsTimeStamp _lastDropTime{};
+    bool _lastDropValid{false};
 
-    /* startup-grace disruption accounting */
-    std::atomic<bool> _everConnected{false};   // true after first successful connect
-    epicsTimeStamp _startTime{};               // driver start time (for startup grace)
-    bool _startupCounted{false};               // count "dead at boot" only once
+    std::atomic<bool> _everConnected{false};
+    epicsTimeStamp _startTime{};
+    bool _startupCounted{false};
 
-    /* diagnostics data (guarded by _mutex) */
     std::uint16_t _idVendor{0}, _idType{0}, _idCode{0}, _idStatus{0};
     std::uint8_t  _idRevMaj{0}, _idRevMin{0};
     std::uint32_t _idSerial{0};
     std::string   _idName;
     std::uint8_t  _devStatus{0};
 
-    /* PNOZmulti project data (guarded by _mutex) */
-    std::uint16_t _projSum{0};       // project check sum   (bytes 0..1, big-endian)
-    std::uint16_t _projSumAll{0};    // overall  check sum  (bytes 2..3, big-endian)
+    std::uint16_t _projSum{0};
+    std::uint16_t _projSumAll{0};
     std::uint8_t  _projDay{0}, _projMonth{0};
     std::uint16_t _projYear{0};
     std::uint8_t  _projHour{0}, _projMin{0};
-    std::string   _projName;         // decoded to UTF-8/ASCII (big-endian per char)
+    std::string   _projName;
 
-    std::atomic<bool> _diagValid{false};   // true once Identity read OK
-    std::atomic<bool> _identDone{false};   // read Identity only once per connect
+    std::atomic<bool> _diagValid{false};
+    std::atomic<bool> _identDone{false};
+    std::atomic<bool> _projValid{false};
+    std::atomic<bool> _projDone{false};
 
-    std::atomic<bool> _projValid{false};   // true once project read OK
-    std::atomic<bool> _projDone{false};    // read project only once per connect
+    unsigned _diagCycle{0};
+    unsigned _diagBackoff{0};
+    unsigned _disconnLogCycle{0};
 
-    unsigned _diagCycle{0};                 // worker-cycle counter for cadence
-    unsigned _diagBackoff{0};               // cycles to wait after a failure
-    unsigned _disconnLogCycle{0};           // rate-limit "still disconnected" heartbeat log
-
-    std::shared_ptr<eipScanner::SessionInfo>  _explicitSession;
+    std::shared_ptr<eipScanner::SessionInfo>   _explicitSession;
     std::shared_ptr<eipScanner::MessageRouter> _messageRouter;
 
     IOSCANPVT _scanPvt{nullptr};
-    IOSCANPVT _dropScan{nullptr};   // scan list for the last-drop timestamp record
-    std::thread _thread;
+    IOSCANPVT _dropScan{nullptr};
 
-    std::unique_ptr<eipScanner::ConnectionManager> _connectionManager;
+    // Per-PLC session + implicit connection (within the SHARED CM in PnzManager).
     std::shared_ptr<eipScanner::SessionInfoIf> _session;
-    std::weak_ptr<eipScanner::IOConnection> _io;
+    std::weak_ptr<eipScanner::IOConnection>    _io;
 
-    static PnzDriver* _instance;
+    friend class PnzManager;
 };
 
-extern "C" int pnzEtherIPConfigure(const char* ip, unsigned long rpiUs);
+// =============================================================================
+// PnzManager - process-wide. ONE shared ConnectionManager, ONE worker thread,
+//              map<sector, PnzPlc>. Multi-PLC.
+// =============================================================================
+class PnzManager {
+public:
+    static PnzManager* instance();
 
-#endif
+    // Register one PLC for `sector`. armAtBoot sets its initial arm state.
+    // Returns the PnzPlc* (nullptr on error). Starts the shared worker if
+    // not running. Sector must be UNIQUE (duplicate -> error, returns existing).
+    // NOTE: `sector` MUST match the dbLoadRecords SECTOR macro for routing.
+    static PnzPlc* configure(const std::string& sector, const std::string& ip,
+                             std::uint32_t rpiUs, bool armAtBoot);
+
+    // Resolve a PLC by sector (used by device support). nullptr if unknown.
+    PnzPlc* plc(const std::string& sector);
+
+    // Per-sector arm (used by iocsh pnzEtherIPArm(sector,on)). Returns false if
+    // sector unknown.
+    bool arm(const std::string& sector, bool on);
+
+    ~PnzManager();
+
+private:
+    PnzManager() = default;
+    PnzManager(const PnzManager&) = delete;
+    PnzManager& operator=(const PnzManager&) = delete;
+
+    void worker();   // single shared loop; iterates ALL PnzPlc contexts.
+
+    // Connection lifecycle for a given PLC via the SHARED ConnectionManager.
+    bool openConnection(PnzPlc& plc);
+    void closeConnection(PnzPlc& plc);
+
+    static PnzManager* _instance;
+
+    std::atomic<bool> _stop{false};
+    std::thread       _thread;
+
+    std::unique_ptr<eipScanner::ConnectionManager> _connectionManager;
+
+    // Keyed by SECTOR (must match dbLoadRecords SECTOR + @SECTOR: links).
+    std::map<std::string, std::unique_ptr<PnzPlc>> _plcs;
+    mutable std::mutex _plcsMutex;
+};
+
+// =============================================================================
+// iocsh-registered functions (signatures CHANGED for multi-PLC / per-sector).
+//   pnzEtherIPConfigure(ip, rpi, sector, armAtBoot)
+//   pnzEtherIPArm(sector, on)
+// =============================================================================
+extern "C" int pnzEtherIPConfigure(const char* ip, unsigned long rpiUs,
+                                   const char* sector, int armAtBoot);
+extern "C" int pnzEtherIPArm(const char* sector, int on);
+
+#endif // PNZ_DRIVER_H

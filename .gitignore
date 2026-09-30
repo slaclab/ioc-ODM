@@ -31,3 +31,18 @@ info*.req
 .project
 .settings/
 tmp/
+
+# Generated per-IOC boot files (created by build.sh via convertRelease.pl)
+/iocBoot/*/envPaths
+
+# Manual pre-change backups
+*.pre_optionf_step4
+
+# EIPScanner upstream extras not needed for library build
+/EIPScanner/.travis.yml
+/EIPScanner/Dockerfile
+/EIPScanner/docker-compose.yml
+/EIPScanner/docker/
+/EIPScanner/docs/
+/EIPScanner/examples/
+/EIPScanner/test/
