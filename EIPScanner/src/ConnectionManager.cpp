@@ -151,7 +151,14 @@ namespace eipScanner {
 			Logger(LogLevel::INFO) << "Open UDP socket to send data to "
 					<< ioConnection->_socket->getRemoteEndPoint().toString();
 
-			findOrCreateSocket(sockets::EndPoint(si->getRemoteEndPoint().getHost(), EIP_DEFAULT_IMPLICIT_PORT));
+			// Path A (Option F): share ONE bound 0.0.0.0:2222 receive socket across
+			// all connections. UDPBoundSocket binds INADDR_ANY regardless of the
+			// host, so keying by the PLC host created N identical 0.0.0.0:2222
+			// sockets (the in-process :2222 collision). Keying by a constant
+			// 0.0.0.0:2222 yields ONE shared receive socket; inbound datagrams are
+			// demuxed to the correct IOConnection by T2O_ID via _connectionMap in
+			// the receive handler below. -- scondam/AI-assisted, Option F Step 2.
+			findOrCreateSocket(sockets::EndPoint("0.0.0.0", EIP_DEFAULT_IMPLICIT_PORT));
 
 			auto result = _connectionMap
 					.insert(std::make_pair(response.getT2ONetworkConnectionId(), ioConnection));
