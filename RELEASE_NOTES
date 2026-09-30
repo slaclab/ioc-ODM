@@ -11,6 +11,14 @@
 #  Mod
 #==============================================================
 
+R1.1.10       S. Condamoor (scondam)
+29-Sept-2026   Branch odm-eip: Update sioc-sys0-od03 to communicate with all 3 plcs.
+		Comes up in the DISARMED state - writes to the PLCs are disabled.
+	       
+R1.1.9       S. Condamoor (scondam)
+29-Sept-2026   Branch odm-eip: All iocs run on the same lcls-daemon0 and use UDP port 2222 causing conflict.
+	       Modify driver to multiplex them in a ioc talking to all 3 plcs.
+
 R1.1.8       S. Condamoor (scondam)
 16-Sept-2026   Branch odm-eip
 	      Add sioc-sys0-od04 for plc-li08-od01 and sioc-sys0-od05 for plc-li10-od01
