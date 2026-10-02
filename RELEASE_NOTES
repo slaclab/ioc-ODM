@@ -11,6 +11,11 @@
 #  Mod
 #==============================================================
 
+R1.1.11       S. Condamoor (scondam)
+2-Oct-2026   Branch odm-eip: Update sioc-sys0-od03 st.cmd file only
+		Now comes up in the ARMED state - writes to the PLCs are enabled.
+		LI08 duplicate PVs resolved by G.Brown by decommissioning them in sioc-sys0-od01
+		
 R1.1.10       S. Condamoor (scondam)
 29-Sept-2026   Branch odm-eip: Update sioc-sys0-od03 to communicate with all 3 plcs.
 		Comes up in the DISARMED state - writes to the PLCs are disabled.

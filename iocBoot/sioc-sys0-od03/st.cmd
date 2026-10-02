@@ -8,14 +8,15 @@
 #  Desc:  EPICS startup script for the ODM soft IOC.
 #         R1.1.10: sioc-sys0-od03 consolidates LI08, LI09, LI10
 #         onto ONE IOC (od04/od05 decommissioned).
-#         Boots DISARMED (read-only) for phase-1 comm bring-up.
+#         R1.1.11 (02-Oct-2026): PHASE 2 - all three sectors boot ARMED
+#         (writes enabled) after LI08 legacy-PV decommission + phase-1 RO PASS.
 #
 #  Facility:  LCLS Personnel Protection System (PPS)
 #
 #  Auth: 14-Aug-2026, Shantha Condamoor  (SCONDAM)
 #  Rev:  29-Sep-2026, Shantha Condamoor  (SCONDAM) - multi-PLC R1.1.10
 #--------------------------------------------------------------
-#  Mod:
+#  Mod:  02-Oct-2026, S. Condamoor - armAtBoot 0->1 all sectors (phase-2 writes).
 #==============================================================
 #
 
@@ -66,19 +67,17 @@ epicsEnvSet("IOC","sioc-sys0-od03")
 #     armAtBoot: 0 = DISARMED (read-only) for phase-1 bring-up
 #                1 = ARMED (writes enabled) for phase-2 write testing
 #
-#   *** PHASE 1 (this file): all three sectors DISARMED (read-only). ***
+#   *** PHASE 2: all three sectors ARMED (writes enabled). ***
+#   Phase-1 read-only verification PASSED; LI08 legacy duplicate PVs decommissioned.
 #   Verify RO PVs read correctly from all three PLCs with NO cross-talk
 #   (e.g. LI08 values must NOT appear on LI09/LI10 PVs) before arming.
-#
-#   PHASE 2: change armAtBoot 0 -> 1 per sector (or use pnzEtherIPArm
-#   "LIxx",1 at runtime) and reboot to test write PVs.
 #==============================================================
 # LI08  plc-li08-od01
-pnzEtherIPConfigure("172.27.143.38",  500000, "LI08", 0)
+pnzEtherIPConfigure("172.27.143.38",  500000, "LI08", 1)
 # LI09  plc-li09-od01
-pnzEtherIPConfigure("172.27.143.202", 500000, "LI09", 0)
+pnzEtherIPConfigure("172.27.143.202", 500000, "LI09", 1)
 # LI10  plc-li10-od01
-pnzEtherIPConfigure("172.27.143.104", 500000, "LI10", 0)
+pnzEtherIPConfigure("172.27.143.104", 500000, "LI10", 1)
 
 #==============================================================
 # Load per-sector databases
