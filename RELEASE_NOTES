@@ -11,6 +11,9 @@
 #  Mod
 #==============================================================
 
+R1.0.21       G. Brown (gwbrown)
+2-Oct-2026    LI08, LI09, LI10 moved to another IOC.
+
 R1.0.20       S. Condamoor (scondam)
 22-Sep-2025   Add PVs for the added supervisory channels for LCLSHE
 

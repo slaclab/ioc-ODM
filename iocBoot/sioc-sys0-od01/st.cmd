@@ -40,9 +40,7 @@ iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI04")
 iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI05")
 iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI06")
 iocshLoad( "../common/init_pilz_asyn.cmd", "SECTOR=LI07")
-iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI08")
-iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI09")
-iocshLoad( "../common/init_pnoz2_asyn.cmd", "SECTOR=LI10")
+
 cd ${TOP}
 
 # Load Additional databases:
