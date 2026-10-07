@@ -65,6 +65,7 @@ pattern
     {"BKH:LI03:OD02:1104_01_CH26 MS",  "ODM:LI05:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S05", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH27 MS",  "ODM:LI06:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S06", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH28 MS",  "ODM:LI07:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S07", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+<<<<<<< Upstream, based on local/main
 # ============================================================================
 # R1.0.25 - S08/S09 HB swap per SE field correction (S08=#9 I2=CH30,
 #           S09=#9 I3=CH31). Supersedes R1.0.24. All else unchanged.
@@ -85,6 +86,14 @@ pattern
     {"BKH:LI03:OD02:1104_01_CH36 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
     {"BKH:LI03:OD02:1104_01_CH37 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
     {"BKH:LI03:OD02:1104_01_CH39 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+=======
+    {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH30 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI09:OD02:L1AlarmStatus", "Sec 09, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH34 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}   
+>>>>>>> d6046de R1.0.20: Add PVs for the added supervisory channels for LCLSHE
 }
 
 # Supervisor
