@@ -30,6 +30,12 @@ pattern
     {  25, :1104_01_CH26, "Chan26", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  26, :1104_01_CH27, "Chan27", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  27, :1104_01_CH28, "Chan28", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  28, :1104_01_CH29, "Chan29", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  29, :1104_01_CH30, "Chan30", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  30, :1104_01_CH31, "Chan31", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  31, :1104_01_CH32, "Chan32", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  32, :1104_01_CH33, "Chan33", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  33, :1104_01_CH34, "Chan34", $(M)_1104_01, NO_ALARM, NO_ALARM}    
 }
 
 file bkhBo_simple.db {

@@ -55,16 +55,22 @@ pattern
     {"BKH:LI03:OD02:1104_01_CH14 MS",  "ODM:LI06:OD02:L2AlarmStatus", "Sec 06, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH15 MS",  "ODM:LI07:OD02:L1AlarmStatus", "Sec 07, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH16 MS",  "ODM:LI07:OD02:L2AlarmStatus", "Sec 07, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH17 MS", "ODM:SYS0:OD02:SuprHrtbtAlarm",  "Supervisor HB Alarm Summary", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH18 MS",      "ODM:SYS0:OD02:SuprHrtbt",         "Supervisor Heartbeat",     Off,    On, NO_ALARM, NO_ALARM}
-    {"BKH:LI03:OD02:1104_01_CH21 MS",    "ODM:LI00:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S00", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH22 MS",    "ODM:LI01:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S01", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH23 MS",    "ODM:LI02:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S02", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH24 MS",    "ODM:LI03:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S03", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH25 MS",    "ODM:LI04:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S04", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH26 MS",    "ODM:LI05:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S05", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH27 MS",    "ODM:LI06:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S06", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH28 MS",    "ODM:LI07:OD02:PilzHBAlarm",     "Pilz Heartbeat Alarm S07", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH17 MS",  "ODM:SYS0:OD02:SuprHrtbtAlarm","Supervisor HB Alarm Summary", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH18 MS",  "ODM:SYS0:OD02:SuprHrtbt",     "Supervisor Heartbeat",     Off,    On, NO_ALARM, NO_ALARM}
+    {"BKH:LI03:OD02:1104_01_CH21 MS",  "ODM:LI00:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S00", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH22 MS",  "ODM:LI01:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S01", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH23 MS",  "ODM:LI02:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S02", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH24 MS",  "ODM:LI03:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S03", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH25 MS",  "ODM:LI04:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S04", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH26 MS",  "ODM:LI05:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S05", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH27 MS",  "ODM:LI06:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S06", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH28 MS",  "ODM:LI07:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S07", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH30 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI09:OD02:L1AlarmStatus", "Sec 09, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH34 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}   
 }
 
 # Supervisor
