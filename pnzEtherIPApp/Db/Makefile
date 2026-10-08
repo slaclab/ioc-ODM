@@ -9,4 +9,6 @@ DB += pnz_project.db
 DB += pnzValidBit.template
 DB += pnzValidBit.substitutions
 
+DB += sioc-sys0-od03.db
+
 include $(TOP)/configure/RULES
