@@ -65,12 +65,17 @@ pattern
     {"BKH:LI03:OD02:1104_01_CH26 MS",  "ODM:LI05:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S05", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH27 MS",  "ODM:LI06:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S06", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH28 MS",  "ODM:LI07:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S07", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH30 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI09:OD02:L1AlarmStatus", "Sec 09, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH34 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM,    MAJOR}   
+# --- CORRECTED per SE hardware wiring (was WRONG in R1.0.22) ---
+# 3 heartbeat signals first (KL1104 #9 spare channels), then 6 L1/L2 (KL1104 #10,#11)
+    {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:LI08:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S08", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH30 MS",  "ODM:LI09:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S09", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI10:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S10", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH34 MS",  "ODM:LI09:OD02:L1AlarmStatus", "Sec 09, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH35 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH36 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH37 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR} 
 }
 
 # Supervisor

@@ -11,6 +11,12 @@
 #  Mod
 #==============================================================
 
+R1.0.23       S. Condamoor (scondam)
+8-Oct-2026    Correct CH29-37 supervisor mapping per SE hardware wiring:
+              CH29-31 = S08/S09/S10 Pilz Heartbeat Alarms,
+              CH32-37 = S08/S09/S10 Level-1/Level-2 tunnel alarms.
+              (Supersedes R1.0.22 which mis-mapped CH29-34.)
+
 R1.0.22       S. Condamoor (scondam)
 7-Oct-2026    Add PVs for the added supervisory channels for LCLSHE
 

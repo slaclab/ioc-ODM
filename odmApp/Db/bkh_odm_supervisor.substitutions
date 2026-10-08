@@ -36,6 +36,9 @@ pattern
     {  31, :1104_01_CH32, "Chan32", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  32, :1104_01_CH33, "Chan33", $(M)_1104_01, NO_ALARM, NO_ALARM}
     {  33, :1104_01_CH34, "Chan34", $(M)_1104_01, NO_ALARM, NO_ALARM}    
+    {  34, :1104_01_CH35, "Chan35", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  35, :1104_01_CH36, "Chan36", $(M)_1104_01, NO_ALARM, NO_ALARM}
+    {  36, :1104_01_CH37, "Chan37", $(M)_1104_01, NO_ALARM, NO_ALARM}    
 }
 
 file bkhBo_simple.db {
