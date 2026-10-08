@@ -1,0 +1,62 @@
+#==============================================================
+#
+#  Name: sioc-sys0-od03.db
+#
+#  Abs:  od03 SYS0-level Alarm Reset / Mute masters + fanouts.
+#
+#  Rem:  LOAD ONCE (NOT per-sector) - these are SYS0-level
+#        singletons. The per-sector leaf records
+#        ODM:LIxy:100:AlarmReset/AlarmMute already exist in od03.
+#
+#        OPTION A (current): LI09, LI10 fanned out here.
+#        LI08 intentionally left in od01's legacy fanouts
+#        (ODM:SYS0:100:AlarmResetFan2/AlarmMuteFan2 :OUTB) until
+#        gwbrown decommissions LI08 from od01. Then migrate to
+#        OPTION B: add LI08 OUTx lines below (marked).
+#
+#        :OD03: infix avoids collision with od01's
+#        ODM:SYS0:100:AlarmReset / AlarmMute masters.
+#
+#  Auth: 07-Oct-2026, S. Condamoor (scondam)
+#  Rev:  dd-mmm-yyyy, Reviewer's Name (USERNAME)
+#  Mod:
+#        dd-mmm-yyyy, First Lastname (USERNAME):
+#          comment
+#
+#==============================================================
+
+#--------------------------------------------------------------
+# Alarm Reset
+#--------------------------------------------------------------
+record(bo, "ODM:SYS0:OD03:AlarmReset") {
+  field(DESC, "od03 Alarm Reset master")
+  field(OUT,  "ODM:SYS0:OD03:AlarmResetFan1 PP")
+  field(HIGH, 1)
+  field(ZNAM, "Normal")
+  field(ONAM, "Reset")
+}
+
+record(dfanout, "ODM:SYS0:OD03:AlarmResetFan1") {
+# field(OUTx, "ODM:LI08:100:AlarmReset PP")   # OPTION B: add after od01 LI08 decommission
+  field(OUTA, "ODM:LI09:100:AlarmReset PP")
+  field(OUTB, "ODM:LI10:100:AlarmReset PP")
+}
+
+#--------------------------------------------------------------
+# Alarm Mute
+#--------------------------------------------------------------
+record(bo, "ODM:SYS0:OD03:AlarmMute") {
+  field(DESC, "od03 Alarm Mute master")
+  field(OUT,  "ODM:SYS0:OD03:AlarmMuteFan1 PP")
+  field(HIGH, 1)
+  field(ZNAM, "Normal")
+  field(ONAM, "Mute")
+}
+
+record(dfanout, "ODM:SYS0:OD03:AlarmMuteFan1") {
+# field(OUTx, "ODM:LI08:100:AlarmMute PP")    # OPTION B: add after od01 LI08 decommission
+  field(OUTA, "ODM:LI09:100:AlarmMute PP")
+  field(OUTB, "ODM:LI10:100:AlarmMute PP")
+}
+
+# End of file

@@ -11,6 +11,12 @@
 #  Mod
 #==============================================================
 
+R1.1.12       S. Condamoor (scondam)
+7-Oct-2026   Branch odm-eip: Update sioc-sys0-od03 st.cmd file
+	     Loads AlarmReset and AlarmMute fanouts for LI09/LI10
+	     LI08 intentionally left in od01's legacy fanouts
+	     Will add to sioc-sys0-od03 once LI08 is decommissioned in od01.
+	     
 R1.1.11       S. Condamoor (scondam)
 2-Oct-2026   Branch odm-eip: Update sioc-sys0-od03 st.cmd file only
 		Now comes up in the ARMED state - writes to the PLCs are enabled.

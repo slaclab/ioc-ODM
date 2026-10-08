@@ -104,6 +104,12 @@ dbLoadRecords("db/pnz_project.db","SECTOR=LI10")
 dbLoadTemplate("db/pnzValidBit.substitutions", "SECTOR=LI10")
 
 #==============================================================
+# Load od03 SYS0-level alarm Reset/Mute fanouts (load ONCE,
+# NOT per-sector - SYS0-level singleton records)
+#==============================================================
+dbLoadRecords("db/sioc-sys0-od03.db")
+
+#==============================================================
 # Setup autosave/restore
 #   NOTE: autosave is IOC-scoped and generic (info_positions/info_settings).
 #   makeAutosaveFiles() auto-includes ALL loaded records, so LI08/LI09/LI10
