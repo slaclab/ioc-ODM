@@ -65,17 +65,31 @@ pattern
     {"BKH:LI03:OD02:1104_01_CH26 MS",  "ODM:LI05:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S05", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH27 MS",  "ODM:LI06:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S06", NoAlarm, Alarm, NO_ALARM,    MAJOR}
     {"BKH:LI03:OD02:1104_01_CH28 MS",  "ODM:LI07:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S07", NoAlarm, Alarm, NO_ALARM,    MAJOR}
-# --- CORRECTED per SE hardware wiring (was WRONG in R1.0.22) ---
-# 3 heartbeat signals first (KL1104 #9 spare channels), then 6 L1/L2 (KL1104 #10,#11)
-    {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:LI08:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S08", NoAlarm, Alarm, NO_ALARM, MAJOR}
+# ============================================================================
+# R1.0.24 - CORRECTED per SE FIELD WIRING (physical layout). Supersedes the
+# R1.0.22/R1.0.23 CH29-37 mapping, which was WRONG (mis-mapped PPS Clear as
+# S08 HB and scrambled HB and L1/L2).
+#
+# Channel = 21 + (KL1104_module# - 7)*4 + (input_I - 1); order I1->I2->I3->I4
+#   Module #9  (HB group): CH29=#9 I1=PPS Clear (raw-bi only, NOT a HB)
+#                          CH30=#9 I2=S09 HB, CH31=#9 I3=S08 HB, CH32=#9 I4=S10 HB
+#   Module #10 (L1/L2)   : CH33=S08 L1, CH34=S09 L1, CH35=S08 L2, CH36=S09 L2
+#   Module #11           : CH37=S10 L1, (CH38 spare), CH39=S10 L2, (CH40 spare)
+#
+# *** PROVISIONAL until SE one-signal-at-a-time stimulus verification ***
+# NOTE: CH29 = PPS Clear has NO derived-PV line (raw bi only). To expose it,
+#       uncomment the line below and confirm ZNAM/ONAM/severities with SE.
+# {"BKH:LI03:OD02:1104_01_CH29 MS",  "ODM:SYS0:OD02:PpsClear",      "Supervisor PPS Clear", Not_Clear, Clear, MINOR, NO_ALARM}
+# ============================================================================
     {"BKH:LI03:OD02:1104_01_CH30 MS",  "ODM:LI09:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S09", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI10:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S10", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH31 MS",  "ODM:LI08:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S08", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH32 MS",  "ODM:LI10:OD02:PilzHBAlarm",   "Pilz Heartbeat Alarm S10", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH33 MS",  "ODM:LI08:OD02:L1AlarmStatus", "Sec 08, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
     {"BKH:LI03:OD02:1104_01_CH34 MS",  "ODM:LI09:OD02:L1AlarmStatus", "Sec 09, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH35 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH36 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
-    {"BKH:LI03:OD02:1104_01_CH37 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR} 
+    {"BKH:LI03:OD02:1104_01_CH35 MS",  "ODM:LI08:OD02:L2AlarmStatus", "Sec 08, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH36 MS",  "ODM:LI09:OD02:L2AlarmStatus", "Sec 09, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH37 MS",  "ODM:LI10:OD02:L1AlarmStatus", "Sec 10, Level-1 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
+    {"BKH:LI03:OD02:1104_01_CH39 MS",  "ODM:LI10:OD02:L2AlarmStatus", "Sec 10, Level-2 Tunnel Alarm", NoAlarm, Alarm, NO_ALARM, MAJOR}
 }
 
 # Supervisor
