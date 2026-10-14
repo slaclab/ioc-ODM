@@ -2,7 +2,7 @@
 #
 #  Abs:  Initialize ModBus Asyn communications
 #
-#  Name: init_asyn.cmd
+#  Name: init_MO2i_asyn.cmd
 #
 #  Facility:  SLAC PPS Controls
 #
@@ -26,6 +26,8 @@ drvAsynIPPortConfigure( "OXI_LI05", "ts-li05-od01:2101", 0, 0, 0 )
 drvAsynIPPortConfigure( "OXI_LI06", "ts-li06-od01:2101", 0, 0, 0 )
 drvAsynIPPortConfigure( "OXI_LI07", "ts-li07-od01:2101", 0, 0, 0 )
 drvAsynIPPortConfigure( "OXI_LI08", "ts-li08-od01:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_LI08", "ts-li09-od01:2101", 0, 0, 0 )
+drvAsynIPPortConfigure( "OXI_LI08", "ts-li10-od01:2101", 0, 0, 0 )
 epicsEnvSet( "STREAM_PROTOCOL_PATH", "$(TOP)/db")
 
 # End of script

@@ -11,11 +11,14 @@
 #  Mod
 #==============================================================
 
+R1.0.25       G. Brown (gwbrown)
+14-Oct-2026   Add HE Oxigraf serial connections.
+
 R1.0.25       S. Condamoor (scondam)
 8-Oct-2026    Swap S08/S09 Pilz HB per SE field correction: S08 HB = CH30
               (#9 I2), S09 HB = CH31 (#9 I3). Supersedes R1.0.24. L1/L2 and
               all other channels unchanged.
-	      
+
 R1.0.24       S. Condamoor (scondam)
 8-Oct-2026    Correct CH29-39 supervisor mapping per SE field wiring (supersedes R1.0.23)
 
