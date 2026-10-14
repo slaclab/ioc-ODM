@@ -10,6 +10,8 @@ pattern	{ PRIM, LOCA, UNIT, PORT,         SCAN      }
 		{ ODM,  LI06, 100,    OXI_$(LOCA), "1 second" }
 		{ ODM,  LI07, 100,    OXI_$(LOCA), "1 second" }
 		{ ODM,  LI08, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI09, 100,    OXI_$(LOCA), "1 second" }
+		{ ODM,  LI10, 100,    OXI_$(LOCA), "1 second" }
 }
 
 file odm-oxigraf-alias.template
@@ -24,6 +26,8 @@ pattern	{ LOCA }
 		{ LI06 }
 		{ LI07 }
 		{ LI08 }
+		{ LI09 }
+		{ LI10 }
 }
 
 file asynRecord.db
