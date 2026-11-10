@@ -67,15 +67,11 @@ R1.1.2       S. Condamoor (scondam)
 
 R1.1.1       S. Condamoor (scondam)
 26-Aug-2026   Branch odm-eip
-<<<<<<< Upstream, based on local/main
-		Update database files, drivers for recovery from communication disconnects.
-=======
+
         Update database files, drivers for recovery from communication disconnects.
->>>>>>> d6046de R1.0.20: Add PVs for the added supervisory channels for LCLSHE
 
 R1.1.0       S. Condamoor (scondam)
 24-Aug-2026   Branch odm-eip
-<<<<<<< Upstream, based on local/main
 		Initial release for Pilz PNOZ EtherNet/IP module testing with sioc-b34-od01.
 		Includes the EIPScanner library needed by the pnzEtherIPApp.
 		Build for Rocky9.
@@ -108,14 +104,6 @@ R1.0.20       S. Condamoor (scondam)
 
 R1.0.20       G. Brown (gwbrown)
 2-Jul-2026    Add new model PLC, PILZ PNOZ2, for LCLS-HE in sectors LI08, LI09, LI10
-=======
-        Initial release for Pilz PNOZ EtherNet/IP module testing with sioc-b34-od01.
-        Includes the EIPScanner library needed by the pnzEtherIPApp.
-        Build for Rocky9.
-
-R1.0.20       S. Condamoor (scondam)
-22-Sep-2025   Add PVs for the added supervisory channels for LCLSHE
->>>>>>> d6046de R1.0.20: Add PVs for the added supervisory channels for LCLSHE
 
 R1.0.19       G. Brown (gwbrown)
 22-Sep-2025   Update to Rocky9
